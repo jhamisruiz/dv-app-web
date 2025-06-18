@@ -77,5 +77,5 @@ jobs:
           docker rm app-web-container || true
           docker rmi ghcr.io/jhamisruiz/dv-app-web:latest || true
           docker pull ghcr.io/jhamisruiz/dv-app-web:latest
-          docker run -d --name app-web-container -p 8000:8080 ghcr.io/jhamisruiz/dev-app-web:latest
+          docker run -d --name app-web-container -p 8000:8080 ghcr.io/jhamisruiz/dv-app-web:latest
         EOF
