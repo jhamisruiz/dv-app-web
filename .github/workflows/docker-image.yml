@@ -5,6 +5,7 @@ on:
     branches: [ "master" ]
   # pull_request:
   #   branches: [ "master" ]
+  workflow_dispatch:
 
 jobs:
 
@@ -74,5 +75,8 @@ jobs:
           docker rm app-web-container || true
           docker rmi ghcr.io/jhamisruiz/dv-app-web:latest || true
           docker pull ghcr.io/jhamisruiz/dv-app-web:latest
-          docker run -d --name app-web-container -p 8000:8080 ghcr.io/jhamisruiz/dv-app-web:latest
+          docker run -d \
+            --name  app-web-container \
+            -p 8000:8080 \
+            ghcr.io/nectextil/nec-app-web:latest
         EOF
