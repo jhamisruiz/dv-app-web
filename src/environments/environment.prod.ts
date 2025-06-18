@@ -4,8 +4,8 @@ export const environment = {
   wsHost: 'prueba/ws',
   wsSSL: true,
 
-  userName: '',//'admin',
-  userPass: '',//'admin123',
+  userName: '',//'admin' \ 'kalva,
+  userPass: '',//'admin123' \ '123,
   apiHost: 'gateway.adminedic.com',
   apiVersion: 'v1',
   apiSSL: true,
