@@ -64,18 +64,19 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Setup SSH
-      uses: webfactory/ssh-agent@v0.8.0
-      with:
-        ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+    - name: Install SSHPASS
+      run: sudo apt-get install -y sshpass
 
     - name: SSH init Serever
       run: |
-        ssh -o StrictHostKeyChecking=no ${{ secrets.DEV_VPS_AUTH }} << EOF
+        sshpass -p ${{ secrets.DEV_VPS_PASSWORD }} ssh -o StrictHostKeyChecking=no ${{ secrets.DEV_VPS_AUTH }} << EOF
           docker login ghcr.io -u jhamisruiz -p ${{ secrets.GITH_PASSWORD }}
           docker stop app-web-container || true
           docker rm app-web-container || true
           docker rmi ghcr.io/jhamisruiz/dv-app-web:latest || true
           docker pull ghcr.io/jhamisruiz/dv-app-web:latest
-          docker run -d --name app-web-container -p 8000:8080 ghcr.io/jhamisruiz/dv-app-web:latest
+          docker run -d \
+            --name  app-dv-container \
+            -p 8000:8080 \
+            ghcr.io/jhamisruiz/dv-app-web:latest
         EOF
