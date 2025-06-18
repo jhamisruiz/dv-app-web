@@ -45,16 +45,16 @@ jobs:
       env:
          NEW_VERSION: ${{ steps.version.outputs.version }}
       run: |
-        docker build -t ghcr.io/nectextil/dv-app-web:$NEW_VERSION .
-        docker build -t ghcr.io/nectextil/dv-app-web:latest .
+        docker build -t ghcr.io/jhamisruiz/dv-app-web:$NEW_VERSION .
+        docker build -t ghcr.io/jhamisruiz/dv-app-web:latest .
 
     ## step:5- Build de la imagen en Docker
     - name: Push Docker Image to GitHub Container Registry
       env:
          NEW_VERSION: ${{ steps.version.outputs.version }}
       run: |
-        docker push ghcr.io/nectextil/dv-app-web:$NEW_VERSION
-        docker push ghcr.io/nectextil/dv-app-web:latest
+        docker push ghcr.io/jhamisruiz/dv-app-web:$NEW_VERSION
+        docker push ghcr.io/jhamisruiz/dv-app-web:latest
 
   deploy:
 
@@ -68,14 +68,14 @@ jobs:
 
     - name: SSH init Serever
       run: |
-        sshpass -p ${{ secrets.NEC_VPS_PASSWORD }} ssh -o StrictHostKeyChecking=no ${{ secrets.NEC_VPS_AUTH }} << EOF
-          docker login ghcr.io -u nectextil -p ${{ secrets.GITH_PASSWORD }}
-          docker stop app-nec-container || true
-          docker rm app-nec-container || true
-          docker rmi ghcr.io/nectextil/dv-app-web:latest || true
-          docker pull ghcr.io/nectextil/dv-app-web:latest
+        sshpass -p ${{ secrets.DEV_VPS_PASSWORD }} ssh -o StrictHostKeyChecking=no ${{ secrets.DEV_VPS_AUTH }} << EOF
+          docker login ghcr.io -u jhamisruiz -p ${{ secrets.GITH_PASSWORD }}
+          docker stop app-web-container || true
+          docker rm app-web-container || true
+          docker rmi ghcr.io/jhamisruiz/dv-app-web:latest || true
+          docker pull ghcr.io/jhamisruiz/dv-app-web:latest
           docker run -d \
-            --name  app-nec-container \
+            --name  app-web-container \
             -p 8000:8080 \
-            ghcr.io/nectextil/dv-app-web:latest
+            ghcr.io/jhamisruiz/dv-app-web:latest
         EOF
