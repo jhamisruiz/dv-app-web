@@ -1,0 +1,23 @@
+<label *ngIf="!(label===false || label==='false')" for="miImput" class="mb-0 block text-capitalize {{labelClass}}">
+  {{label??'label text'}}
+  <i *ngIf="(initRequired || required)" class="text-danger">*</i>
+</label>
+<div class="">
+  <label [for]="id" style="cursor: pointer"
+    class="d-flex w-100 border border-2 {{required&&!dataFile?.nombre?'border-danger':'border-primary'}} justify-content-center rounded-3 p-0 pl-2">
+    <i class="pi pi-upload text-success mt-2 mb-1" style="font-size: 1.5rem; margin-right: 5px;"></i>
+    <p class="font-poppins font-semibold text-success text-sm mb-1 mt-1">{{fileLabel??'Selec. archivo'}}</p>
+  </label>
+  <input #input (change)="onFileChange($event)" [disabled]="(dataFile?.nombre && !dataFile?.delete)" type="file"
+    [name]="id" [id]="id" hidden [multiple]="multiple" accept="{{accept}}" />
+  <p class="text-danger" *ngIf="errorMessage">{{ errorMessage }}</p>
+  <div class="text-warning" [hidden]="!infoFile">
+    {{infoFile ??'Info file'}}
+  </div>
+
+  <div class="d-flex mb-3" *ngIf="dataFile?.nombre && !dataFile?.delete">
+    <span class="ml-3" style="margin-right: 5px;">{{dataFile?.nombre}}</span>
+    <i [attr.aria-hidden]="true" (click)="deleteFile()" class="pi pi-trash text-danger"
+      style="font-size: 1.5rem;cursor: pointer;"></i>
+  </div>
+</div>

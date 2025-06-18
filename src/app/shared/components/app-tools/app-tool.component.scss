@@ -1,0 +1,66 @@
+:host ::ng-deep .p-toolbar {
+  background: transparent;
+  border: none;
+  padding: 0;
+  border-radius: 6px;
+  gap: 0.5rem;
+  margin-top: -25px;
+}
+
+:host ::ng-deep  .p-button {
+  color: #ffffff;
+  /*background: #3B82F6;
+  border: 1px solid #3B82F6;
+   padding: 0.5rem 1rem; */
+  font-size: 1rem;
+  transition: background-color 0.2s, color 0.2s, border-color 0.2s, box-shadow 0.2s, outline-color 0.2s;
+  border-radius: 6px;
+  outline-color: transparent;
+}
+
+:host ::ng-deep  .p-button {
+  margin: 0;
+  display: inline-flex;
+  cursor: pointer;
+  -webkit-user-select: none;
+  user-select: none;
+  align-items: center;
+  vertical-align: bottom;
+  text-align: center;
+  overflow: hidden;
+  position: relative;
+}
+
+:host ::ng-deep  .p-button.p-button-icon-only {
+  width: 2.5rem;
+  padding: 0.5rem 0;
+}
+
+:host ::ng-deep ol {
+  list-style-type: decimal;
+}
+
+:host ::ng-deep ol li::marker {
+  font-weight: bold;
+}
+
+:host ::ng-deep button {
+position: absolute;
+}
+
+:host ::ng-deep .p-message-wrapper {
+  position: relative;
+}
+
+:host ::ng-deep .p-message .p-message-close {
+  right: 5px;
+}
+
+:host ::ng-deep .p-message .p-message-wrapper {
+  padding: .35rem 1.75rem;
+}
+
+:host ::ng-deep .p-dialog .p-dialog-header-icon {
+  right: 5px;
+  color: red;
+}

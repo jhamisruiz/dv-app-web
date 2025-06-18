@@ -1,0 +1,354 @@
+<p-toast [position]="'top-right'" [baseZIndex]="500000">
+</p-toast>
+
+<p-table #dt [columns]="headersTable" [value]="data" dataKey="index" [resizableColumns]="true"
+  [selectionMode]="(!modViewTab && selectionMode==='single'? 'single': null)" columnResizeMode="expand"
+  responsiveLayout="scroll" editMode="row" [(selection)]="selectedIndex" [paginator]="paginator" [rows]="pageRowInit"
+  [showCurrentPageReport]="true" (onRowSelect)="onRowSelect($event)" (onRowUnselect)="onRowUnselect($event)"
+  [style]="{'width': '100%!important','overflow':'auto!important'}"
+  styleClass="{{gridlines?'p-datatable-gridlines':''}}"
+  currentPageReportTemplate="Mostrando {first} de {last} de {totalRecords} Filas" [rowsPerPageOptions]="[5,10,25,50,100]"
+  [loading]="loading">
+  <ng-template pTemplate="caption" *ngIf="caption">
+    <div class="d-flex justify-content-between flex-wrap bg-success">
+    </div>
+    <div class="w-100 pt-0 d-flex justify-content-end" *ngIf="!modViewTab">
+      <div style="height: 37px;" class="d-flex">
+        <div class="d-flex">
+          <!-- *ngIf="Table" -->
+          <div class="p-0 mx-1" *ngIf="!isediting&&btnNewRow">
+            <button (click)="addRowInTable()" type="button" class="btn p-button-success pl-3 pr-3 mr-1"
+              [disabled]="locked">
+              <i class="pi pi-plus"></i>
+            </button>
+          </div>
+
+          <div class="d-flex" *ngIf="!buttonInRow">
+            <div *ngIf="!isediting&&btnEditRow" class="p-0 mx-1">
+              <button *ngIf="!isediting" type="button"
+                class="{{rowSelect?'':'isdisabled'}} btn p-button-primary  pl-3 pr-3 mr-1"
+                (click)="onRowEditInit(rowData)">
+                <i class="pi pi-pencil"></i>
+              </button>
+            </div>
+            <div *ngIf="!!isDelete&&btnDelete" class="p-0 mx-1">
+              <button *ngIf="!isediting" type="button"
+                class="{{rowSelect?'':'isdisabled'}} btn p-button-danger  pl-3 pr-3 mr-1"
+                (click)="onRowEditDelete(rowData, rowData, rowData?.index ?? 0);changeData()">
+                <i class="pi pi-trash"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+        <div *ngIf="!buttonInRow && editing" class="p-0">
+          <button type="button" class="btn p-button-success  pl-3 pr-3 mr-1" (click)="onRowEditSave(rowData)">
+            <i class="pi pi-check"></i>
+          </button>
+        </div>
+        <div *ngIf="!buttonInRow && editing">
+          <button type="button" class="btn p-button-warning  pl-3 pr-3 mr-1"
+            (click)="onRowEditCancel(rowData, rowData?.index);changeData()">
+            <i class="pi pi-times"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+  <ng-template pTemplate="header">
+    <tr>
+      <th style="width: 2.25em" *ngIf="tableCheckbox" class="th-dark" ngClass="th-dark">
+        <p-tableHeaderCheckbox (click)="selectCheckbox()"></p-tableHeaderCheckbox>
+      </th>
+      <th pSortableColumn="index" *ngIf="rowIndex" ngClass="th-dark" style="width: 50px;" class="pb-1 pt-1 p-1">#</th>
+      <th *ngFor="let col of headersTable" ngClass="th-dark" [style]="(col?.hwidth) ?? 'width: auto;'"
+        [hidden]="col.visible !== undefined" class="pb-1 pt-1 pl-0 text-capitalize {{col.center ? 'text-center': ''}}">
+        <div class="d-flex" [ngClass]="col.customClass">
+          <div class="bg">
+            {{ col.label }}
+          </div>
+        </div>
+      </th>
+      <th ngClass="th-dark" *ngIf="buttonInRow">
+        Acciones
+      </th>
+    </tr>
+  </ng-template>
+  <ng-template pTemplate="body" let-d let-columns="columns" let-editing="editing" let-index="rowIndex">
+    <tr [pEditableRow]="d" [pSelectableRow]="(editing? null: d)">
+      <td *ngIf="tableCheckbox">
+        <p-tableCheckbox [value]="d" (click)="selectCheckbox()"></p-tableCheckbox>
+        <!-- <p-checkbox [binary]="true" (onChange)="selectCheckbox($event, d)" inputId="binary"></p-checkbox> -->
+      </td>
+      <td class="p-1 td-dark" *ngIf="rowIndex">{{index+1}}</td>
+      <td *ngFor="let h of headersTable" class="p-1 pl-1 td-dark" [style]="(h?.hwidth) ?? 'min-width: 60px;'"
+        [hidden]="h.visible !== undefined">
+        <p-cellEditor>
+          <ng-template pTemplate="input">
+            <div class="ml-1" *ngIf="h?.type==='suggest' ">
+              <p-autoComplete appendTo="body" [(ngModel)]="d[h?.fieldname??'']" [suggestions]="h?.data ?? filterSelect"
+                [inputStyle]="{'width': '100%', 'min-width': '100px' }" [style]="{'width':'100%','min-width':'100%'}"
+                inputStyleClass="form-control border border-{{(h?.errStyle? h?.errStyle:'info')}}  rounded rounded-3"
+                [dataKey]="h?.dataKey" [attr.optionValue]="h?.optionValue" [field]="h?.optLabel"
+                [placeholder]="h?.placeholder??'Buscar...'" [showClear]="h?.showClear ?? true"
+                (onClear)="onClearSuggt($event,d,h?.field, h?.parentsVals);errorStyle(d,h,d[h.field],h?.required, h?.parentsVals ?? [])"
+                (onFocus)="errorStyle(d,h,d[h.field],h?.required, h?.parentsVals ?? [])"
+                (onSelect)="selectedItemSgst($event, d,h?.field,h?.optionValue, h?.parentsVals);changeData()"
+                (completeMethod)="filterData($event,h, h?.url)" [minLength]="1" [readonly]="h?.readonly"
+                [disabled]="h?.disabled??false" (change)="change($event,d,h?.field, h?.parentsVals??[]);changeData()"
+                [forceSelection]="true">
+                <ng-template let-value pTemplate="item">
+                  <span style="font-size:11px; text-transform: uppercase;" class="pt-1 pb-1 d-flex">
+                    <p-badge *ngIf="value && h?.Labels&& value[(h?.Labels??[])[0]??'']"
+                      [value]="value[(h?.Labels??[])[0]]" severity="info" styleClass="m-0"></p-badge>
+                    <div *ngFor="let lbl of h?.Labels; let i = index" class="mx-1 {{i===0? 'd-none':''}}">
+                      {{i>0? value[lbl]:''}}
+                    </div>
+                    <!-- <p-badge *ngIf="value?.[h?.codigo??'']" [value]="(value?.[h?.codigo??''] ?? '')" severity="info"
+                      styleClass="m-0 mr-1"></p-badge>
+                    {{value?.[h?.optLabel??'']}} -->
+                  </span>
+                </ng-template>
+              </p-autoComplete>
+            </div>
+            <div class="select w-100 d-flex" *ngIf="h?.type==='select'">
+              <div class="data w-100">
+                <div class="data w-100">
+                  <p-dropdown appendTo="body" [attr.dropdown]="true" [options]="h?.data" [(ngModel)]="d[h.field]"
+                    (onChange)="selected($event, d,h?.field, h?.parentsVals ?? [], h);changeData();errorStyle(d,h,d[h.field], h?.required, h?.parentsVals ?? [])"
+                    (onFocus)="errorStyle(d,h,d[h.field],h?.required, h?.parentsVals ?? [])"
+                    (onClear)="onClearSuggt($event,d,h?.field, h?.parentsVals);errorStyle(d,h,d[h.field],h?.required, h?.parentsVals ?? [])"
+                    styleClass="form-control border border-{{(h?.errStyle? h?.errStyle:'info')}}"
+                    [disabled]="h?.disabled??false" [style]="{'width': h?.minWidth ??'100%','min-width':'100%'}"
+                    [filter]="h?.filter ?? true" filterBy="codigo,{{h?.optionLabel}}"
+                    optionValue="{{h?.optionValue ?? 'code'}}" optionLabel="{{h?.optionLabel ?? h?.optLabel ?? 'name'}}"
+                    [placeholder]="h?.placeholder??''" [showClear]="h?.showClear ?? true">
+                    <ng-template let-tmt pTemplate="selectedItem" *ngIf="h?.isTemplete">
+                      <div class="select-item select-item-value" *ngIf="d[h.field]">
+                        <div>
+                          <p-badge *ngIf="(tmt&&h&&tmt[(h?.Labels??[])[0]??''])" [value]="(tmt[(h?.Labels??[])[0]])"
+                            severity="info" styleClass="m-0 mr-1"></p-badge>
+                          {{tmt&&h &&tmt[(h?.Labels??[])[1]]?tmt[(h?.Labels??[])[1]]:''}}
+                          {{tmt&&h &&tmt[(h?.Labels??[])[2]]?(h?.separador?h?.separador:' ')+tmt[(h?.Labels??[])[2]]:
+                          ''}}
+                          {{tmt&&h &&tmt[(h?.Labels??[])[3]]?(h?.separador?h?.separador:' ')+tmt[(h?.Labels??[])[3]]:
+                          ''}}
+                        </div>
+                      </div>
+                    </ng-template>
+                    <ng-template let-select pTemplate="item" *ngIf="h?.isTemplete">
+                      <div class="select-item">
+                        <div>
+                          <p-badge *ngIf="(select&&h&&select[(h?.Labels??[])[0]??''])"
+                            [value]="(select[(h?.Labels??[])[0]])" severity="info" styleClass="m-0 mr-1"></p-badge>
+                          {{select&&h &&select[(h?.Labels??[])[1]]?select[(h?.Labels?? [])[1]]:''}}
+                          {{select&&h &&select[(h?.Labels??[])[2]]?(h?.separador?h?.separador:'
+                          ')+select[(h?.Labels??[])[2]]: ''}}
+                          {{select&&h &&select[(h?.Labels??[])[3]]?(h?.separador?h?.separador:'
+                          ')+select[(h?.Labels??[])[3]]: ''}}
+                        </div>
+                      </div>
+                    </ng-template>
+                  </p-dropdown>
+                </div>
+              </div>
+            </div>
+            <div class="ml-1" *ngIf="(!h?.type ) || h?.type==='text'">
+              <input pInputText type="text" style="min-height: 38px;font-size: 1rem;"
+                [ngStyle]="{width: h?.minWidth ?? '100%'}"
+                class="form-control border {{h?.disabled?'':'border-'+(h?.errStyle? h?.errStyle:'info')}}"
+                [placeholder]="h?.placeholder??''" [readonly]="h?.readonly" [disabled]="h?.disabled??false"
+                [(ngModel)]="d[h.field]" (focus)="errorStyle(d,h, d[h.field], h?.required, h?.parentsVals ?? [])"
+                (keyup)="errorStyle(d,h, d[h.field], h?.required, h?.parentsVals ?? [])">
+            </div>
+            <div class="ml-1" *ngIf="h?.type==='checkbox'">
+              <p-checkbox name="pizza" value="Cheese" [(ngModel)]="d[h.field]"></p-checkbox>
+            </div>
+            <div class="ml-1" *ngIf="h?.type==='file'">
+              <input pInputText type="file" style="min-height: 32px;" [ngStyle]="{width: h?.minWidth ?? '100%'}"
+                class="border {{h?.disabled?'':'border-'+(h?.errStyle? h?.errStyle:'info')}}"
+                [placeholder]="h?.placeholder??''" [readonly]="h?.readonly" [disabled]="h?.disabled??false"
+                [(ngModel)]="d[h.field]">
+            </div>
+            <div class="ml-1" *ngIf="h?.type==='date'">
+              <p-calendar appendTo="body" [(ngModel)]="d[h.field]" [showIcon]="true"
+                [dateFormat]="h?.dateFormat ?? 'yy-mm-dd'" [minDate]="h?.mindate" [maxDate]="h?.maxdate"
+                (onSelect)="onCalendarSelect($event, d,h.field, h?.dateFormat?? 'yy-mm-dd');errorStyle(d,h,d[h.field],h?.required, h?.parentsVals ?? []);OnFocus.emit($event);"
+                [disabled]="h?.disabled??false" [inputStyle]="{'width':'100%','min-width':'100%'}" class="w-100"
+                inputStyleClass="form-control border border-{{(h?.errStyle? h?.errStyle:'info')}}  rounded rounded-3"
+                (focus)="errorStyle(d,h,d[h.field],h?.required, h?.parentsVals ?? []);OnFocus.emit($event);"
+                (focusout)="OnFocusOut.emit($event);errorStyle(d,h,d[h.field],h?.required, h?.parentsVals ?? []);OnFocus.emit($event)"
+                (keydown.arrowdown)="keyArrowDown.emit()" (keydown)="OnKeyDown.emit($event)"
+                (keyup)="OnKeyUp.emit($event)" (keydown.arrowup)="keyArrowUp.emit()" (keydown.tab)="keyTab.emit()"
+                (keydown.enter)="keyEnter.emit()">
+              </p-calendar>
+            </div>
+            <div class="" *ngIf="h?.type==='inputMask'">
+              <!-- // DAR ESPACIO A PALABARAS esto es para nro de tarjetas de credito -->
+              <input pInputText (keyup)="spaceCuenta($event ,d[h.field])" type="text" style="min-height: 32px;"
+                class="form-control border {{h?.disabled?'':'border-'+(h?.errStyle? h?.errStyle:'info')}}"
+                [placeholder]="h?.placeholder??''" [(ngModel)]="d[h.field]">
+            </div>
+            <div class="text-area w-100 d-flex justify-content-center" *ngIf="h?.type==='textArea'">
+              <textarea rows="{{h?.textAreaRows??1}}" [(ngModel)]="d[h.field]"
+                class="form-control border {{h?.disabled?'':'border-'+(h?.errStyle? h?.errStyle:'info')}}"
+                [readonly]="h?.readonly" [disabled]="h?.disabled??false"
+                (focus)="errorStyle(d,h, d[h.field],h?.required, h?.parentsVals ?? [])"
+                (keyup)="errorStyle(d,h, d[h.field], h?.required, h?.parentsVals ?? [])"></textarea>
+            </div>
+            <div class="number ml-1 w-100 d-flex justify-content-center" *ngIf="h?.type==='number'">
+              <p-inputNumber [(ngModel)]="d[h.field]" mode="decimal" (focusout)="changeData()"
+                [inputStyle]="{'width':h?.minWidth ?? '100%','min-width':'100%'}" class="w-100"
+                [showButtons]="(h?.disabled ? false: (h?.showButtons ?? false))"
+                (onInput)="errorStyle(d,h,d[h.field],h?.required ?? false, h?.parentsVals ?? []);"
+                inputStyleClass="form-control border {{h?.disabled?'':'border-'+(h?.errStyle? h?.errStyle:'info')}} rounded rounded-3"
+                [min]="h?.inputMin" [max]="h?.inputMax"
+                [minFractionDigits]="(h?.minFractionDigits || h?.minFractionDigits===0 ? h?.minFractionDigits : 2)"
+                prefix="{{h.prefix}}" locale="en-US" [readonly]="h?.readonly??false" [disabled]="h?.disabled??false"
+                (onFocus)="errorStyle(d,h,d[h.field],h?.required, h?.parentsVals ?? [])"
+                (keyup)="errorStyle(d,h, d[h.field], h?.required, h?.parentsVals ?? [])">
+              </p-inputNumber>
+            </div>
+            <div class="multiple w-100 d-flex justify-content-center" *ngIf="h?.type==='multiple'">
+              <!-- //FIXME: OPTION VALUE -->
+              <p-multiSelect appendTo="body" [options]="h?.data ??[]" [style]="{'width':h?.minWidth ?? '100%'}"
+                [(ngModel)]="d[h.fieldname??'']" [defaultLabel]="h?.placeholder??''" (onChange)="changeData()"
+                optionLabel="{{h?.optionCode ?? 'name'}}">
+                <ng-template let-value pTemplate="item">
+                  <div class="value-item">
+                    <div>
+                      <span class="bg-info p-1 rounded-3">
+                        {{value[h?.optionCode??'']}}
+                      </span> -
+                      {{value[h?.optionLabel??'']}}
+                    </div>
+                  </div>
+                </ng-template>
+              </p-multiSelect>
+            </div>
+          </ng-template>
+          <ng-template pTemplate="output">
+            <div class="" *ngIf="h?.type==='suggest'">
+              <p-badge *ngIf="d[h?.fieldname??'']?.[h?.codigo??'']"
+                [value]="(d[h?.fieldname??'']?.[h?.codigo??''] ?? '')" severity="info" styleClass="m-0 mr-1"></p-badge>
+              {{d[h?.fieldname??'']?.[h.optLabel??''] ?? '...'}}
+            </div>
+            <div class="select w-100 d-flex" *ngIf="h?.type==='select'">
+              <div class="data" *ngIf="h?.url || h?.data">
+                <div *ngIf="!h?.Labels">
+                  {{outputSug(h?.data,d[h?.field??''], h?.optionValue ?? 'name',h?.optionLabel ?? 'name',
+                  h?.optionCode)}}
+                </div>
+                <div *ngIf="h?.Labels?.length" class="d-flex"
+                  [innerHTML]="outputSugLabs(h?.data,d[h?.field??''], h?.optionValue ?? 'name',h?.Labels??[], h?.separador)">
+                </div>
+              </div>
+            </div>
+            <div class="w-100 d-flex" *ngIf="!h?.type && !h?.estado">
+              {{d[h?.field??'']??h?.value}}
+            </div>
+            <div class="w-100 d-flex" *ngIf="h?.type==='text'">
+              <div class="w-100 d-flex" *ngIf="!h?.linkDownload">
+                {{d[h.field]}}
+              </div>
+              <div class="w-100 d-flex" *ngIf="h?.linkDownload">
+                <a target="_blank"
+                  [href]="d['rutaArchivoCompleto'] ?? (h?.linkDownload+'/'+d[h.field])">{{d[h.field]}}</a>
+              </div>
+            </div>
+            <div class="ml-1" *ngIf="h?.type==='checkbox'">
+              <p-checkbox name="pizza" value="Cheese" [(ngModel)]="d[h.field]" [disabled]="true"></p-checkbox>
+            </div>
+            <div class="w-100 d-flex" *ngIf="h?.type==='simpleSelect'">
+              {{outputSug(h?.data,d[h?.field??''], h?.optionValue ?? 'name',h?.optionLabel ?? 'name', h?.optionCode)}}
+            </div>
+            <div class="w-100 d-flex justify-content-center align-items-center" *ngIf="h?.type==='textArea'">
+              {{d[h.field]}}
+            </div>
+            <div class="w-100 d-flex" *ngIf="h?.type==='number'">
+              <div *ngIf="h?.prefix && d[h.field]">{{h?.prefix}}</div>
+              <div *ngIf="h?.minFractionDigits">
+                {{convertirDecimales(d[h.field],h?.minFractionDigits??0) }}
+              </div>
+              <div *ngIf="!h?.minFractionDigits">
+                {{d[h.field]}}
+              </div>
+            </div>
+            <div class="w-100 d-flex justify-content-center align-items-center" *ngIf="h?.type==='inputMask'">
+              {{d[h.field]}}
+            </div>
+            <div class="w-100 d-flex justify-content-center align-items-center" *ngIf="h?.type==='date'">
+              {{ d[h.field] | date: 'dd-MM-yyyy' }}
+            </div>
+
+            <div class="w-100 d-flex" *ngIf="h?.type==='button'">
+              <button type="button"
+                class="btn p-button-{{h?.btnBool?(d[h.field]===true ?h?.btnClass: h?.btnBoolClass):h?.btnClass ?? 'success'}}">
+                <i *ngIf="h?.icon" class="bx {{(h?.btnBool? (d[h.field]===true ?h?.icon: h?.btnBoolIcon): h?.icon)}}"
+                  style="font-size: 1.6rem;"></i>
+
+                <i *ngIf="!h?.icon" class="text-white">{{h?.label}}</i>
+              </button>
+            </div>
+            <div *ngIf="h.estado" class="{{h.center ? 'text-center': ''}}">
+              <p-badge *ngIf="!h?.estadoDocs"
+                value="{{d[h.field]===0||d[h.field]===false?'Inactivo':(d[h.field]===1 || d[h.field]===true?'Activo':(d[h.field]===2?'Boqueado':(d[h.field]===3?'Anulado':(''))))}}"
+                [severity]="(d[h.field]===0||d[h.field]===false? 'danger':
+                (d[h.field]===1 || d[h.field]===true?'success':(d[h.field]===2?'warning':null)))"
+                styleClass="mr-2 {{(d[h.field]===3?'bg-secondary':(''))}}"></p-badge>
+
+              <div *ngIf="h?.estadoDocs">
+                <div *ngFor="let i of h?.estadoDocs">
+                  <p-badge *ngIf="d[h.field]=== i.id" value="{{i.name}}" styleClass="mr-2 {{i.color}}">
+
+                  </p-badge>
+                </div>
+              </div>
+
+            </div>
+            <div class="w-100 d-flex" *ngIf="h?.type==='boolean'">
+              <p-badge *ngIf="d[h.field]===true" [value]="('Descalificado')"
+                [severity]="('danger')" />
+              <p-badge *ngIf="d[h.field]!==true" [value]="(h?.boolLabel?h?.boolLabel:'En Evaluación')"
+                [severity]="(h?.severity?h?.severity:'info')" />
+            </div>
+          </ng-template>
+        </p-cellEditor>
+      </td>
+      <!-- botones de mantenedor -->
+      <td class="p-1 pl-1 td-dark" *ngIf="buttonInRow">
+        <span class="sizes p-0 m-0 d-flex">
+          <div *ngIf="!isediting" class="p-0 mr-1">
+            <button *ngIf="!isediting" (click)="onRowEditInit(d)" pButton pRipple icon="pi pi-pencil m-0 p-0"
+              class="btn p-button-success  mr-1" styleClass="p-button-sm" [disabled]="locked">
+            </button>
+          </div>
+          <div *ngIf="!!isDelete" class="p-0 mr-1">
+            <button *ngIf="!isediting" (click)="onRowEditDelete(d,rowData, rowData?.index ?? 0);changeData()" pButton
+              pRipple icon="pi pi-trash m-0 p-0" class="btn  p-button-danger  mr-1" styleClass="p-button-sm"
+              [disabled]="locked">
+            </button>
+          </div>
+          <!-- cacel save -->
+          <div *ngIf="editing" class="p-0 mr-1">
+            <button pButton pRipple icon="pi pi-check" class="btn p-button-success  mr-1" (click)="onRowEditSave(d)">
+            </button>
+          </div>
+          <div *ngIf="editing" class="mr-1">
+            <button pButton pRipple icon="pi pi-times" class="btn p-button-warning  mr-1"
+              (click)="onRowEditCancel(d, d?.index);changeData()">
+            </button>
+          </div>
+        </span>
+      </td>
+    </tr>
+  </ng-template>
+</p-table>
+
+<p-confirmDialog #cd [style]="{width: 'auto'}" [baseZIndex]="10000">
+  <p-footer>
+    <button type="button" pButton class="p-button-danger" icon="pi pi-times" label="No" (click)="cd.reject()">
+    </button>
+    <button type="button" pButton class="p-button-info" icon="pi pi-check" label="Si" (click)="cd.accept()">
+    </button>
+  </p-footer>
+</p-confirmDialog>

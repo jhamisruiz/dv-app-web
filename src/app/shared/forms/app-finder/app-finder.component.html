@@ -1,0 +1,31 @@
+<div class="field d-flex flex-column" *ngIf="simple && !multiselect">
+  <label for="" class="mb-0 block text-capitalize {{labelClass}}">
+    {{label??'label text'}}
+    <i *ngIf="(initRequired || required)" class="text-danger">*</i>
+  </label>
+  <p-autoComplete appendTo="body" [(ngModel)]="descriptionValue" [suggestions]="data" (onSelect)="onSelect($event)"
+    (onFocus)="onFocus()" (onBlur)="onBlur($event)" (onClear)="onClear($event)"
+    [inputStyle]="{'width': '100%', 'min-width': '100px' }" [style]="{'width':'100%','min-width':'100%'}"
+    inputStyleClass="{{styleClass ?? class}} {{layoutMode==='dark'?'form-control':''}} {{(hasError && (currentControl?.touched || currentControl?.dirty)) || borderRequired2?'border-danger':''}}"
+    (completeMethod)="search($event)" [disabled]="locked ? locked: disabled" [required]="required"
+    [forceSelection]="true" (keydown.arrowdown)="keyArrowDown.emit()" (keydown.arrowup)="keyArrowUp.emit()"
+    (keydown.tab)="keyTab.emit()" (keydown.enter)="keyEnter.emit()" [dataKey]="optionValue"
+    [attr.optionValue]="optionValue" [field]="field" [placeholder]="placeholder ?? 'Buscar...'" [showClear]="true">
+    <ng-template let-select pTemplate="item">
+      <span style="font-size:11px; text-transform: uppercase;" class="pt-1 pb-1">
+        <p-badge *ngIf="Labels.length > 1 && select && select[Labels[0]]" [value]="select[Labels[0]]" severity="info"
+          styleClass="m-0 mr-1"></p-badge>
+        {{Labels.length===1&&select?select[Labels[0]]:''}}
+        {{Labels.length===2&&select&&select[Labels[1]]?(separador? ' '+separador+' ': ' ')+ select[Labels[1]]:''}}
+        {{Labels.length===3&&select&&select[Labels[2]]?(separador? ' '+separador+' ': ' ')+ select[Labels[2]]: ''}}
+        {{Labels.length===4&&select&&select[Labels[3]]?(separador ? ' '+separador+' ': ' ')+ select[Labels[3]]: ''}}
+      </span>
+    </ng-template>
+  </p-autoComplete>
+  <div class="w-100" style="height: 15px;">
+     <small class="text-danger fw-bold"
+      *ngIf="(hasError && (currentControl?.touched || currentControl?.dirty) ||required2)">
+      {{messageError}}
+    </small>
+  </div>
+</div>

@@ -1,0 +1,86 @@
+<app-tools (OnClickNew)="changeMode($event)" (OnClickSave)="onSubmit()" [ViewMode]="modeType"
+  (OnClickBack)="changeMode($event)">
+</app-tools>
+
+<ng-container *ngIf="isViewMode || isDeleteMode">
+  <app-table (OnEdit)="getForm($event);" (OnDelete)="delForm($event)" [path]="fullPath" [tableName]="'Personal'"
+    [headers]="headers" [btnEdit]="true" [btnDelete]="true" [refresh]="auto">
+  </app-table>
+</ng-container>
+
+<ng-container *ngIf="isCreateMode || isEditMode">
+  <div class="card-body">
+    <form [formGroup]="form">
+      <div class="row gy-4">
+        <div class="col-xxl-3 col-md-6">
+          <div>
+            <app-input inputClass="form-control" (OnKeyUp)="onInput($event)" formControlName="dni_ruc" label="DNI / RUC"
+              type="text" [formValid]="ok"></app-input>
+          </div>
+        </div>
+        <!--end col-->
+        <div class="col-xxl-3 col-md-6">
+          <div>
+            <app-input inputClass="form-control" formControlName="nombres" label="NOMBRES" type="text" [formValid]="ok">
+            </app-input>
+          </div>
+        </div>
+        <!--end col-->
+        <div class="col-xxl-3 col-md-6">
+          <div>
+            <app-input inputClass="form-control" formControlName="apellido_paterno" label="APELLIDO PARTERNO"
+              type="text" [formValid]="ok"></app-input>
+          </div>
+        </div>
+        <!--end col-->
+        <div class="col-xxl-3 col-md-6">
+          <div>
+            <app-input inputClass="form-control" formControlName="apellido_materno" label="APELLIDO MATERNO" type="text"
+              [formValid]="ok"></app-input>
+          </div>
+        </div>
+        <!--end col-->
+      </div>
+      <div class="row gy-4">
+        <div class="col-xxl-6 col-md-12">
+          <div>
+            <app-input inputClass="form-control" formControlName="nombre_completo" label="NOMBRE COMPLETO" type="text"
+              [formValid]="ok"></app-input>
+          </div>
+        </div>
+        <div class="col-xxl-3 col-md-6">
+          <div>
+            <app-select [dataSource]="dataGrupo" formControlName="idgrupo_empleado" [showClear]="true" [filter]="false"
+              optionValue="id" optionLabel="nombre" styleClass="p-0 w-100" placeholder="-Seleccionar-"
+              label="GRUPO EMPLEADO" [formValid]="ok"></app-select>
+          </div>
+        </div>
+        <div class="col-xxl-3 col-md-6">
+          <div>
+            <app-input inputClass="form-control" formControlName="telefono" label="NRO CELULAR" type="text"
+              [formValid]="ok"></app-input>
+          </div>
+        </div>
+        <div class="col-xxl-6 col-md-12">
+          <div>
+            <app-input inputClass="form-control" formControlName="direccion" label="DIRECCION" type="text"
+              [formValid]="ok"></app-input>
+          </div>
+        </div>
+        <div class="col-xxl-3 col-md-6">
+          <div>
+            <app-input inputClass="form-control" formControlName="descripcion" label="DESCRIPCION" type="text"
+              [formValid]="ok"></app-input>
+          </div>
+        </div>
+        <div class="col-xxl-3 col-md-6">
+          <div class="d-flex flex-column">
+            <label for="" class="block text-capitalize">HABILITAR</label>
+            <p-inputSwitch formControlName="es_planilla"></p-inputSwitch>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+
+</ng-container>

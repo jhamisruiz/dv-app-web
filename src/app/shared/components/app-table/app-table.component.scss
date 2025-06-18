@@ -1,0 +1,133 @@
+[data-layout-mode=dark] :host ::ng-deep .th-dark {
+  background-color: var(--vz-header-bg-dark);
+  color: var(--vz-body-color);
+}
+
+:host ::ng-deep .p-datatable .p-datatable-thead>tr>th {
+  padding: 0.6rem 0.2rem;
+}
+
+:host ::ng-deep .p-datatable .p-datatable-header {
+  border: 0 solid #dee2e6;
+  border-bottom: 1px solid #dee2e6;
+  background-color: transparent;
+}
+
+[data-layout-mode=dark] :host ::ng-deep .p-datatable-header {
+  background-color: transparent;
+  color: var(--vz-body-color);
+}
+
+:host ::ng-deep .p-table {
+  border: 2 solid #ec0000 !important;
+}
+
+[data-layout-mode=dark] :host ::ng-deep .p-datatable .p-datatable-tbody>tr {
+  background-color: var(--vz-input-bg);
+  color: var(--vz-body-color);
+}
+
+:host ::ng-deep .p-datatable .p-datatable-tbody>tr:hover {
+  background: rgb(185, 212, 247);
+  color: #000;
+}
+
+:host ::ng-deep .p-datatable .p-datatable-tbody>tr.p-highlight {
+  background: hwb(216 4% 16%) !important;
+  color: #dad9d9;
+}
+
+
+[data-layout-mode=dark] :host ::ng-deep .p-datatable .p-sortable-column .p-sortable-column-icon {
+  color: #dee2e6;
+  margin-left: 0.5rem;
+}
+
+[data-layout-mode=dark] :host ::ng-deep .p-paginator {
+  background-color: var(--vz-input-bg);
+  color: var(--vz-body-color);
+}
+
+[data-layout-mode=light] :host ::ng-deep .th-dark {
+  background-color: var(--gray-300);
+}
+
+
+:host ::ng-deep .p-badge {
+  line-height: 1.4rem !important;
+}
+
+:host ::ng-deep .p-tag {
+  display: unset;
+  padding: 0.16rem 0.3rem;
+}
+
+:host ::ng-deep .p-button-success {
+  background-color: #22C55E;
+  color: #ffffff;
+}
+
+:host ::ng-deep .p-button.p-button-icon-only {
+  width: auto;
+  padding: 0.2rem 0.8rem;
+  margin-right: 1px;
+}
+
+:host ::ng-deep .p-button-danger {
+  background-color: #EF4444;
+  color: #ffffff;
+}
+
+:host ::ng-deep .p-button-primary {
+  background-color: #3B82F6;
+  color: #ffffff;
+}
+
+:host ::ng-deep .p-button-secondary {
+  color: #ffffff;
+  background: #64748B;
+  border: 1px solid #64748B;
+}
+
+:host ::ng-deep .p-button-help {
+  color: #ffffff;
+  background: #A855F7;
+  border: 1px solid #A855F7;
+}
+
+:host ::ng-deep .p-button-warning {
+  color: #ffffff;
+  background: #F59E0B;
+  border: 1px solid #F59E0B;
+}
+
+:host ::ng-deep .p-datatable {
+  .p-datatable-header {
+    padding-top: 2px;
+    padding-bottom: 2px;
+  }
+}
+
+:host ::ng-deep .p-badge {
+
+  .darck {
+    background-color: #282e38 !important;
+    color: #ffffff !important;
+  }
+}
+
+:host ::ng-deep .p-datatable .p-datatable-tbody>tr:focus {
+  outline: none;
+  outline-offset: 0.15rem;
+}
+
+
+:host ::ng-deep .badge-info {
+  border-radius: 10px;
+  background-color: #3B82F6;
+  color: #ffffff;
+}
+
+.text-right {
+  text-align: right !important;
+}

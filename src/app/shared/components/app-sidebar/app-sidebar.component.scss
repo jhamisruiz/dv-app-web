@@ -1,0 +1,90 @@
+:host ::ng-deep.p-sidebar-right {
+  top: 0;
+  right: 0;
+  width: 29rem !important;
+  height: 100%;
+  bottom: 0 !important;
+}
+
+.bg-soft-primary {
+  background-color: var(--vz-topbar-user-bg-dark) !important;
+}
+
+:host ::ng-deep .p-sidebar .p-sidebar-header .p-sidebar-close,
+.p-sidebar .p-sidebar-header .p-sidebar-icon {
+  color: red;
+}
+
+:host ::ng-deep.p-sidebar-left.p-sidebar-sm,
+.p-sidebar-right.p-sidebar-sm {
+  width: 29rem !important;
+}
+
+@media only screen and (max-width: 520px) {
+  :host ::ng-deep.p-sidebar-top {
+    left: auto;
+    width: 100% !important;
+    height: 100%;
+    margin: 5px;
+  }
+
+  :host ::ng-deep.p-sidebar-right {
+    bottom: -1px !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: 20rem !important;
+  }
+
+  :host ::ng-deep.p-sidebar-right {
+    top: auto !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+  }
+
+  .s-title {
+    display: none;
+  }
+}
+
+.menu-dropdown.show {
+  transition: max-height 1s ease;
+}
+
+:host ::ng-deep .menu-dropdown.show {
+  transition: max-height 1s ease;
+}
+
+//
+.navbar-menu .navbar-nav .nav-link:hover .icon-dual {
+  color: var(--vz-vertical-menu-item-hover-color);
+  fill: #fff
+}
+
+.navbar-menu .navbar-nav .nav-link[data-bs-toggle=collapse]:after {
+  display: block;
+  content: "\f0142";
+  font-family: "Material Design Icons";
+  margin-left: auto;
+  -webkit-transition: -webkit-transform .2s;
+  transition: -webkit-transform .2s;
+  transition: transform .2s;
+  transition: transform .2s, -webkit-transform .2s;
+  font-size: 1.05rem;
+  position: absolute;
+  color: var(--vz-vertical-menu-title-color)
+}
+
+[data-layout=horizontal] :host ::ng-deep .navbar-menu {
+  background: var(--vz-topnav-bg);
+  border-right-color: transparent;
+  padding: 0 0.75rem;
+  box-shadow: 0 2px 4px rgba(15, 34, 58, 0.12);
+  margin-top: 45px;
+  position: fixed;
+  left: 0;
+  right: 0;
+  z-index: 99;
+  width: 100%;
+  bottom: auto;
+}

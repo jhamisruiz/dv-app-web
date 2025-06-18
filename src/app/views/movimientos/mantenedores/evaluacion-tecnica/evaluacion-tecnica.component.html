@@ -1,0 +1,637 @@
+<app-tools (OnClickNew)="changeMode($event)" [isBtnNew]="false" (OnClickSave)="btnSubmit()" [ViewMode]="modeType"
+  (OnClickBack)="changeMode($event)" [setConfirm]="sms">
+</app-tools>
+
+<ng-container *ngIf="isViewMode || isDeleteMode">
+  <app-table [currentPath]="fullPath+'?esDocumentaria=1'" (OnEdit)="getForm($event);" (OnDelete)="delForm($event)"
+    [headers]="headers" [btnDelete]="true" [btnEdit]="true" [refresh]="auto">
+  </app-table>
+</ng-container>
+
+<ng-container *ngIf="isCreateMode || isEditMode">
+  <div class="card-body">
+    <form [formGroup]="form">
+      <h3>
+        <span fw-bold text-black>EVALUACIÓN - TÉCNICA DE {{form.value.nombre}}</span>
+      </h3>
+      <div class="row mt-3" *ngIf="!proveedor">
+        <app-table-grid [dataSource]="form.value.Lista_proveedores" (OnRowSelect)="getById($event)" [caption]="false"
+          [btnDelete]="false" [btnNewRow]="false" [btnEditRow]="false" [paginator]="false"
+          [headers]="headers_evaluacion">
+        </app-table-grid>
+      </div>
+    </form>
+    <form [formGroup]="formP">
+      <div class="row" *ngIf="proveedor">
+        <div class="col-xxl-2 col-md-3 col-sm-4 pt-3">
+          <p-button label="Select. Otro Proveedor" (onClick)="resetFormulario()" [outlined]="true" severity="warning"
+            styleClass="w-100 mt-1" class="w-100 mt-1" icon="pi pi-reply"></p-button>
+        </div>
+        <div class="col-xxl-3 col-md-4 col-sm-4">
+          <div>
+            <app-select [currentPath]="'/proveedor-buscar'" formControlName="proveedor" [showClear]="false"
+              [filter]="false" optionValue="id" optionLabel="empresa_razon_social" styleClass="p-0 w-100"
+              placeholder="-Seleccionar-" label="Proveedor" [isTemplete]="true"
+              [Labels]="['empresa_ruc','empresa_razon_social']" [formValid]="ok"></app-select>
+          </div>
+        </div>
+        <div class="col-xxl-3 col-md-4 col-sm-4">
+          <div>
+            <app-select [currentPath]="'/insumos-buscar'" formControlName="insumo" [showClear]="false" [filter]="false"
+              optionValue="id" optionLabel="nombre" styleClass="p-0 w-100" placeholder="-Seleccionar-" label="Insumo"
+              [isTemplete]="true" [Labels]="['codigo','nombre']" [formValid]="ok"></app-select>
+          </div>
+        </div>
+      </div>
+      <div class="card-body" *ngIf="proveedor">
+        <div class="row mt-1">
+          <div class="col-md-12">
+            <p-stepper [(activeStep)]="activeStep" [linear]="true">
+              <p-stepperPanel header="E. DE MUESTRA C. DE CALIDAD">
+                <ng-template pTemplate="content" let-nextCallback="nextCallback" let-index="index">
+                  <div class="row">
+                    <div class="col-md-5">
+                      <p-fieldset>
+                        <div class="row" formGroupName="step_mcc_mf">
+                          <h5>
+                            <span class="fw-bold text-dark mb-2">EVALUACIÓN DE MUESTRA CERTIFICADO DE CALIDAD <i
+                                class="text-danger">*</i></span>
+                          </h5>
+                          <div class="col-sm-6">
+                            <h6>CUMPLE</h6>
+                            <button type="button" (click)="onChange('step_mcc_mf',true, 'evaluacion_mcc')"
+                              class="checkbox-box {{formP.get('step_mcc_mf')?.get('evaluacion_mcc')?.value===true? 'p-checkbox-box-highlight':''}}">
+                            </button>
+                          </div>
+                          <div class="col-sm-6">
+                            <h6>NO CUMPLE</h6>
+                            <button type="button" (click)="onChange('step_mcc_mf',false, 'evaluacion_mcc')"
+                              class="checkbox-box {{formP.get('step_mcc_mf')?.get('evaluacion_mcc')?.value===false? 'p-checkbox-box-highlight':''}}">
+                            </button>
+                          </div>
+                          <div class="col-xxl-6 col-md-6 col-sm-6">
+                            <div>
+                              <app-input-file [setDataFile]="formP.get('step_mcc_mf')?.get('pdf_mcc')?.value"
+                                [base64]="true" (NgModelResponse)="getFile($event,'step_mcc_mf','pdf_mcc');"
+                                [accept]="'.pdf'" label="Adjuntar evidencia">
+                              </app-input-file>
+                            </div>
+                          </div>
+                          <div class="col-xxl-6 col-md-6 col-sm-6 pt-4">
+                            <p-button label="Ver archivo" (onClick)="verPDF('step_mcc_mf','pdf_mcc')" styleClass="w-100"
+                              class="w-100" [outlined]="true" severity="help"></p-button>
+                          </div>
+                          <div class="col-xxl-12 col-md-12">
+                            <div>
+                              <app-input inputClass="form-control" formControlName="comentario_mcc" label="Comentario"
+                                type="textarea" [formValid]="ok"></app-input>
+                            </div>
+                          </div>
+                          <span class="fw-bold text-dark mb-2">EVALUACIÓN DE MUESTRA FISICA <i
+                              class="text-danger">*</i></span>
+                          <div class="col-sm-6">
+                            <h6>CUMPLE</h6>
+                            <button type="button" (click)="onChange('step_mcc_mf',true, 'evaluacion_mf')"
+                              class="checkbox-box {{formP.get('step_mcc_mf')?.get('evaluacion_mf')?.value===true? 'p-checkbox-box-highlight':''}}">
+                            </button>
+                          </div>
+                          <div class="col-sm-6">
+                            <h6>NO CUMPLE</h6>
+
+                            <button type="button" (click)="onChange('step_mcc_mf',false, 'evaluacion_mf')"
+                              class="checkbox-box {{formP.get('step_mcc_mf')?.get('evaluacion_mf')?.value===false? 'p-checkbox-box-highlight':''}}">
+                            </button>
+                          </div>
+                          <div class="col-xxl-6 col-md-6 col-sm-6">
+                            <div>
+                              <app-input-file [setDataFile]="formP.get('step_mcc_mf')?.get('pdf_mf')?.value"
+                                [base64]="true" (NgModelResponse)="getFile($event,'step_mcc_mf','pdf_mf');"
+                                [accept]="'.pdf'" label="Adjuntar evidencia">
+                              </app-input-file>
+                            </div>
+                          </div>
+                          <div class="col-xxl-6 col-md-6 col-sm-6 pt-4">
+                            <p-button label="Ver archivo" (onClick)="verPDF('step_mcc_mf','pdf_mf')" styleClass="w-100"
+                              class="w-100" [outlined]="true" severity="help"></p-button>
+                          </div>
+                          <div class="col-xxl-12 col-md-12">
+                            <div>
+                              <app-input inputClass="form-control" formControlName="comentario_mf" label="Comentario"
+                                type="textarea" [formValid]="ok"></app-input>
+                            </div>
+                          </div>
+                        </div>
+                      </p-fieldset>
+                      <div class="w-100 d-flex pt-4 justify-content-end">
+                        <p-button label="Next" icon="pi pi-arrow-right" iconPos="right"
+                          (onClick)="nextEvalMuestraCertCalidad(nextCallback)" />
+                      </div>
+                    </div>
+                    <div class="col-md-7">
+                      <div class="office-viewer" *ngIf="pdf_view&&pdfUrl&&activeStep===0">
+                        <iframe title="pdf1" class="doc" width="100%" height="100%" [src]="pdfUrl"></iframe>
+                      </div>
+                    </div>
+                  </div>
+                </ng-template>
+              </p-stepperPanel>
+              <p-stepperPanel header="PLAZO DE ENTREGA">
+                <ng-template pTemplate="content" let-prevCallback="prevCallback" let-nextCallback="nextCallback"
+                  let-index="index">
+                  <div class="row">
+                    <div class="col-md-5">
+                      <p-tabView (onChange)="onChangePlazoEntrega($event)" [(activeIndex)]="activeInsumoIndex">
+                        <p-tabPanel header="INSUMO PRINCIPAL">
+                          <div class="row" formGroupName="step_plazos_entrega">
+                            <div class="col-lg-4 d-flex align-items-center mb-2">
+                              <p-checkbox id="option1" formControlName="evaluacion_pe30"
+                                (onChange)="onChangePe($event, 'evaluacion_pe30')" [binary]="true"
+                                inputId="binary"></p-checkbox>
+                              <label for="option1" class="mx-2 m-0 p-0">{{'14 '||'30 '}}DÍAS</label>
+                            </div>
+                            <div class="col-lg-4 d-flex align-items-center mb-2">
+                              <p-checkbox id="option2" formControlName="evaluacion_pe45"
+                                (onChange)="onChangePe($event, 'evaluacion_pe45')" [binary]="true"
+                                inputId="binary"></p-checkbox>
+                              <label for="option2" class="mx-2 m-0 p-0">{{ '21'||'45' }} DÍAS</label>
+                            </div>
+                            <div class="col-lg-4 d-flex align-items-center mb-2">
+                              <p-checkbox id="option3" formControlName="evaluacion_pe60"
+                                (onChange)="onChangePe($event, 'evaluacion_pe60')" [binary]="true"
+                                inputId="binary"></p-checkbox>
+                              <label for="option3" class="mx-2 m-0 p-0">{{ '30'||'60' }} DÍAS</label>
+                            </div>
+                            <div class="col-lg-4 d-flex align-items-center mb-2">
+                              <p-checkbox id="option4" formControlName="evaluacion_pe75"
+                                (onChange)="onChangePe($event, 'evaluacion_pe75')" [binary]="true"
+                                inputId="binary"></p-checkbox>
+                              <label for="option4" class="mx-2 m-0 p-0">{{ '50'||'60' }} DÍAS</label>
+                            </div>
+                            <div class="col-lg-4 d-flex align-items-center mb-2">
+                              <p-checkbox id="option5" formControlName="evaluacion_pe90"
+                                (onChange)="onChangePe($event, 'evaluacion_pe90')" [binary]="true"
+                                inputId="binary"></p-checkbox>
+                              <label for="option5" class="mx-2 m-0 p-0">{{ '70'||'90' }} DÍAS</label>
+                            </div>
+                            <div class="col-lg-4 d-flex align-items-center mb-2">
+                              <p-checkbox id="option6" formControlName="evaluacion_pemas90"
+                                (onChange)="onChangePe($event, 'evaluacion_pemas90')" [binary]="true"
+                                inputId="binary"></p-checkbox>
+                              <label for="option6" class="mx-2 m-0 p-0">MAS DE {{ '70'||'90' }} DÍAS</label>
+                            </div>
+                            <div class="col-md-12 col-lg-12">
+                              <div class="col-md-12 col-lg-12">
+                                <span class="text-black">ADJUNTAR EVIDENCIA</span>
+                              </div>
+                              <div class="col-md-12 col-lg-12 d-lg-flex d-sm-block">
+                                <div class="col-md-6 col-lg-6 p-2">
+                                  <app-input-file [setDataFile]="formP.get('step_plazos_entrega')?.get('pdf_pe')?.value"
+                                    [base64]="true" (NgModelResponse)="getFile($event,'step_plazos_entrega','pdf_pe');"
+                                    [accept]="'.pdf'" label="false">
+                                  </app-input-file>
+                                </div>
+                                <div class="col-md-6 col-lg-6 p-2">
+                                  <p-button label="Ver archivo" (onClick)="verPDF('step_plazos_entrega','pdf_pe')"
+                                    styleClass="w-100" class="w-100" [outlined]="true" severity="help"></p-button>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="col-xxl-12 col-md-12 mt-2 mb-2">
+                              <div>
+                                <app-input inputClass="form-control" labelClass="text-black mb-2"
+                                  formControlName="comentario_pe" label="Comentario" type="textarea"
+                                  [formValid]="ok"></app-input>
+                              </div>
+                            </div>
+                          </div>
+                        </p-tabPanel>
+                        <p-tabPanel header="INSUMO SECUNDARIO">
+                          <div class="row" formGroupName="step_plazo_entrega_secundario">
+                            <div class="col-lg-4 d-flex align-items-center mb-2">
+                              <p-radioButton inputId="evaluacion_pe_sec_20" formControlName="selected_plazo_entrega_sec"
+                                value="evaluacion_pe_sec_20"
+                                (onClick)="onClickEvalSec($event, 'step_plazo_entrega_secundario', 'step_plazos_entrega')" />
+                              <label class="mx-2 m-0 p-0" for="evaluacion_pe_sec_20">
+                                Hasta {{'14'||'20'}} días
+                              </label>
+                            </div>
+                            <div class="col-lg-4 d-flex align-items-center mb-2">
+                              <p-radioButton inputId="evaluacion_pe_sec_30" formControlName="selected_plazo_entrega_sec"
+                                value="evaluacion_pe_sec_30"
+                                (onClick)="onClickEvalSec($event, 'step_plazo_entrega_secundario', 'step_plazos_entrega')" />
+                              <label class="mx-2 m-0 p-0" for="evaluacion_pe_sec_30">
+                                Hasta {{'21'||'30'}} días
+                              </label>
+                            </div>
+                            <div class="col-lg-4 d-flex align-items-center mb-2">
+                              <p-radioButton inputId="evaluacion_pe_sec_40" formControlName="selected_plazo_entrega_sec"
+                                value="evaluacion_pe_sec_40"
+                                (onClick)="onClickEvalSec($event, 'step_plazo_entrega_secundario', 'step_plazos_entrega')" />
+                              <label class="mx-2 m-0 p-0" for="evaluacion_pe_sec_40">
+                                Hasta {{'30'||'40'}} días
+                              </label>
+                            </div>
+                            <div class="col-lg-4 d-flex align-items-center mb-2">
+                              <p-radioButton inputId="evaluacion_pe_sec_50" formControlName="selected_plazo_entrega_sec"
+                                value="evaluacion_pe_sec_50"
+                                (onClick)="onClickEvalSec($event, 'step_plazo_entrega_secundario', 'step_plazos_entrega')" />
+                              <label class="mx-2 m-0 p-0" for="evaluacion_pe_sec_50">
+                                Hasta {{'50'||'50'}} días
+                              </label>
+                            </div>
+                            <div class="col-lg-4 d-flex align-items-center mb-2">
+                              <p-radioButton inputId="evaluacion_pe_sec_60" formControlName="selected_plazo_entrega_sec"
+                                value="evaluacion_pe_sec_60"
+                                (onClick)="onClickEvalSec($event, 'step_plazo_entrega_secundario', 'step_plazos_entrega')" />
+                              <label class="mx-2 m-0 p-0" for="evaluacion_pe_sec_60">
+                                Hasta {{'70'||'60'}} días
+                              </label>
+                            </div>
+                            <div class="col-lg-4 d-flex align-items-center mb-2">
+                              <p-radioButton inputId="evaluacion_pe_sec_mas60"
+                                formControlName="selected_plazo_entrega_sec" value="evaluacion_pe_sec_mas60"
+                                (onClick)="onClickEvalSec($event, 'step_plazo_entrega_secundario', 'step_plazos_entrega')" />
+                              <label class="mx-2 m-0 p-0" for="evaluacion_pe_sec_mas60">
+                                Más de {{'70'||'60'}} días
+                              </label>
+                            </div>
+                            <div class="col-md-12 col-lg-12">
+                              <div class="col-md-12 col-lg-12">
+                                <span class="text-black">ADJUNTAR EVIDENCIA</span>
+                              </div>
+                              <div class="col-md-12 col-lg-12 d-lg-flex d-sm-block">
+                                <div class="col-md-6 col-lg-6 p-2">
+                                  <app-input-file
+                                    [setDataFile]="formP.get('step_plazo_entrega_secundario')?.get('pdf_sec_pe')?.value"
+                                    [base64]="true"
+                                    (NgModelResponse)="getFile($event,'step_plazo_entrega_secundario','pdf_sec_pe');"
+                                    [accept]="'.pdf'" label="false">
+                                  </app-input-file>
+                                </div>
+                                <div class="col-md-6 col-lg-6 p-2">
+                                  <p-button label="Ver archivo"
+                                    (onClick)="verPDF('step_plazo_entrega_secundario','pdf_sec_pe')" styleClass="w-100"
+                                    class="w-100" [outlined]="true" severity="help"></p-button>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="col-xxl-12 col-md-12 mt-2 mb-2">
+                              <div>
+                                <app-input inputClass="form-control" labelClass="text-black mb-2"
+                                  formControlName="comentario_sec_pe" label="Comentario" type="textarea"
+                                  [formValid]="ok"></app-input>
+                              </div>
+                            </div>
+                          </div>
+                        </p-tabPanel>
+                      </p-tabView>
+                      <div class="w-100 d-flex pt-4 justify-content-between">
+                        <p-button label="Back" icon="pi pi-arrow-left"
+                          (onClick)="prevCallback.emit();clearVAlidators('step_plazos_entrega');pdf_view=false;" />
+                        <p-button label="Next" icon="pi pi-arrow-right" iconPos="right"
+                          (onClick)="nextInsumos(nextCallback);pdf_view=false;" />
+                      </div>
+                    </div>
+                    <div class="col-md-7">
+                      <div class="office-viewer" *ngIf="pdf_view&&pdfUrl&&activeStep===1">
+                        <iframe title="pdf2" class="doc" width="100%" height="100%" [src]="pdfUrl"></iframe>
+                      </div>
+                    </div>
+                  </div>
+                </ng-template>
+              </p-stepperPanel>
+              <p-stepperPanel header="STOCK / CAPACIDAD">
+                <ng-template pTemplate="content" let-prevCallback="prevCallback" let-nextCallback="nextCallback"
+                  let-index="index">
+                  <div class="row">
+                    <div class="col-lg-5">
+                      <p-tabView [(activeIndex)]="activeFabricanteConsumidorIndex"
+                        (onChange)="onChangeTabStock($event)">
+                        <p-tabPanel header="FABRICANTE">
+                          <div class="row" formGroupName="step_fabricante">
+                            <div class="col-12 mb-2">
+                              <span class="fw-bold text-dark mb-2">STOCK DE MATERIA PRIMA <i
+                                  class="text-danger">*</i></span>
+                            </div>
+                            <div class="col-sm-4">
+                              <h6>100%</h6>
+                              <button type="button" (click)="onChangeSMP(true, 'evaluacion_smp_100')"
+                                class="checkbox-box {{formP.get('step_fabricante')?.get('evaluacion_smp_100')?.value===true? 'p-checkbox-box-highlight':''}}">
+                              </button>
+                            </div>
+                            <div class="col-sm-4">
+                              <h6>{{ '75%-100%'||'50%' }}</h6>
+                              <button type="button" (click)="onChangeSMP(true, 'evaluacion_smp_50_100')"
+                                class="checkbox-box {{formP.get('step_fabricante')?.get('evaluacion_smp_50_100')?.value===true? 'p-checkbox-box-highlight':''}}">
+                              </button>
+                            </div>
+                            <div class="col-sm-4">
+                              <h6>{{ '50% - 75%'||'15% - 50%' }}</h6>
+                              <button type="button" (click)="onChangeSMP(true, 'evaluacion_smp_15_50')"
+                                class="checkbox-box {{formP.get('step_fabricante')?.get('evaluacion_smp_15_50')?.value===true? 'p-checkbox-box-highlight':''}}">
+                              </button>
+                            </div>
+                            <div class="col-sm-4">
+                              <h6>{{ '50% - 0%'||'0' }}</h6>
+                              <button type="button" (click)="onChangeSMP(true, 'evaluacion_smp_50_0')"
+                                class="checkbox-box {{formP.get('step_fabricante')?.get('evaluacion_smp_50_0')?.value===true? 'p-checkbox-box-highlight':''}}">
+                              </button>
+                            </div>
+                            <div class="col-xxl-6 col-md-6 col-sm-6">
+                              <div>
+                                <app-input-file [setDataFile]="formP.get('step_fabricante')?.get('pdf_smp')?.value"
+                                  [base64]="true" (NgModelResponse)="getFile($event,'step_fabricante','pdf_smp');"
+                                  [accept]="'.pdf'" label="Adjuntar evidencia">
+                                </app-input-file>
+                              </div>
+                            </div>
+                            <div class="col-xxl-6 col-md-6 col-sm-6 pt-4">
+                              <p-button label="Ver archivo" (onClick)="verPDF('step_fabricante','pdf_smp')"
+                                styleClass="w-100" class="w-100" [outlined]="true" severity="help"></p-button>
+                            </div>
+                            <div class="col-xxl-12 col-md-12">
+                              <div>
+                                <app-input inputClass="form-control" formControlName="comentario_smp" label="Comentario"
+                                  type="textarea" [formValid]="ok"></app-input>
+                              </div>
+                            </div>
+                            <div class="col-12 mb-2">
+                              <span class="fw-bold text-dark mb-2">CAPACIDAD DE MAQUINARIA <i
+                                  class="text-danger">*</i></span>
+                            </div>
+                            <div class="col-sm-12">
+                              <h6>El proveedor cuenta con pisos, techos y paredes apropiadas para la conservación de los insumos.</h6>
+                              <p-inputSwitch formControlName="evaluacion_cm" />
+                            </div>
+                            <div class="col-sm-12">
+                              <h6>El proveedor cuenta con el espacio señalizado, limpio y ordenado para almacenar los insumos.</h6>
+                              <p-inputSwitch formControlName="evaluacion_cm1" />
+                            </div>
+                            <div class="col-sm-12">
+                              <h6>El proveedor ofrece la distribución de los insumos para abastecer a las MYPE</h6>
+                              <p-inputSwitch formControlName="evaluacion_cm2" />
+                            </div>
+                            <!-- <div class="col-sm-6">
+                              <h6>CUMPLE</h6>
+                              <button type="button" (click)="onChange('step_fabricante',true, 'evaluacion_cm')"
+                                class="checkbox-box {{formP.get('step_fabricante')?.get('evaluacion_cm')?.value===true? 'p-checkbox-box-highlight':''}}">
+                              </button>
+                            </div>
+                            <div class="col-sm-6">
+                              <h6>NO CUMPLE</h6>
+                              <button type="button" (click)="onChange('step_fabricante',false, 'evaluacion_cm')"
+                                class="checkbox-box {{formP.get('step_fabricante')?.get('evaluacion_cm')?.value===false? 'p-checkbox-box-highlight':''}}">
+                              </button>
+                            </div> -->
+                            <div class="col-xxl-6 col-md-6 col-sm-6">
+                              <div>
+                                <app-input-file [setDataFile]="formP.get('step_fabricante')?.get('pdf_cm')?.value"
+                                  [base64]="true" (NgModelResponse)="getFile($event,'step_fabricante','pdf_cm');"
+                                  [accept]="'.pdf'" label="Adjuntar evidencia">
+                                </app-input-file>
+                              </div>
+                            </div>
+                            <div class="col-xxl-6 col-md-6 col-sm-6 pt-4">
+                              <p-button label="Ver archivo" (onClick)="verPDF('step_fabricante','pdf_cm')"
+                                styleClass="w-100" class="w-100" [outlined]="true" severity="help"></p-button>
+                            </div>
+                            <div class="col-xxl-12 col-md-12">
+                              <div>
+                                <app-input inputClass="form-control" formControlName="comentario_cm" label="Comentario"
+                                  type="textarea" [formValid]="ok"></app-input>
+                              </div>
+                            </div>
+                          </div>
+                        </p-tabPanel>
+                        <p-tabPanel header="DISTRIBUIDOR">
+                          <div class="row" formGroupName="step_distribuidor">
+                            <div class="col-12 mb-2">
+                              <span class="fw-bold text-dark mb-2">STOCK DE INSUMO OFERTADO <i
+                                  class="text-danger">*</i></span>
+                            </div>
+                            <div class="col-sm-4">
+                              <h6>100%</h6>
+                              <button type="button" (click)="onChangeSIO(true, 'evaluacion_sio_100')"
+                                class="checkbox-box {{formP.get('step_distribuidor')?.get('evaluacion_sio_100')?.value===true? 'p-checkbox-box-highlight':''}}">
+                              </button>
+                            </div>
+                            <div class="col-sm-4">
+                              <h6>{{ '75%-100%'||'50%' }} - 100%</h6>
+                              <button type="button" (click)="onChangeSIO(true, 'evaluacion_sio_50_100')"
+                                class="checkbox-box {{formP.get('step_distribuidor')?.get('evaluacion_sio_50_100')?.value===true? 'p-checkbox-box-highlight':''}}">
+                              </button>
+                            </div>
+                            <div class="col-sm-4">
+                              <h6>{{ '50% - 75%'||'15% - 50%' }}</h6>
+                              <button type="button" (click)="onChangeSIO(true, 'evaluacion_sio_15_50')"
+                                class="checkbox-box {{formP.get('step_distribuidor')?.get('evaluacion_sio_15_50')?.value===true? 'p-checkbox-box-highlight':''}}">
+                              </button>
+                            </div>
+                            <div class="col-sm-4">
+                              <h6>{{ ('50% - 0%'||'0') }}</h6>
+                              <button type="button" (click)="onChangeSIO(true, 'evaluacion_sio_50_0')"
+                                class="checkbox-box {{formP.get('step_distribuidor')?.get('evaluacion_sio_50_0')?.value===true? 'p-checkbox-box-highlight':''}}">
+                              </button>
+                            </div>
+                            <div class="col-xxl-6 col-md-6 col-sm-6">
+                              <div>
+                                <app-input-file [setDataFile]="formP.get('step_distribuidor')?.get('pdf_sio')?.value"
+                                  [base64]="true" (NgModelResponse)="getFile($event,'step_distribuidor','pdf_sio');"
+                                  [accept]="'.pdf'" label="Adjuntar evidencia">
+                                </app-input-file>
+                              </div>
+                            </div>
+                            <div class="col-xxl-6 col-md-6 col-sm-6 pt-4">
+                              <p-button label="Ver archivo" (onClick)="verPDF('step_distribuidor','pdf_sio')"
+                                styleClass="w-100" class="w-100" [outlined]="true" severity="help"></p-button>
+                            </div>
+                            <div class="col-xxl-12 col-md-12">
+                              <div>
+                                <app-input inputClass="form-control" formControlName="comentario_sio" label="Comentario"
+                                  type="textarea" [formValid]="ok"></app-input>
+                              </div>
+                            </div>
+                            <div class="col-12 mb-2">
+                              <span class="fw-bold text-dark mb-2">CAPACIDAD DE ATENCIÓN <i
+                                  class="text-danger">*</i></span>
+                            </div>
+                            <div class="col-sm-12">
+                              <h6>El proveedor cuenta con pisos, techos y paredes apropiadas para la conservación de los insumos.</h6>
+                              <p-inputSwitch formControlName="evaluacion_ca" />
+                            </div>
+                            <div class="col-sm-12">
+                              <h6>El proveedor cuenta con el espacio señalizado, limpio y ordenado para almacenar los insumos.</h6>
+                              <p-inputSwitch formControlName="evaluacion_ca1" />
+                            </div>
+                            <div class="col-sm-12">
+                              <h6>El proveedor ofrece la distribución de los insumos para abastecer a las MYPE</h6>
+                              <p-inputSwitch formControlName="evaluacion_ca2" />
+                            </div>
+                            <!-- <div class="col-sm-6">
+                              <h6>CUMPLE</h6>
+                              <button type="button" (click)="onChange('step_distribuidor',true, 'evaluacion_ca')"
+                                class="checkbox-box {{formP.get('step_distribuidor')?.get('evaluacion_ca')?.value===true? 'p-checkbox-box-highlight':''}}">
+                              </button>
+                            </div>
+                            <div class="col-sm-6">
+                              <h6>NO CUMPLE</h6>
+
+                              <button type="button" (click)="onChange('step_distribuidor',false, 'evaluacion_ca')"
+                                class="checkbox-box {{formP.get('step_distribuidor')?.get('evaluacion_ca')?.value===false? 'p-checkbox-box-highlight':''}}">
+                              </button>
+                            </div> -->
+                            <div class="col-xxl-6 col-md-6 col-sm-6">
+                              <div>
+                                <app-input-file [setDataFile]="formP.get('step_distribuidor')?.get('pdf_ca')?.value"
+                                  [base64]="true" (NgModelResponse)="getFile($event,'step_distribuidor','pdf_ca');"
+                                  [accept]="'.pdf'" label="Adjuntar evidencia">
+                                </app-input-file>
+                              </div>
+                            </div>
+                            <div class="col-xxl-6 col-md-6 col-sm-6 pt-4">
+                              <p-button label="Ver archivo" (onClick)="verPDF('step_distribuidor','pdf_ca')"
+                                styleClass="w-100" class="w-100" [outlined]="true" severity="help"></p-button>
+                            </div>
+                            <div class="col-xxl-12 col-md-12">
+                              <div>
+                                <app-input inputClass="form-control" formControlName="comentario_ca" label="Comentario"
+                                  type="textarea" [formValid]="ok"></app-input>
+                              </div>
+                            </div>
+                          </div>
+                        </p-tabPanel>
+                        <div class="w-100 d-flex pt-4 justify-content-between">
+                          <p-button label="Back" icon="pi pi-arrow-left"
+                            (onClick)="prevCallback.emit();pdf_view=false;" />
+                          <p-button label="Next" icon="pi pi-arrow-right" iconPos="right"
+                            (onClick)="nextStepFD(nextCallback);validate('step_eis_po');pdf_view=false;" />
+                        </div>
+                      </p-tabView>
+                    </div>
+                    <div class="col-md-7">
+                      <div class="office-viewer" *ngIf="pdf_view&&pdfUrl&&activeStep===2">
+                        <iframe title="pdf2" class="doc" width="100%" height="100%" [src]="pdfUrl"></iframe>
+                      </div>
+                    </div>
+                  </div>
+                </ng-template>
+              </p-stepperPanel>
+              <p-stepperPanel header="EXPERIENCIA IGUAL O SIMILAR">
+                <ng-template pTemplate="content" let-prevCallback="prevCallback" let-index="index">
+                  <div class="row">
+                    <div class="col-lg-5">
+                      <p-fieldset>
+                        <div class="row" formGroupName="step_eis_po">
+                          <div class="col-12 mb-2">
+                            <span class="fw-bold text-dark mb-2">EXPERIENCIA IGUAL O SIMILAR <i
+                                class="text-danger">*</i></span>
+                          </div>
+                          <div class="col-sm-12">
+                            <h6>El proveedor muestra montos de ventas iguales o mayores al monto base requerido en el periodo establecido</h6>
+                            <button type="button" (click)="onChange('step_eis_po',true, 'evaluacion_eis')"
+                              class="checkbox-box {{formP.get('step_eis_po')?.get('evaluacion_eis')?.value===true? 'p-checkbox-box-highlight':''}}">
+                            </button>
+                          </div>
+                          <div class="col-sm-12">
+                            <h6>El proveedor muestra montos de ventas hasta en un 10% menos del monto base requerido en el periodo establecido (07 puntos)</h6>
+                            <button type="button" (click)="onChange('step_eis_po',true, 'evaluacion_eis7')"
+                              class="checkbox-box {{formP.get('step_eis_po')?.get('evaluacion_eis7')?.value===true? 'p-checkbox-box-highlight':''}}">
+                            </button>
+                          </div>
+                          <div class="col-sm-12">
+                            <h6>El proveedor muestra montos de ventas entre el 80% y 90% del monto base requerido en el periodo establecido</h6>
+                            <button type="button" (click)="onChange('step_eis_po',true, 'evaluacion_eis5')"
+                              class="checkbox-box {{formP.get('step_eis_po')?.get('evaluacion_eis5')?.value===true? 'p-checkbox-box-highlight':''}}">
+                            </button>
+                          </div>
+                          <!-- <div class="col-sm-6">
+                            <h6>IGUAL</h6>
+                            <button type="button" (click)="onChange('step_eis_po',true, 'evaluacion_eis')"
+                              class="checkbox-box {{formP.get('step_eis_po')?.get('evaluacion_eis')?.value===true? 'p-checkbox-box-highlight':''}}">
+                            </button>
+                          </div>
+                          <div class="col-sm-6">
+                            <h6>SIMILAR</h6>
+
+                            <button type="button" (click)="onChange('step_eis_po',false, 'evaluacion_eis')"
+                              class="checkbox-box {{formP.get('step_eis_po')?.get('evaluacion_eis')?.value===false? 'p-checkbox-box-highlight':''}}">
+                            </button>
+                          </div> -->
+                          <div class="col-xxl-6 col-md-6 col-sm-6">
+                            <div>
+                              <app-input-file [setDataFile]="formP.get('step_eis_po')?.get('pdf_eis')?.value"
+                                [base64]="true" (NgModelResponse)="getFile($event,'step_eis_po','pdf_eis');"
+                                [accept]="'.pdf'" label="Adjuntar evidencia">
+                              </app-input-file>
+                            </div>
+                          </div>
+                          <div class="col-xxl-6 col-md-6 col-sm-6 pt-4">
+                            <p-button label="Ver archivo" (onClick)="verPDF('step_eis_po','pdf_eis')" styleClass="w-100"
+                              class="w-100" [outlined]="true" severity="help"></p-button>
+                          </div>
+                          <div class="col-xxl-12 col-md-12">
+                            <div>
+                              <app-input inputClass="form-control" formControlName="comentario_eis" label="Comentario"
+                                type="textarea" [formValid]="ok"></app-input>
+                            </div>
+                          </div>
+                          <div class="row">
+                            <div class="col-12 mb-2">
+                              <span class="fw-bold text-dark mb-2">PRECIO OFERTADO <i class="text-danger">*</i></span>
+                            </div>
+                            <div class="col-xxl-4 col-md-6 mt-2">
+                              <app-input inputClass="form-control" formControlName="evaluacion_po"
+                                [minFractionDigits]="2" label="false" type="number" [formValid]="ok"></app-input>
+                            </div>
+                          </div>
+                          <div class="row">
+                            <div class="col-xxl-8 col-md-6 mt-2">
+                              <app-select [dataSource]="moneda" formControlName="evaluacion_po_moneda" [showClear]="true" [filter]="false"
+                                optionValue="codigo" optionLabel="nombre" styleClass="p-0 w-100" placeholder="-Seleccionar-"
+                                label="SELECCIONAR MONEDA" [isTemplete]="true" [Labels]="['codigo','nombre']" [formValid]="ok"></app-select>
+                            </div>
+                          </div>
+                          <div class="col-xxl-6 col-md-6 col-sm-66">
+                            <div>
+                              <app-input-file [setDataFile]="formP.get('step_eis_po')?.get('pdf_po')?.value"
+                                [base64]="true" (NgModelResponse)="getFile($event,'step_eis_po','pdf_po');"
+                                [accept]="'.pdf'" label="Adjuntar evidencia">
+                              </app-input-file>
+                            </div>
+                          </div>
+                          <div class="col-xxl-6 col-md-6 col-sm-6 pt-4">
+                            <p-button label="Ver archivo" (onClick)="verPDF('step_eis_po','pdf_po')" styleClass="w-100"
+                              class="w-100" [outlined]="true" severity="help"></p-button>
+                          </div>
+                          <div class="col-xxl-12 col-md-12">
+                            <div>
+                              <app-input inputClass="form-control" formControlName="comentario_po" label="Comentario"
+                                type="textarea" [formValid]="ok"></app-input>
+                            </div>
+                          </div>
+                        </div>
+                      </p-fieldset>
+                      <div class="w-100 d-flex pt-4 justify-content-start">
+                        <p-button label="Back" icon="pi pi-arrow-left"
+                          (onClick)="prevCallback.emit();clearVAlidators('step_eis_po');pdf_view=false;" />
+                      </div>
+                    </div>
+                    <div class="col-md-7">
+                      <div class="office-viewer" *ngIf="pdf_view&&pdfUrl&&activeStep===3">
+                        <iframe title="pdf3" class="doc" width="100%" height="100%" [src]="pdfUrl"></iframe>
+                      </div>
+                    </div>
+                  </div>
+                </ng-template>
+              </p-stepperPanel>
+            </p-stepper>
+          </div>
+        </div>
+      </div>
+    </form>
+    <div class="progress-spinner" *ngIf="isLoading">
+      <p-progressSpinner></p-progressSpinner>
+    </div>
+  </div>
+
+</ng-container>

@@ -1,0 +1,68 @@
+<div class="row gy-4">
+  <div class="col-xxl-3 col-md-6">
+    <div class="form-group">
+      <span class="mb-0 pb-0">DEPARTAMENTO <i class="text-danger">*</i> </span>
+      <div class="cal-icon">
+        <p-dropdown appendTo="body" (onChange)="getDepartamentoToProvincia();resetUbigeo()" (onClear)="resetUbigeo()"
+          [options]="departamentos" styleClass="p-0 w-100 {{layoutMode==='dark'?'form-control':''}}"
+          [style]="{'width':'100%','min-width':'100%'}" [(ngModel)]="departamento" optionLabel="Departamento"
+          [filter]="true" filterBy="Departamento" [showClear]="true" placeholder="Select Departamento">
+          <ng-template pTemplate="selectedItem">
+            <div class="depa-item depa-item-value" *ngIf="departamento">
+              <div>{{departamento?.Departamento}}</div>
+            </div>
+          </ng-template>
+          <ng-template let-depa pTemplate="item">
+            <div class="depa-item">
+              <div>{{depa?.Departamento}}</div>
+            </div>
+          </ng-template>
+        </p-dropdown>
+      </div>
+    </div>
+  </div>
+  <div class="col-xxl-3 col-md-6">
+    <div class="form-group">
+      <span class="mb-0 pb-0">PROVINCIA <i class="text-danger">*</i> </span>
+      <div class="cal-icon">
+        <p-dropdown appendTo="body" (onChange)="getProvinciaToDistrito();resetUbigeo()" (onClear)="resetUbigeo()"
+          [options]="provincias" styleClass="p-0 w-100 {{layoutMode==='dark'?'form-control':''}}"
+          [style]="{'width':'100%','min-width':'100%'}" [(ngModel)]="provincia" optionLabel="Provincia" [filter]="true"
+          filterBy="Provincia" [showClear]="true" placeholder="Select a Provincia">
+          <ng-template pTemplate="selectedItem">
+            <div class="prov-item prov-item-value" *ngIf="provincia">
+              <div>{{provincia?.Provincia}}</div>
+            </div>
+          </ng-template>
+          <ng-template let-prov pTemplate="item">
+            <div class="prov-item">
+              <div>{{prov?.Provincia}}</div>
+            </div>
+          </ng-template>
+        </p-dropdown>
+      </div>
+    </div>
+  </div>
+  <div class="col-xxl-3 col-md-6">
+    <div class="form-group">
+      <span class="mb-0 pb-0">DISTRITO <i class="text-danger">*</i> </span>
+      <div class="cal-icon">
+        <p-dropdown appendTo="body" (onChange)="getUbigeo()" (onClear)="resetUbigeo()" [options]="distritos"
+          styleClass="p-0 w-100 {{layoutMode==='dark'?'form-control':''}}" [style]="{'width':'100%','min-width':'100%'}"
+          [(ngModel)]="distrito" optionLabel="Distrito" [filter]="true" filterBy="Distrito" [showClear]="true"
+          placeholder="Select a Distrito">
+          <ng-template pTemplate="selectedItem">
+            <div class="distr-item distr-item-value" *ngIf="distrito?.Distrito">
+              <div>{{distrito?.Distrito}}</div>
+            </div>
+          </ng-template>
+          <ng-template let-distr pTemplate="item">
+            <div class="distr-item">
+              <div>{{distr?.Distrito}}</div>
+            </div>
+          </ng-template>
+        </p-dropdown>
+      </div>
+    </div>
+  </div>
+</div>

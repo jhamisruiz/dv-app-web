@@ -1,0 +1,66 @@
+<header id="page-topbar">
+  <div class="layout-width">
+    <div class="navbar-header">
+      <div class="d-flex">
+        <!-- LOGO -->
+        <div class="navbar-brand-box horizontal-logo">
+          <a href="/" class="logo logo-dark">
+            <span class="logo-sm">
+              <img [src]="logo" alt="" height="22">
+            </span>
+            <span class="logo-lg">
+              <img [src]="logo" alt="" height="17">
+            </span>
+          </a>
+
+          <a href="/" class="logo logo-light">
+            <span class="logo-lg">
+              <img [src]="logo" alt="" height="38">
+            </span>
+          </a>
+        </div>
+        <button type="button" (click)="addOrRemoveBodyClass();(open=open?false:true)"
+          class="btn btn-sm px-3 fs-16 header-item vertical-menu-btn topnav-hamburger" id="topnav-hamburger-icon">
+          <span class="hamburger-icon {{open?'':'open'}}">
+            <span></span>
+            <span></span>
+            <span></span>
+          </span>
+        </button>
+      </div>
+      <div class="d-flex align-items-center">
+        <div class="ms-1 header-item d-none d-sm-flex">
+          <button type="button" (click)="changeMode()"
+            class="btn btn-icon btn-topbar btn-ghost-secondary rounded-circle">
+            <i class="bx {{layoutMode==='dark'? 'bx-sun': 'bx-moon'}} fs-22"></i>
+          </button>
+        </div>
+        <div class="dropdown ms-sm-3 header-item topbar-user">
+          <button type="button" class="btn" id="page-header-user-dropdown" data-bs-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">
+            <span class="d-flex align-items-center">
+              <img class="rounded-circle header-profile-user" src="assets/images/users/user-dummy-img.jpg"
+                alt="Header Avatar">
+              <span class="text-start ms-xl-1">
+                <span class="d-none d-sm-inline-block ms-1 fw-medium user-name-text">{{userData?.names}}</span>
+              </span>
+            </span>
+          </button>
+          <div class="dropdown-menu dropdown-menu-end">
+            <h6 class="dropdown-header">{{'Bienvenido!'}}</h6>
+            <button class="dropdown-item" type="button">
+              <i class="mdi mdi-account-circle text-muted fs-16 align-middle me-1"></i>
+              <span class="align-middle">{{'Perfil'}}</span>
+            </button>
+            <a class="dropdown-item" href="#" (click)="logout()">
+              <i class="mdi mdi-logout text-muted fs-16 align-middle me-1"></i>
+              <span class="align-middle" data-key="t-logout">{{'Cerrar Sesión'}}</span></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<p-toast [position]="'top-right'" [baseZIndex]="500000">
+</p-toast>

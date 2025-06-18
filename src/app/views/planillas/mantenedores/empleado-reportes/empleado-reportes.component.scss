@@ -1,0 +1,33 @@
+:host ::ng-deep.p-inputtext.p-inputtext-sm {
+  font-size: 0.875rem;
+  padding: 0.5rem 0.5rem;
+}
+
+:host ::ng-deep .p-datepicker table td.p-datepicker-today>span {
+  background-color: orange;
+}
+
+:host ::ng-deep .p-datepicker table td>span.p-highlight {
+  color: #EFF6FF;
+  background: #1D4ED8;
+}
+
+.t-header {
+  top: 118px;
+  position: fixed;
+  left: 0;
+  right: 0;
+  z-index: 1;
+  width: 110%;
+}
+
+.table-h {
+  margin-top: 50px;
+}
+
+@media only screen and (max-width: 1024px) {
+  .t-header {
+    top: 70px;
+  }
+
+}

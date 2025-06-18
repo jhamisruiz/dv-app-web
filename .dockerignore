@@ -1,0 +1,7 @@
+.git
+.gitignore
+.editorconfig
+# Dockerfile
+/dist
+/node_modules
+*.md

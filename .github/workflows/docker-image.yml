@@ -1,0 +1,81 @@
+name: Docker Image CI
+
+on:
+  push:
+    branches: [ "main" ]
+  # pull_request:
+  #   branches: [ "main" ]
+
+jobs:
+
+  build-docker-image:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    ## step:1- toma todo el codigo del repo
+    - uses: actions/checkout@v3
+      with:
+          fetch-depth: 0
+
+    ## step:2-
+    - name: Git Semantic Version
+      uses: PaulHatch/semantic-version@v4.0.3
+      with:
+        major_pattern: "major:"
+        minor_pattern: "feat:"
+        format: "${major}.${minor}.${patch}-prls${increment}"
+        #format: "${major}.${minor}.${patch}-prerelease${increment}"
+      # con el id se puede llamar desde otro step
+      id: version
+
+    ## step:3- Iniciar secion en docker
+    ## buenas practicas -> stdin stderr stdout
+    - name: GitHub Login Container Registry
+      env:
+        GITH_USER: ${{ github.actor }}
+        GITH_PASSWORD: ${{ secrets.GITH_PASSWORD }}
+      run: |
+        echo "Iniciando login en github"
+        echo $GITH_PASSWORD | docker login ghcr.io -u $GITH_USER --password-stdin
+        echo "Fin del login"
+
+    ## step:4- Build de la imagen en Docker
+    - name: Build the Docker image
+      env:
+         NEW_VERSION: ${{ steps.version.outputs.version }}
+      run: |
+        docker build -t ghcr.io/nectextil/dv-app-web:$NEW_VERSION .
+        docker build -t ghcr.io/nectextil/dv-app-web:latest .
+
+    ## step:5- Build de la imagen en Docker
+    - name: Push Docker Image to GitHub Container Registry
+      env:
+         NEW_VERSION: ${{ steps.version.outputs.version }}
+      run: |
+        docker push ghcr.io/nectextil/dv-app-web:$NEW_VERSION
+        docker push ghcr.io/nectextil/dv-app-web:latest
+
+  deploy:
+
+    # nedd first execute build-docker-image
+    needs: build-docker-image
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Install SSHPASS
+      run: sudo apt-get install -y sshpass
+
+    - name: SSH init Serever
+      run: |
+        sshpass -p ${{ secrets.NEC_VPS_PASSWORD }} ssh -o StrictHostKeyChecking=no ${{ secrets.NEC_VPS_AUTH }} << EOF
+          docker login ghcr.io -u nectextil -p ${{ secrets.GITH_PASSWORD }}
+          docker stop app-nec-container || true
+          docker rm app-nec-container || true
+          docker rmi ghcr.io/nectextil/dv-app-web:latest || true
+          docker pull ghcr.io/nectextil/dv-app-web:latest
+          docker run -d \
+            --name  app-nec-container \
+            -p 8000:8080 \
+            ghcr.io/nectextil/dv-app-web:latest
+        EOF

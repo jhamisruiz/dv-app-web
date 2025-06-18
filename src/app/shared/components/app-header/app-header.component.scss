@@ -1,0 +1,131 @@
+:host ::ng-deep .p-dialog .p-dialog-header-icons {
+  display: none;
+}
+
+#page-topbar {
+  top: 0;
+  position: fixed;
+  background: var(--vz-topbar-user-bg-dark);
+  left: 0;
+  right: 0;
+  z-index: 100;
+}
+
+[data-topbar=light] :host ::ng-deep #page-topbar {
+  background-color: #fff;
+  border-color: var(--vz-header-bg-dark);
+}
+
+[data-topbar=primary] :host ::ng-deep #page-topbar {
+  background-color: #0d6efd;
+  border-color: var(--vz-header-bg-primary)
+}
+
+[data-topbar=primary]:host ::ng-deep .navbar-header .btn-topbar {
+  color: var(--vz-header-item-color-primary)
+}
+
+[data-topbar=primary]:host ::ng-deep .navbar-header .btn-topbar:focus,
+[data-topbar=primary]:host ::ng-deep .navbar-header .btn-topbar:hover {
+  background-color: rgba(255, 255, 255, .07);
+  color: #fff
+}
+
+@media (min-width: 768px) {
+  [data-layout=vertical][data-sidebar-size=md] :host ::ng-deep #page-topbar {
+    left: 180px;
+  }
+}
+
+[data-layout=horizontal] :host ::ng-deep #page-topbar {
+  width: 100%;
+}
+
+
+@media (min-width:768px) {
+  [data-layout=vertical] :host ::ng-deep #page-topbar {
+    left: 250px;
+  }
+}
+
+@media (min-width: 1024.1px) {
+  [data-layout=vertical][data-layout-style=detached] :host ::ng-deep #page-topbar {
+    left: 0 !important;
+    -webkit-box-shadow: 0 1px 2px rgba(56, 65, 74, .15);
+    box-shadow: 0 1px 2px rgba(56, 65, 74, .15);
+  }
+}
+
+@media (min-width:768px) {
+  [data-sidebar-size=sm] :host ::ng-deep #page-topbar {
+    left: 70px !important
+  }
+}
+
+[data-layout=semibox] :host ::ng-deep #page-topbar {
+  left: 250px;
+}
+
+@media (min-width: 1440px) {
+  [data-layout=semibox] :host ::ng-deep #page-topbar {
+    left: calc(250px + 50px + 1.5rem + 25px);
+    right: calc(110px + 1.5rem);
+    top: 25px;
+    border-radius: .25rem;
+    -webkit-transition: all .5s ease;
+    transition: all .5s ease;
+  }
+}
+
+@media (max-width:768px) {
+  [data-layout=semibox] :host ::ng-deep #page-topbar {
+    left: 0 !important
+  }
+}
+
+//primary
+
+
+@media (min-width:767.99px) {
+  [data-topbar=primary]:host ::ng-deep .topbar-user {
+    background-color: var(--vz-topbar-user-bg-primary)
+  }
+}
+
+[data-topbar=primary]:host ::ng-deep .topbar-user .user-name-text {
+  color: rgba(255, 255, 255, .85) !important
+}
+
+[data-topbar=primary]:host ::ng-deep .topbar-user .user-name-sub-text {
+  color: var(--vz-header-item-color-primary) !important
+}
+
+[data-topbar=primary]:host ::ng-deep .logo-primary {
+  display: none
+}
+
+[data-topbar=primary]:host ::ng-deep .logo-light {
+  display: inline-block
+}
+
+[data-topbar=primary]:host ::ng-deep .app-search .form-control {
+  background-color: rgba(255, 255, 255, .05);
+  color: #fff
+}
+
+[data-topbar=primary]:host ::ng-deep .app-search input.form-control::-webkit-input-placeholder,
+[data-topbar=primary]:host ::ng-deep .app-search span.search-widget-icon {
+  color: rgba(255, 255, 255, .5)
+}
+
+[data-topbar=primary]:host ::ng-deep .hamburger-icon span {
+  background-color: #e9ebec
+}
+
+[data-layout=vertical][data-layout-style=detached][data-topbar=primary]:host ::ng-deep .horizontal-logo .logo-primary {
+  display: none
+}
+
+[data-layout=vertical][data-layout-style=detached][data-topbar=primary]:host ::ng-deep .horizontal-logo .logo-light {
+  display: block
+}

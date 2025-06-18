@@ -1,0 +1,284 @@
+<app-tools (OnClickNew)="changeMode($event)" (OnClickSave)="onSubmit()" [ViewMode]="modeType"
+  (OnClickBack)="changeMode($event)">
+</app-tools>
+
+<ng-container *ngIf="isViewMode || isDeleteMode">
+  <app-table [path]="fullPath" (OnEdit)="getForm($event);" (OnDelete)="delForm($event)" [headers]="headers"
+    [btnDelete]="true" [btnEdit]="true" [refresh]="auto">
+  </app-table>
+</ng-container>
+
+<ng-container *ngIf="isCreateMode || isEditMode">
+  <div class="card-body">
+    <form [formGroup]="form">
+      <p-divider align="left">
+        <a href="#collapsdatosEmpresa" data-bs-toggle="collapse" aria-expanded="false"
+          aria-controls="collapsdatosEmpresa" (click)="(datosEmpresa =datosEmpresa?false:true)">
+          <h4 class="p-tag mb-0 text-white">
+            <i class="{{datosEmpresa? 'pi pi-plus' : 'pi pi-minus'}} mr-2"></i>
+            1. DATOS DE LA EMPRESA
+          </h4>
+        </a>
+      </p-divider>
+      <div class="row collapse show" id="collapsdatosEmpresa">
+        <div class="row gy-1">
+          <!--end col-->
+          <div class="col-xxl-3 col-md-6">
+            <div>
+              <app-input inputClass="form-control" (OnInput)="onInput($event)" formControlName="empresa_ruc"
+                label="NUMERO DE RUC" type="text" [formValid]="ok"></app-input>
+            </div>
+          </div>
+          <!--end col-->
+          <div class="col-xxl-3 col-md-6">
+            <div>
+              <app-input inputClass="form-control" formControlName="empresa_razon_social" label="RAZON SOCIAL"
+                type="text" [formValid]="ok"></app-input>
+            </div>
+          </div>
+          <div class="col-xxl-3 col-md-6">
+            <div>
+              <app-input inputClass="form-control" formControlName="empresa_email" label="EMAIL EMPRESA" type="text"
+                [formValid]="ok"></app-input>
+            </div>
+          </div>
+          <div class="col-xxl-1 col-md-4 col-4">
+            <div class="d-flex flex-column">
+              <label for="" class="block text-capitalize">FABRICANTE</label>
+              <p-inputSwitch formControlName="empresa_fabricante"></p-inputSwitch>
+            </div>
+          </div>
+          <div class="col-xxl-1 col-md-4 col-4">
+            <div class="d-flex flex-column">
+              <label for="" class="block text-capitalize">DISTRIBUIDOR</label>
+              <p-inputSwitch formControlName="empresa_distribuidor"></p-inputSwitch>
+            </div>
+          </div>
+          <div class="col-xxl-1 col-md-4 col-4">
+            <div class="d-flex flex-column">
+              <label for="" class="block text-capitalize">SERVICIOS</label>
+              <p-inputSwitch formControlName="empresa_servicios"></p-inputSwitch>
+            </div>
+          </div>
+        </div>
+        <div class="row mt-3">
+          <div class="col-xxl-12 col-md-12 mb-1">
+            <div>
+              <app-input inputClass="form-control" formControlName="empresa_domici_legal" label="DOMICILIO LEGAL"
+                type="text" [formValid]="ok"></app-input>
+            </div>
+          </div>
+          <app-ubigeo [setUbigeo]="form.value?.empresa_ubigeo" (NgModelResponse)="getUbigeo($event)"></app-ubigeo>
+          <div class="col-xxl-12 col-md-12 mt-3">
+            <div>
+              <app-input inputClass="form-control" formControlName="empresa_direcc_planta" label="DIRECCION PLANTA"
+                type="text" [formValid]="ok"></app-input>
+            </div>
+          </div>
+          <app-ubigeo [setUbigeo]="form.value?.empresa_ubigeo_planta"
+            (NgModelResponse)="getUbigeoPlanta($event)"></app-ubigeo>
+        </div>
+        <div class="row mt-4">
+
+          <div class="col-xxl-3 col-md-6">
+            <div>
+              <app-input inputClass="form-control" formControlName="empresa_licen_funciona_vigente"
+                label="LICENCIA DE FUNCIONAMIENTO VIGENTE" type="text" [formValid]="ok"></app-input>
+            </div>
+          </div>
+          <div class="col-xxl-3 col-md-6">
+            <div>
+              <app-input inputClass="form-control" formControlName="empresa_inicio_activi" label="INICIO DE ACTIVIDADES"
+                type="date" [formValid]="ok"></app-input>
+            </div>
+          </div>
+          <div class="col-xxl-3 col-md-6">
+            <div>
+              <app-input inputClass="form-control" formControlName="empresa_inscrita_sunarp_ficha"
+                label="INSCRITA SUNARP DE FICHA" type="text" [formValid]="ok"></app-input>
+            </div>
+          </div>
+          <div class="col-xxl-3 col-md-6">
+            <div>
+              <app-input inputClass="form-control" formControlName="empresa_asiento" label="ASIENTO" type="text"
+                [formValid]="ok"></app-input>
+            </div>
+          </div>
+          <div class="col-xxl-3 col-md-6">
+            <div>
+              <app-input inputClass="form-control" formControlName="empresa_activi_economi_industrial"
+                label="ACTIVIDAD ECONOMICA INDUSTRIAL (CIIU) N°" type="text" [formValid]="ok"></app-input>
+            </div>
+          </div>
+        </div>
+      </div>
+      <p-divider align="left" styleClass="mt-2">
+        <a href="#collapsrepreLegal" data-bs-toggle="collapse" aria-expanded="false" aria-controls="collapsrepreLegal"
+          (click)="(repreLegal =repreLegal?false:true)">
+          <h4 class="p-tag mb-0 text-white">
+            <i class="{{repreLegal? 'pi pi-plus' : 'pi pi-minus'}} mr-2"></i>
+            2. REPRESENTATE LEGAL
+          </h4>
+        </a>
+      </p-divider>
+      <div class="row collapse show" id="collapsrepreLegal">
+        <div class="row mt-3">
+          <div class="col-xxl-3 col-md-6">
+            <div>
+              <app-input inputClass="form-control" (OnInput)="onInputDNI($event)" formControlName="represen_dni"
+                label="NUMERO DE DOCUMENTO" type="text" [formValid]="ok"></app-input>
+            </div>
+          </div>
+          <div class="col-xxl-3 col-md-6">
+            <div>
+              <app-input inputClass="form-control" formControlName="represen_nombre"
+                label="NOMBRE DE REPRESENTANTE LEGAL" type="text" [formValid]="ok"></app-input>
+            </div>
+          </div>
+          <div class="col-xxl-3 col-md-6">
+            <div>
+              <app-input inputClass="form-control" formControlName="represen_cargo" label="CARGO" type="text"
+                [formValid]="ok"></app-input>
+            </div>
+          </div>
+          <div class="col-xxl-3 col-md-6">
+            <div>
+              <app-input inputClass="form-control" formControlName="represen_telefono" label="TELEFONO" type="text"
+                [formValid]="ok"></app-input>
+            </div>
+          </div>
+          <div class="col-xxl-3 col-md-6">
+            <div>
+              <app-input inputClass="form-control" formControlName="represen_email" label="EMAIL" type="text"
+                [formValid]="ok"></app-input>
+            </div>
+          </div>
+        </div>
+      </div>
+      <p-divider align="left" styleClass="mt-2">
+        <a href="#collapscontanctEmpresa" data-bs-toggle="collapse" aria-expanded="false"
+          aria-controls="collapscontanctEmpresa" (click)="(contanctEmpresa =contanctEmpresa?false:true)">
+          <h4 class="p-tag mb-0 text-white">
+            <i class="{{contanctEmpresa? 'pi pi-plus' : 'pi pi-minus'}} mr-2"></i>
+            3. CONTACTO EMPRESA
+          </h4>
+        </a>
+      </p-divider>
+      <div class="row collapse show" id="collapscontanctEmpresa">
+        <div class="row mt-1">
+          <div class="col-xxl-3 col-md-6">
+            <div>
+              <app-input inputClass="form-control" (OnInput)="onInputDNICargo($event)" formControlName="contacto_dni" label="NUMERO DE DOCUMENTO"
+                type="text" [formValid]="ok"></app-input>
+            </div>
+          </div>
+          <div class="col-xxl-3 col-md-6">
+            <div>
+              <app-input inputClass="form-control" formControlName="contacto_nombre"
+                label="NOMBRE DE PERSONA DE CONTACTO" type="text" [formValid]="ok"></app-input>
+            </div>
+          </div>
+          <div class="col-xxl-3 col-md-6">
+            <div>
+              <app-input inputClass="form-control" formControlName="contacto_cargo"
+                label="CARGO" type="text" [formValid]="ok"></app-input>
+            </div>
+          </div>
+          <div class="col-xxl-3 col-md-6">
+            <div>
+              <app-input inputClass="form-control" formControlName="contacto_telefono" label="TELEFONO" type="text"
+                [formValid]="ok"></app-input>
+            </div>
+          </div>
+          <div class="col-xxl-3 col-md-6">
+            <div>
+              <app-input inputClass="form-control" formControlName="contacto_correo" label="EMAIL" type="text"
+                [formValid]="ok"></app-input>
+            </div>
+          </div>
+        </div>
+        <div class="row mt-3">
+          <div class="col-xxl-6 col-md-6">
+            <div>
+              <app-input inputClass="form-control" formControlName="contacto_direccion_laboral"
+                label="DIRECCION LABORAL" type="text" [formValid]="ok"></app-input>
+            </div>
+          </div>
+        </div>
+      </div>
+      <p-divider align="left" styleClass="mt-2">
+        <a href="#collventaProduccion" data-bs-toggle="collapse" aria-expanded="false"
+          aria-controls="collventaProduccion" (click)="(ventaProduccion =ventaProduccion?false:true)">
+          <h4 class="p-tag mb-0 text-white">
+            <i class="{{ventaProduccion? 'pi pi-plus' : 'pi pi-minus'}} mr-2"></i>
+            4. VENTAS Y PRODUCCIÓN
+          </h4>
+        </a>
+      </p-divider>
+      <div class="row collapse show" id="collventaProduccion">
+        <div class="row mt-1">
+          <div class="col-xxl-3 col-md-6">
+            <div>
+              <app-input inputClass="form-control" formControlName="venpro_capac_produc_mes"
+                label="CAPACIDAD DE PRODUCCION MENSUAL" type="text" [formValid]="ok"></app-input>
+            </div>
+          </div>
+          <div class="col-xxl-3 col-md-6">
+            <div>
+              <app-input inputClass="form-control" formControlName="venpro_bien_oferta_propu"
+                label="TIPO DE BIENES OFERTADOS" type="text" [formValid]="ok"></app-input>
+            </div>
+          </div>
+          <div class="col-xxl-3 col-md-6">
+            <div>
+              <app-input inputClass="form-control" formControlName="venpro_hora_recep_expe_fisico"
+                label="HORA DE RECEPCION DE EXPEDIENTE FISICO" type="time" [format]="'hh:mm:ss'" [formValid]="ok"></app-input>
+            </div>
+          </div>
+          <div class="col-xxl-3 col-md-6">
+            <div>
+              <app-input inputClass="form-control" formControlName="venpro_fecha_expe_fisico_postu"
+                label="FECHA DE EXPEDIENTE FISICO DE POSTULACION" [dateNow]="true" type="calendar"
+                [formValid]="ok"></app-input>
+            </div>
+          </div>
+        </div>
+        <div class="row mt-3">
+          <h5>ORIGEN DE LA MATERIA PRIMA</h5>
+          <div class="col-xxl-1 col-md-4 col-4">
+            <div class="d-flex flex-column">
+              <label for="" class="block text-capitalize">NACIONAL</label>
+              <p-inputSwitch formControlName="venpro_materia_prima_nacional"></p-inputSwitch>
+            </div>
+          </div>
+          <div class="col-xxl-1 col-md-4 col-4">
+            <div class="d-flex flex-column">
+              <label for="" class="block text-capitalize">IMPORTADO</label>
+              <p-inputSwitch formControlName="venpro_materia_prima_importado"></p-inputSwitch>
+            </div>
+          </div>
+          <div class="col-xxl-1 col-md-4 col-4 d-none">
+            <div class="d-flex flex-column">
+              <label for="" class="block text-capitalize">HABILITAR</label>
+              <p-inputSwitch formControlName="habilitado"></p-inputSwitch>
+            </div>
+          </div>
+          <!-- <div class="col-xxl-3 col-md-6">
+            <div>
+              <app-input inputClass="form-control" formControlName="fecha_registro" label="FECHA DE REGISTRO"
+                [dateNow]="true" type="calendar" [formValid]="ok" [locked]="isEditMode"></app-input>
+            </div>
+          </div>
+          <div class="col-xxl-3 col-md-6">
+            <div>
+              <app-select [dataSource]="dataGrupo" formControlName="origen_materia_prima" [showClear]="true" [filter]="false"
+                optionValue="codigo" optionLabel="nombre" styleClass="p-0 w-100" placeholder="-Seleccionar-"
+                label="SELECCIONAR TIPO MATERIA" [isTemplete]="true" [Labels]="['codigo','nombre']" [formValid]="ok"></app-select>
+            </div>
+          </div> -->
+        </div>
+      </div>
+    </form>
+  </div>
+
+</ng-container>

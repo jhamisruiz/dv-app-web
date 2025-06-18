@@ -1,0 +1,52 @@
+/* ------------------------------------------------------------------------------
+ *
+ *  # Bootstrap v4.3.1 (https://getbootstrap.com)
+ *
+ *  Copyright 2011-2018 The Bootstrap Authors
+ *  Copyright 2011-2018 Twitter, Inc.
+ *  Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
+ *
+ * ---------------------------------------------------------------------------- */
+
+// Import custom template config
+@import "../../../config";
+@import "../../../shared/utils/ll-functions";
+@import "../../../shared/utils/ll-mixins";
+
+// Core variables and mixins
+@import "../../../_bootstrap/functions";
+@import "../../../_bootstrap/variables";
+@import "../../../_bootstrap/mixins";
+
+// Import template's variables
+@import "../variables/variables-core";
+@import "../variables/variables-custom";
+@import "../../../themes/default/bootstrap_fac/mixins";
+
+// Import default files
+@import "../../../themes/default/bootstrap_fac/reboot";
+@import "../../../themes/default/bootstrap_fac/type";
+@import "../../../themes/default/bootstrap_fac/code";
+@import "../../../themes/default/bootstrap_fac/tables";
+@import "../../../themes/default/bootstrap_fac/forms";
+@import "../../../themes/default/bootstrap_fac/buttons";
+@import "../../../themes/default/bootstrap_fac/dropdown";
+@import "../../../themes/default/bootstrap_fac/button-group";
+@import "../../../themes/default/bootstrap_fac/input-group";
+@import "../../../themes/default/bootstrap_fac/custom-forms";
+@import "../../../themes/default/bootstrap_fac/nav";
+@import "../../../themes/default/bootstrap_fac/navbar";
+@import "../../../themes/default/bootstrap_fac/card";
+@import "../../../themes/default/bootstrap_fac/breadcrumb";
+@import "../../../themes/default/bootstrap_fac/pagination";
+@import "../../../themes/default/bootstrap_fac/badge";
+@import "../../../themes/default/bootstrap_fac/alert";
+@import "../../../themes/default/bootstrap_fac/progress";
+@import "../../../themes/default/bootstrap_fac/media";
+@import "../../../themes/default/bootstrap_fac/list-group";
+@import "../../../themes/default/bootstrap_fac/close";
+@import "../../../themes/default/bootstrap_fac/toasts";
+@import "../../../themes/default/bootstrap_fac/modal";
+@import "../../../themes/default/bootstrap_fac/tooltip";
+@import "../../../themes/default/bootstrap_fac/popover";
+@import "../../../themes/default/bootstrap_fac/utilities";

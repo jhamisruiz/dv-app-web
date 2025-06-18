@@ -1,0 +1,94 @@
+<div *ngIf="(inputType==='text')  || inputType==='time'" class="d-flex flex-column">
+  <label *ngIf="!(label===false || label==='false')" for="miImput" class="mb-0 block text-capitalize {{labelClass}}">
+    {{label??'label text'}}
+    <i *ngIf="(initRequired || required)" class="text-danger">*</i>
+  </label>
+  <!-- input text -->
+  <input #input [id]="id" [(ngModel)]="value" type="{{type==='text'? type: 'time'}}" step="{{type==='time'? 1: ''}}"
+    [placeholder]="(placeholder ?? '')" (input)="!nsNumber ? onChangeValue($any($event).target) : onInpt($event)"
+    [disabled]="locked ? locked: disabled"
+    class="{{inputClass}} {{((hasError && (currentControl?.touched || currentControl?.dirty)) || borderRequired)||(borderRequired2)?'border-danger':''}}"
+    [style]="inputStyle" [required]="required" (focus)="getReqError();OnFocus.emit($event);"
+    (focusout)="OnFocusOut.emit($event);" (blur)="nsBlur.emit($event);onTouched($event)"
+    (keydown.arrowdown)="keyArrowDown.emit()" (keydown)="OnKeyDown.emit($event)" (keyup)="OnKeyUp.emit($event)"
+    (keydown.arrowup)="keyArrowUp.emit()" (keydown.tab)="keyTab.emit()" (keydown.enter)="keyEnter.emit()" />
+  <div class="w-100" style="height: 15px;">
+    <small class="text-danger fw-bold"
+      *ngIf="(hasError && (currentControl?.touched || currentControl?.dirty)) || required ||required2">
+      {{((hasError && (currentControl?.touched || currentControl?.dirty)) ||
+      borderRequired)||(borderRequired2)?messageError:''}}
+    </small>
+  </div>
+</div>
+<!-- calendar -->
+<div *ngIf="(inputType==='calendar') || inputType==='date'" class="d-flex flex-column">
+  <label *ngIf="!(label===false || label==='false')" for="miImput" class="mb-0 block text-capitalize {{labelClass}}">
+    {{label??'label text'}}
+    <i *ngIf="(initRequired || required)" class="text-danger">*</i>
+  </label>
+  <p-calendar [(ngModel)]="defaultDate" [showIcon]="true" [dateFormat]="dateFormat" [minDate]="mindate"
+    [maxDate]="maxdate" (onSelect)="onCalendarSelect($event)" [disabled]="locked ? locked: disabled"
+    [inputStyle]="{'width':'100%','min-width':'100%'}" class="w-100"
+    inputStyleClass="{{inputClass}} {{((hasError && (currentControl?.touched || currentControl?.dirty)) || borderRequired)||(borderRequired2)?'border-danger':''}}"
+    [required]="required" (focus)="getReqError();OnFocus.emit($event);" (focusout)="OnFocusOut.emit($event);"
+    (blur)="nsBlur.emit($event);onTouched($event)" (keydown.arrowdown)="keyArrowDown.emit()"
+    (keydown)="OnKeyDown.emit($event)" (keyup)="OnKeyUp.emit($event)" (keydown.arrowup)="keyArrowUp.emit()"
+    (keydown.tab)="keyTab.emit()" (keydown.enter)="keyEnter.emit()">
+  </p-calendar>
+  <div class="w-100" style="height: 15px;">
+    <small class="text-danger fw-bold"
+      *ngIf="(hasError && (currentControl?.touched || currentControl?.dirty)) || required ||required2">
+      {{((hasError && (currentControl?.touched || currentControl?.dirty)) ||
+      borderRequired)||(borderRequired2)?messageError:''}}
+    </small>
+  </div>
+</div>
+
+<!-- input number -->
+<div *ngIf="(inputType==='number')" class="d-flex flex-column">
+  <label *ngIf="!(label===false || label==='false')" for="miImput" class="mb-0 block text-capitalize {{labelClass}}">
+    {{label??'label text'}}
+    <i *ngIf="(initRequired || required)" class="text-danger">*</i>
+  </label>
+  <p-inputNumber #input locale="en-US" [(ngModel)]="value" [showButtons]="showButtons" [min]="(min ?? -99999999)"
+    [max]="(max ?? 99999999)" mode="decimal" [placeholder]="(placeholder ?? '')"
+    [minFractionDigits]="(minFractionDigits??0)" [style]="style" styleClass="w-100 {{class}} "
+    [disabled]="locked ? locked: disabled" [readonly]="(readonly)"
+    inputStyleClass="style-disable {{inputClass}} {{inputStyleClass}} {{((hasError && (currentControl?.touched || currentControl?.dirty)) || borderRequired)||(borderRequired2)?'border-danger':''}}"
+    (onInput)="!nsNumber ? onChangeValueIN($event) : onInpt($event)" (attr.onFocusOut)="OnFocusOut.emit($event)"
+    (onFocus)="getReqError();OnFocus.emit($event);" (onBlur)="nsBlur.emit($event);onTouched($event)"
+    (keydown.arrowdown)="keyArrowDown.emit()" (keydown.arrowup)="keyArrowUp.emit()" (keydown.tab)="keyTab.emit()"
+    (keydown.enter)="keyEnter.emit()">
+  </p-inputNumber>
+  <div class="w-100" style="height: 15px;">
+    <small class="text-danger fw-bold"
+      *ngIf="(hasError && (currentControl?.touched || currentControl?.dirty)) || required ||required2">
+      {{((hasError && (currentControl?.touched || currentControl?.dirty)) ||
+      borderRequired)||(borderRequired2)?messageError:''}}
+    </small>
+  </div>
+</div>
+
+<!-- textarea -->
+<div *ngIf="(inputType==='textarea')" class="d-flex flex-column">
+  <label *ngIf="!(label===false || label==='false')" for="miImput" class="mb-0 block text-capitalize {{labelClass}}">
+    {{label??'label text'}}
+    <i *ngIf="(initRequired || required)" class="text-danger">*</i>
+  </label>
+  <textarea #input [id]="id" [(ngModel)]="value" [placeholder]="(placeholder ?? '')"
+    (input)="!nsNumber ? onChangeValue($any($event).target) : onInpt($event)" [disabled]="locked ? locked: disabled"
+    class="{{inputClass}} {{((hasError && (currentControl?.touched || currentControl?.dirty)) || borderRequired)||(borderRequired2)?'border-danger':''}}"
+    [style]="inputStyle" [required]="required" (focus)="getReqError();OnFocus.emit($event);"
+    (blur)="nsBlur.emit($event);onTouched($event)" (keydown.arrowdown)="keyArrowDown.emit()"
+    (keydown.arrowup)="keyArrowUp.emit()" (keydown.tab)="keyTab.emit()" (keydown.enter)="keyEnter.emit()" [rows]="rows"
+    [cols]="cols" pInputTextarea>
+  </textarea>
+  <div class="w-100" style="height: 15px;">
+    <small class="text-danger fw-bold"
+      *ngIf="(hasError && (currentControl?.touched || currentControl?.dirty)) || required ||required2">
+      {{((hasError && (currentControl?.touched || currentControl?.dirty)) ||
+      borderRequired)||(borderRequired2)?messageError:''}}
+    </small>
+  </div>
+
+</div>

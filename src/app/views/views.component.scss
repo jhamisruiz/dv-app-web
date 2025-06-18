@@ -1,0 +1,13 @@
+.app-header {
+  margin-top: -45px;
+  background: var(--vz-topbar-user-bg-dark);
+  position: fixed;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  width: 100%;
+}
+
+.m70 {
+  margin-top: var(--vz-header-height);
+}

@@ -1,0 +1,96 @@
+// dark theme
+:root {
+    --tb-text: rgb(77, 78, 80);
+    --tb-icon: #7f94f3;
+    --tb-base: #ffffff;
+
+    --tb-contraste-menu: rgb(236, 236, 236);
+    // opciones fondo y hover
+    --tb-bg-child: rgba(255, 255, 255, 0.979);
+    --tb-bg-child-active: rgb(236, 236, 236);
+    // // main button and childs
+    --btn-main: #7f94f3;
+    --btn-main-text: #ffffff;
+    --shadow-bar: #ccc;
+    --tb-tools: #ffffff;
+    --table-bordered: #ecebf7;
+    --table-row: #fff;
+    --body: rgb(241, 241, 241);
+    --table-text: rgb(43, 42, 43);
+    --table-text-hover: rgb(104, 104, 104);
+    --tab-body: rgb(255, 255, 255);
+    --tab-footer:rgba(0, 0, 0, 0.02) ;
+    //Forms
+    --label: #575a5a;
+    --label-disabled: #151616;
+    --input-background: #fff;
+    --input-border: #EBEDEF;
+    --input-border-focus: #b1b1b1;
+    --input-disabled: rgb(245, 245, 245);
+    //
+    --disabled-btn: rgb(136, 136, 136);
+    --hober-btn: #8e9ace;
+    --input-redonly: #F5F6F7;
+
+    //btn dgrid
+    --dg-disabled: #ececec;
+    --dg-header: rgb(232, 237, 252);
+    --dg-label: rgb(91, 99, 92);
+    //mixtable
+    --mt-show: rgb(247, 91, 91);
+}
+
+.dark {
+    --tb-text: rgb(240, 240, 240);
+    --tb-icon: rgb(206, 205, 205);
+    --tb-base: #21252b;
+
+    --tb-contraste-menu: rgb(82, 83, 83);
+    // opciones fondo y hover
+    --tb-bg-child: rgba(82, 83, 83, 0.911);
+    --tb-bg-child-active: #484b4af1;
+    // // main button and childs
+    --btn-main: #434957;
+    --btn-main-text: #f8f8f8;
+    --body: #282c34;
+    --shadow-bar: #000;
+
+    // toolbar
+    --tb-tools: #21252b;
+    --table-row: #282c34;
+    --table-bordered: #282c34;
+    --table-text: rgb(170, 169, 170);
+    --table-text-hover: rgb(156, 150, 66);
+    --tab-body: #434957;
+    --tab-footer: #3a3e49;
+    // forms 
+    --label: #dee1e4;
+    --input-background: #3a3e49;
+    --input-border-focus: #ffffff;
+    --input-border: #3a3e49;
+    --input-disabled: #333435;
+    
+    --disabled-btn: rgb(139, 139, 139);
+    --hober-btn: #8f9091;
+}
+
+
+
+// onedark
+
+$atom-one-dark-background: #282c34;
+$currentline : #0A99bbff;
+$ocurrentcell : #00000000;
+$occurrence : #434957;
+$actrlclick : #56b6c2;
+$aksideareas : #21252b;
+$matched_p : #434957;
+$atounmatched_p : #4Dff0000;
+$atomnormal: #abb2bf;
+$akeyword: #c678dd;
+$abuiltin: #56b6c2;
+$aefinition : #61afef;
+$acomment : #5c6370;
+$Sstring: #98c379;
+$number: #d19a66;
+$instance: #e5c07b;

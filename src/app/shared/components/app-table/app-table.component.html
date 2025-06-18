@@ -1,0 +1,220 @@
+<p-toast [position]="'top-right'" [baseZIndex]="500000">
+</p-toast>
+<p-contextMenu #cm [model]="(menuContext ?items : [])" appendTo="body"
+  styleClass="{{menuContext?'':'d-none'}} {{contextDisabled?'d-none':''}} border border-info">
+</p-contextMenu>
+
+<!--  selectionMode="single"  -->
+<div class="border border-1 shadow-class">
+  <p-table #dt [contextMenu]="cm" [columns]="headerstab" [value]="data" dataKey="index"
+    [resizableColumns]="resizableColumns" columnResizeMode="expand"
+    [selectionMode]="(selectionMode==='single'? 'single': null)" responsiveLayout="scroll" editMode="row"
+    [(selection)]="selectedIndex" [paginator]="paginator" [rows]="pageRowInit" [showCurrentPageReport]="true"
+    (onRowSelect)="onRowSelect($event)" (onRowUnselect)="onRowUnselect($event)"
+    [style]="{'width': '100%!important','overflow':'auto!important'}"
+    styleClass="{{gridlines?'p-datatable-gridlines':''}}"
+    currentPageReportTemplate="Mostrando {first} de {last} de {totalRecords} Filas"
+    [rowsPerPageOptions]="[5,10,25,50,100]" [loading]="loading || (loading$ | async)"
+    [tableStyle]="{'min-width': '50rem'}" [globalFilterFields]="globalFilterFields">
+    <ng-template pTemplate="caption">
+      <div class="d-flex">
+        <p-inputIcon (click)="opSearch.toggle($event)" style="cursor: pointer;">
+          <i class="pi pi-search fw-bolder fs-4 text-info"></i>
+        </p-inputIcon>
+        <p-inputIcon (click)="opDownload.toggle($event)" style="margin-left: 10px;cursor: pointer;" *ngIf="exports && customDownloadTemplate">
+          <i class="pi pi-download fw-bolder fs-4 text-danger"></i>
+        </p-inputIcon>
+      </div>
+    </ng-template>
+    <ng-template pTemplate="header" let-columns>
+      <tr *ngIf="!sort">
+        <th style="width: 2.25em" *ngIf="tableCheckbox" class="th-dark" ngClass="th-dark">
+          <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+        </th>
+        <th pSortableColumn="index" *ngIf="rowIndex" ngClass="th-dark" style="width: 50px;" class="pb-1 pt-1 p-1">#</th>
+        <th pResizableColumn *ngFor="let col of columns" ngClass="th-dark" [style]="{'width':' auto;'}"
+          [hidden]="col.visible !== undefined"
+          class="pb-1 pt-1 pl-0 text-capitalize {{col.center ? 'text-center': ''}}">
+          <div class="d-flex" [ngClass]="col.customClass">
+            <div class="bg">
+              {{ col.label }}
+            </div>
+            <!-- <p-sortIcon field="{{col.field}}"></p-sortIcon> -->
+          </div>
+        </th>
+        <th ngClass="th-dark" *ngIf="acciones">
+          Acciones
+        </th>
+      </tr>
+      <tr *ngIf="sort">
+        <th pSortableColumn="index" ngClass="th-dark" style="width: 50px;" class="pb-1 pt-1 p-1">#</th>
+        <th *ngFor="let col of columns" ngClass="th-dark" pSortableColumn="{{col.field}}"
+          [hidden]="col.visible !== undefined"
+          class="pb-1 pt-1 pl-1 text-capitalize {{col.center ? 'text-center': ''}}">
+          <div class="d-flex" [ngClass]="col.style">
+            <div class="bg">
+              {{ col.label }}
+            </div>
+          </div>
+        </th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-d let-columns="columns" let-editing="editing" let-index="rowIndex">
+      <tr [pEditableRow]="d" [pSelectableRow]="(selectableRow? d: null)" [pSelectableRowDblClick]="d"
+        (dblclick)="(dblclick?editRow(d):'')" [pContextMenuRow]="d" (contextmenu)="onContextMenu(d)">
+        <td *ngIf="tableCheckbox">
+          <p-tableCheckbox [value]="d"></p-tableCheckbox>
+        </td>
+        <td class="p-1 td-dark" *ngIf="rowIndex">{{index+1}}</td>
+        <td *ngFor="let h of columns" class="p-1 pl-1 td-dark" style="min-width: 60px;"
+          [hidden]="h.visible !== undefined">
+          <p-cellEditor>
+            <ng-template pTemplate="output">
+              <div class="d-flex" *ngIf="h?.type==='exports'">
+                <p-button *ngIf="h?.excel" (click)="btnFilesClick(d);" severity="success"
+                  icon="pi pi-file-excel"></p-button>
+              </div>
+              <div class="" *ngIf="h?.type==='suggest' || h?.suggest">
+                <p-badge *ngIf="d[h?.fieldname]?.[h?.codigo]" [value]="(d[h?.fieldname]?.[h?.codigo] ?? '')"
+                  severity="info" styleClass="m-0 mr-1"></p-badge>
+                {{d[h?.fieldname]?.[h.olabel] ?? 'no data'}}
+              </div>
+              <div class="select w-100 d-flex" *ngIf="h?.type==='select'">
+                <div class="data" *ngIf="h?.url || h?.data">
+                </div>
+              </div>
+              <div class="w-100 d-flex" *ngIf="!h?.type || h?.type==='text'">
+                <div class="w-100 d-flex" *ngIf="!h?.localUrl">
+                  {{h?.dataoverlay?(obtenerPrimerasCincoPalabras(d[h.field],h?.numberwords??4)):d[h.field]}}
+                </div>
+                <div *ngIf="h?.dataoverlay">
+                  <p-button (click)="op.toggle($event);dataoverlayPanel=d;getdataoverlayPanel(d[h.field])"
+                    icon="pi pi-ellipsis-h"></p-button>
+                </div>
+                <div class="w-100 d-flex" *ngIf="h?.localUrl">
+                  <a class="text-info" [href]="'/'+d[h.field]">/{{d[h.field]}}</a>
+                </div>
+              </div>
+              <div class="w-100 d-flex" *ngIf="h?.type==='binary'">
+                {{d[h.field]===true? h?.binary[0]: h?.binary[1]}}
+              </div>
+              <div class="w-100 d-flex justify-content-center align-items-center" *ngIf="h?.type==='checkbox'">
+                <p-checkbox [(ngModel)]="d[h.field]" (onChange)="onChange($event, d, h)" [binary]="true"
+                  inputId="binary"></p-checkbox>
+              </div>
+              <div class="w-100 d-flex" *ngIf="h?.type==='number'">
+                <div *ngIf="h?.prefix && d[h.field]">{{h?.prefix}}</div>
+                <div *ngIf="h?.minFractionDigits">
+                  {{convertirDecimales(d[h.field],h?.minFractionDigits) }}
+                </div>
+                <div *ngIf="!h?.minFractionDigits">
+                  {{d[h.field]}}
+                </div>
+              </div>
+              <div class="w-100 d-flex justify-content-center align-items-center" *ngIf="h?.type==='inputMask'">
+                {{d[h.field]}}
+              </div>
+              <div class="w-100 d-flex" *ngIf="h?.type==='inputText'">
+                <input type="text" pInputText [(ngModel)]="d[h.field]" (ngModelChange)="onChange($event, d, h)" />
+              </div>
+              <div class="w-100 d-flex justify-content-center align-items-center" *ngIf="h?.type==='date'">
+                {{ d[h.field] | date: 'dd-MM-yyyy' }}
+              </div>
+              <div class="w-100 d-flex" *ngIf="h?.type==='boolean'">
+                <p-badge *ngIf="d[h.field]===true" [value]="'Descalificado'" severity="danger" />
+                <p-badge *ngIf="d[h.field]!==true" [value]="'En Evaluación'" severity="info" />
+              </div>
+              <div class="w-100 d-flex" *ngIf="h?.type==='button'">
+                <button *ngIf="!h?.ifBtnField" type="button" (click)="buttonClick(d)" pButton pRipple
+                  styleClass="p-button-sm"
+                  class="btn p-button-{{h?.btnBool?(d[h.field]===true ?h?.btnClass: h?.btnBoolClass):h?.btnClass ?? 'success'}}">
+                  <i *ngIf="h?.icon" class="bx {{(h?.btnBool? (d[h.field]===true ?h?.icon: h?.btnBoolIcon): h?.icon)}}"
+                    style="font-size: 1.6rem;"></i>
+                  <i *ngIf="!h?.icon" class="text-white">{{h?.label}}</i>
+                </button>
+
+                <button *ngIf="h?.ifBtnField" type="button" (click)="buttonClick(d)" pButton pRipple
+                  styleClass="p-button-sm"
+                  class="btn p-button-{{(d[h.ifBtnField]===true ?h?.ifBtnClass: (h?.btnClass??'success')) ?? 'success'}}">
+                  <i *ngIf="h?.icon" class="bx {{(h?.btnBool? (d[h.field]===true ?h?.icon: h?.btnBoolIcon): h?.icon)}}"
+                    style="font-size: 1.6rem;"></i>
+                  <i *ngIf="!h?.icon" class="text-white">{{(d[h.ifBtnField]===true ?h?.ifBtnName:
+                    (h?.btnLabel??h?.label))}}</i>
+                </button>
+              </div>
+
+              <div class="{{h.center ? 'text-center': ''}}" *ngIf="h.type==='habilitado'">
+                <div class="w-100 d-flex">
+                  <p-tag [value]="getValSeverity(d[h.field])" [severity]="getSeverity(d[h.field])"></p-tag>
+                </div>
+              </div>
+            </ng-template>
+          </p-cellEditor>
+        </td>
+        <td class="p-1 pl-1 td-dark" *ngIf="acciones">
+          <span class="sizes" class="crud=false">
+            <button *ngIf="btnEnable" pButton pRipple (click)="enableR(d, headerstab)" type="button"
+              class="btn  p-button-help  mr-1" styleClass="p-button-sm">
+              <i class="pi pi-thumbs-up"></i>
+            </button>
+
+            <button *ngIf="btnSelect" pButton pRipple (click)="selectR(d)" type="button"
+              class="btn p-button-success  mr-1" styleClass="p-button-sm">
+              <i class="pi pi-check"></i>
+            </button>
+
+            <button *ngIf="btnConfig" pButton pRipple (click)="configR(d)" type="button"
+              class="btn p-button-primary  mr-1" styleClass="p-button-sm">
+              <i class="pi {{iconBtnConfig?iconBtnConfig:'pi-cog'}}"></i>
+            </button>
+
+            <button *ngIf="btnEdit" pButton pRipple (click)="editRow(d)" type="button" icon="pi pi-pencil"
+              class="btn p-button-success  mr-1" styleClass="p-button-sm">
+            </button>
+            <button *ngIf="btnDelete" pButton pRipple (click)="deleteR(d, tableName?? '', headerstab)" pButton pRipple
+              type="button" icon="pi pi-trash" class="btn p-button-danger  mr-1" styleClass="p-button-sm">
+            </button>
+          </span>
+          <div></div>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>
+<p-overlayPanel #opSearch>
+  <ng-template pTemplate="content">
+    <div class="flex flex-column gap-3 w-25rem">
+      <div>
+        <input pInputText type="search" [(ngModel)]="filterGlobal" (ngModelChange)="this.filterSearch.next($event)"
+          placeholder="Buscar..." />
+        <ng-container *ngFor="let h of headerstabFilter; index as i">
+          <div class="col align-items-center mb-2">
+            <p-checkbox [id]="h.field"
+              [binary]="true"
+              [(ngModel)]="h.filter"
+              inputId="binary"></p-checkbox>
+            <label [for]="h.field" class="mx-2 m-0 p-0">{{h.label | titlecase }}</label>
+          </div>
+        </ng-container>
+      </div>
+    </div>
+  </ng-template>
+</p-overlayPanel>
+<p-overlayPanel #opDownload>
+  <ng-template pTemplate="content">
+    <ng-container [ngTemplateOutlet]="customDownloadTemplate"></ng-container>
+  </ng-template>
+</p-overlayPanel>
+
+<p-confirmDialog #cd [style]="{width: 'auto'}" [baseZIndex]="10000">
+  <p-footer>
+    <button type="button" pButton class="p-button-danger" icon="pi pi-times" label="No" (click)="cd.reject()">
+    </button>
+    <button type="button" pButton class="p-button-info" icon="pi pi-check" label="Si" (click)="cd.accept()">
+    </button>
+  </p-footer>
+</p-confirmDialog>
+
+<p-overlayPanel #op breakpoints="{'640px': '100vw'}" [style]="{width: '450px'}">
+  <p>{{dataoverlayPanel}}</p>
+</p-overlayPanel>

@@ -1,0 +1,177 @@
+<div class="d-flex flex-column">
+  <label *ngIf="!(label===false || label==='false')" for="miImput" class="block mb-0 text-capitalize {{labelClass}}">
+    {{label??'label text'}}
+    <i *ngIf="(initRequired || required)" class="text-danger">*</i>
+  </label>
+  <div class="p-inputgroup">
+    <input #input [id]="id" [(ngModel)]="value" type="{{type}}" [placeholder]="(placeholder ?? '')"
+      (input)="!nsNumber ? onChangeValue($any($event).target) : onInpt($event)" [disabled]="locked ? locked: disabled"
+      class="{{inputClass}} {{((hasError && (currentControl?.touched || currentControl?.dirty)) || borderRequired)||(borderRequired2)?'border-danger':''}}"
+      [style]="inputStyle" [required]="required" (focus)="getReqError();OnFocus.emit($event);"
+      (focusout)="OnFocusOut.emit($event);" (blur)="nsBlur.emit($event);onTouched($event)"
+      (keydown.arrowdown)="keyArrowDown.emit()" (keydown)="OnKeyDown.emit($event)" (keyup)="OnKeyUp.emit($event)"
+      (keydown.arrowup)="keyArrowUp.emit()" (keydown.tab)="keyTab.emit()" (keydown.enter)="keyEnter.emit()" />
+    <button type="button" (click)="getSegmentos();visible=true" pButton icon="pi pi-search">
+    </button>
+  </div>
+  <div class="w-100" style="height: 15px;">
+    <small class="text-danger fw-bold"
+      *ngIf="(hasError && (currentControl?.touched || currentControl?.dirty)) || required ||required2">
+      {{((hasError && (currentControl?.touched || currentControl?.dirty)) ||
+      borderRequired)||(borderRequired2)?messageError:''}}
+    </small>
+  </div>
+</div>
+
+<p-dialog header="unspsc" [(visible)]="visible" [modal]="true" [style]="{ width: '80vw' }" [draggable]="false"
+  [resizable]="false" [position]="'top'" [breakpoints]="{ '960px': '100vw' }">
+  <div class="w-100 contenedor">
+    <div class="spinner" *ngIf="(loading$ | async)">
+      <div class="w-100 text-center">
+        <i class="pi pi-spin pi-spinner bg-spinner" style="font-size: 2rem"></i>
+      </div>
+    </div>
+    <div class="row gy-4 pt-3">
+      <div class="mt-3 col-xxl-12 col-md-12">
+        <div class="form-group">
+          <div class="cal-icon">
+            <p-autoComplete appendTo="body" [suggestions]="productos" [placeholder]="'Buscar...'"
+              [inputStyle]="{'width': '100%', 'min-width': '100px' }" [style]="{'width':'100%','min-width':'100%'}"
+              inputStyleClass="p-0 w-100 {{layoutMode==='dark'?'form-control':''}}"
+              (onSelect)="getSuggstToProducto($event)" (completeMethod)="suggestProds($event)" [dataKey]="'codigo'"
+              [attr.optionValue]="'codigo'" [field]="'descripcion'" [minLength]="1" [forceSelection]="true"
+              [showClear]="true" [readonly]="segmento">
+              <ng-template let-value pTemplate="item">
+                <span style="font-size:11px; text-transform: uppercase;" class="pt-1 pb-1">
+                  <p-badge *ngIf="value&&value?.codigo" [value]="(value?.codigo ?? '')" severity="info"
+                    styleClass="m-0 mr-1">
+                  </p-badge>
+                  {{value?.descripcion}}
+                </span>
+              </ng-template>
+            </p-autoComplete>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row gy-4 pt-3">
+      <div class="mt-3 col-xxl-4 col-md-6">
+        <div class="form-group">
+          <span class="mb-0 pb-0">SEGMENTO</span>
+          <div class="cal-icon">
+            <p-dropdown appendTo="body" (onClear)="limpiar()" (onChange)="getSegmentoToFamilia()" [options]="segmentos"
+              styleClass="p-0 w-100 {{layoutMode==='dark'?'form-control':''}}"
+              [style]="{'width':'100%','min-width':'100%'}" [(ngModel)]="segmento" optionLabel="descripcion"
+              [filter]="true" filterBy="descripcion" [showClear]="true" placeholder="Select. Segmento">
+              <ng-template pTemplate="selectedItem">
+                <div class="seg-item seg-item-value d-flex" *ngIf="segmento">
+                  <p-badge *ngIf="segmento?.codigo" [value]="twoWords(segmento?.codigo, 2)" severity="info"
+                    styleClass="m-0 mr-1">
+                  </p-badge>
+                  <div class="p-lg-1">{{segmento?.descripcion}}</div>
+                </div>
+              </ng-template>
+              <ng-template let-seg pTemplate="item">
+                <div class="seg-item d-flex">
+                  <p-badge *ngIf="seg?.codigo" [value]="twoWords(seg?.codigo, 2)" severity="info" styleClass="m-0 mr-1">
+                  </p-badge>
+                  <div class="p-lg-1">{{seg?.descripcion}}</div>
+                </div>
+              </ng-template>
+            </p-dropdown>
+          </div>
+        </div>
+      </div>
+      <div class="mt-3 col-xxl-4 col-md-6">
+        <div class="form-group">
+          <span class="mb-0 pb-0">FAMILIA</span>
+          <div class="cal-icon">
+            <p-dropdown appendTo="body" (onClear)="clearFamilia()" (onChange)="getFamiliaToClase()" [options]="familias"
+              styleClass="p-0 w-100 {{layoutMode==='dark'?'form-control':''}}"
+              [style]="{'width':'100%','min-width':'100%'}" [(ngModel)]="familia" optionLabel="descripcion"
+              [filter]="true" filterBy="descripcion" [showClear]="true" placeholder="Select. Clase">
+              <ng-template pTemplate="selectedItem">
+                <div class="fam-item fam-item-value d-flex" *ngIf="familia">
+                  <p-badge *ngIf="familia?.codigo" [value]="twoWords(familia?.codigo, 4)" severity="info"
+                    styleClass="m-0 mr-2">
+                  </p-badge>
+                  <div class="p-lg-1">{{familia?.descripcion}}</div>
+                </div>
+              </ng-template>
+              <ng-template let-fam pTemplate="item">
+                <div class="fam-item d-flex">
+                  <p-badge *ngIf="fam?.codigo" [value]="twoWords(fam?.codigo, 4)" severity="info" styleClass="m-0 mr-1">
+                  </p-badge>
+                  <div class="p-lg-1">{{fam?.descripcion}}</div>
+                </div>
+              </ng-template>
+            </p-dropdown>
+          </div>
+        </div>
+      </div>
+      <div class="mt-3 col-xxl-4 col-md-6">
+        <div class="form-group">
+          <span class="mb-0 pb-0">CLASE</span>
+          <div class="cal-icon">
+            <p-dropdown appendTo="body" (onClear)="clearClase()" (onChange)="getClaseToProd()" [options]="clases"
+              styleClass="p-0 w-100 {{layoutMode==='dark'?'form-control':''}}"
+              [style]="{'width':'100%','min-width':'100%'}" [(ngModel)]="clase" optionLabel="descripcion"
+              [filter]="true" filterBy="descripcion" [showClear]="true" placeholder="Select. Clase">
+              <ng-template pTemplate="selectedItem">
+                <div class="cls-item cls-item-value d-flex" *ngIf="clase">
+                  <p-badge *ngIf="clase?.codigo" [value]="twoWords(clase.codigo, 6)" severity="info"
+                    styleClass="m-0 mr-1">
+                  </p-badge>
+                  <div class="p-lg-1">{{clase.descripcion}}</div>
+                </div>
+              </ng-template>
+              <ng-template let-cls pTemplate="item">
+                <div class="cls-item d-flex">
+                  <p-badge *ngIf="cls?.codigo" [value]="twoWords(cls?.codigo, 6)" severity="info" styleClass="m-0 mr-1">
+                  </p-badge>
+                  <div class="p-lg-1">{{cls?.descripcion}}</div>
+                </div>
+              </ng-template>
+            </p-dropdown>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <div class="row gy-4 pt-3">
+      <div class="mt-3 col-xxl-12 col-md-12">
+        <div class="form-group">
+          <span class="mb-0 pb-0">PRODUCTO</span>
+          <div class="cal-icon">
+            <p-dropdown appendTo="body" (onClear)="clearProd()" (onChange)="getProducto()" [options]="productos"
+              styleClass="p-0 w-100 {{layoutMode==='dark'?'form-control':''}}"
+              [style]="{'width':'100%','min-width':'100%'}" [(ngModel)]="producto" optionLabel="descripcion"
+              [filter]="true" filterBy="descripcion" [showClear]="true" placeholder="Select. Producto">
+              <ng-template pTemplate="selectedItem">
+                <div class="pr-item pr-item-value d-flex" *ngIf="producto">
+                  <p-badge *ngIf="producto?.codigo" [value]="twoWords(producto?.codigo, 8)" severity="info"
+                    styleClass="m-0 mr-1">
+                  </p-badge>
+                  <div class="p-lg-1">{{producto?.descripcion}}</div>
+                </div>
+              </ng-template>
+              <ng-template let-pr pTemplate="item">
+                <div class="pr-item d-flex">
+                  <p-badge *ngIf="pr?.codigo" [value]="twoWords(pr?.codigo, 8)" severity="info" styleClass="m-0 mr-1">
+                  </p-badge>
+                  <div class="">{{pr?.descripcion}}</div>
+                </div>
+              </ng-template>
+            </p-dropdown>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="mt-3 col-xxl-1 col-md-2 d-flex align-items-end">
+      <p-button [styleClass]="'w-100'" (onClick)="limpiar()" label="Limpiar" severity="help"></p-button>
+    </div>
+  </div>
+  <ng-template pTemplate="footer">
+    <p-button (click)="visible = false" label="Cerrar" styleClass="p-button-danger"></p-button>
+  </ng-template>
+</p-dialog>

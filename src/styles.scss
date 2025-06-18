@@ -1,0 +1,246 @@
+@import url('https://fonts.googleapis.com/icon?family=Material+Icons');
+@import url('//fonts.googleapis.com/earlyaccess/notosanstc.css');
+
+:root {
+  --tb-contraste-menu: rgb(236, 236, 236);
+  // opciones fondo y hover
+  --tb-bg-child: rgba(255, 255, 255, 0.979);
+  --tb-bg-child-active: rgb(236, 236, 236);
+  // // main button and childs
+  --btn-main: #7f94f3;
+  --btn-main-text: #ffffff;
+}
+input[type="time"i]::-webkit-calendar-picker-indicator {
+  background: url('data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20enable-background%3D%22new%200%200%2024%2024%22%20height%3D%2224px%22%20viewBox%3D%220%200%2024%2024%22%20width%3D%2224px%22%20fill%3D%22%23FFFFFF%22%3E%3Cg%3E%3Crect%20fill%3D%22none%22%20height%3D%2224%22%20width%3D%2224%22%2F%3E%3C%2Fg%3E%3Cg%3E%3Cg%3E%3Cg%3E%3Cpath%20d%3D%22M12%2C2C6.5%2C2%2C2%2C6.5%2C2%2C12s4.5%2C10%2C10%2C10s10-4.5%2C10-10S17.5%2C2%2C12%2C2z%20M16.2%2C16.2L11%2C13V7h1.5v5.2l4.5%2C2.7L16.2%2C16.2z%22%20fill%3D%22%233B82F6%22%2F%3E%3C%2Fg%3E%3C%2Fg%3E%3C%2Fg%3E%3C%2Fsvg%3E');
+  position: absolute;
+  right: 0.25rem;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.mat-white {
+  filter: invert(0) sepia(5%) saturate(4590%) hue-rotate(358deg) brightness(101%) contrast(112%);
+}
+.truncate-text {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.red {
+  color: hsl(0, 0%, 100%);
+}
+
+@font-face {
+  font-family: 'Material Icons';
+  font-style: normal;
+  font-weight: 400;
+  src: url(https://example.com/MaterialIcons-Regular.eot);
+  /* For IE6-8 */
+  src: local('Material Icons'), local('MaterialIcons-Regular'),
+    url(https://example.com/MaterialIcons-Regular.woff2) format('woff2'),
+    url(https://example.com/MaterialIcons-Regular.woff) format('woff'),
+    url(https://example.com/MaterialIcons-Regular.ttf) format('truetype');
+}
+
+.p-disabled,
+.p-component:disabled {
+  opacity: 0.8;
+}
+.material-icons {
+  font-family: 'Material Icons';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px;
+  /* Preferred icon size */
+  display: inline-block;
+  line-height: 1;
+  text-transform: none;
+  letter-spacing: normal;
+  word-wrap: normal;
+  white-space: nowrap;
+  direction: ltr;
+
+  /* Support for all WebKit browsers. */
+  -webkit-font-smoothing: antialiased;
+  /* Support for Safari and Chrome. */
+  text-rendering: optimizeLegibility;
+
+  /* Support for Firefox. */
+  -moz-osx-font-smoothing: grayscale;
+
+  /* Support for IE. */
+  font-feature-settings: 'liga';
+}
+
+tr:nth-child(even) {
+  background: rgb(239, 242, 247);
+}
+
+.shadow-class {
+  box-shadow: 0 0 7px rgb(127, 148, 243);
+}
+
+.p-tooltip .p-tooltip-text {
+  background-color: #17a2b8;
+  color: #ffffff;
+  padding-top: 4px;
+   padding-bottom: 4px;
+}
+
+[data-layout-mode=dark] .p-sidebar {
+  background: #4e555c !important;
+  box-shadow: 0 0 7px rgb(165, 180, 245);
+  color: white;
+}
+
+[data-layout-mode=dark] .p-dialog .p-dialog-content {
+  background: #4e555c !important;
+  box-shadow: 0 0 7px rgb(165, 180, 245);
+  color: white;
+}
+
+[data-layout-mode=dark] .p-dialog .p-dialog-header {
+  background: #4e555c !important;
+  color: white;
+  box-shadow: 0 0 7px rgb(165, 180, 245);
+}
+
+[data-layout-mode=dark] .p-dialog .p-dialog-header .p-dialog-header-icon {
+  color: #EF4444
+}
+
+[data-layout-mode=dark] .p-dialog .p-dialog-footer {
+  background: #4e555c !important;
+  color: white;
+  /* box-shadow: 5px 0 10px rgb(165, 180, 245); //* right
+  box-shadow: -5px 0 10px rgb(165, 180, 245); //* left */
+  box-shadow: 0 1px 7px rgb(165, 180, 245); //* bott
+  padding: .5rem 1.5rem .5rem 1.5rem;
+}
+
+[data-layout-mode=dark] .p-paginator {
+  //background: #4e555c !important;
+  border: solid var(--vz-input-bg) !important;
+}
+
+.p-dialog .p-dialog-footer button {
+  margin-right: 10px;
+}
+
+.p-dropdown .p-dropdown-trigger {
+  width: 1.5rem;
+}
+
+.p-dropdown .p-dropdown-clear-icon {
+  color: #EF4444;
+  right: 1.5rem;
+}
+
+.p-dropdown {
+  display: inline-flex;
+  cursor: pointer;
+  position: relative;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+.p-dropdown-panel .p-dropdown-items {
+  padding: 0;
+}
+
+.p-toast .p-toast-message.p-toast-message-warning {
+  background: #fff2e2;
+  border: solid #cc8925;
+  border-width: 0 0 0 6px;
+  color: #cc8925;
+}
+
+.p-toast .p-toast-message.p-toast-message-warning .p-toast-message-icon,
+.p-toast .p-toast-message.p-toast-message-warning .p-toast-icon-close {
+  color: #cc8925;
+}
+
+.p-dropdown-panel .p-dropdown-items .p-dropdown-item {
+  padding: 0.45rem 1.25rem !important;
+}
+
+.p-inputtext {
+  padding: 0.4rem 0.4rem 0.4rem 0.5rem !important;
+}
+
+.p-button.p-button-rounded {
+  border-radius: 2rem;
+}
+
+p-autocomplete.p-autocomplete-clearable .p-autocomplete-clear-icon {
+  color: #EF4444;
+}
+
+.p-autocomplete-panel .p-autocomplete-items .p-autocomplete-item {
+  padding: 5px 10px;
+}
+
+.p-dropdown-panel ol,
+ul {
+  padding-left: .5rem;
+}
+
+.p-dropdown-panel .p-dropdown-header {
+  padding: 0.35rem .5rem;
+}
+
+.p-divider .p-divider-content {
+  background-color: transparent;
+}
+
+.p-divider.p-divider-horizontal {
+  margin: 0;
+}
+
+.p-tag {
+  font-size: 1rem;
+}
+
+.alertify .ajs-header {
+  border-bottom: 0px solid #e5e5e5;
+}
+
+.alertify .ajs-footer {
+  border-top: 0px solid #e5e5e5;
+}
+
+.p-datatable-gridlines .p-datatable-thead>tr>th,
+.p-datatable-gridlines .p-datatable-tbody>tr>td,
+.p-datatable-gridlines .p-datatable-tfoot>tr>td {
+  border-right: 1px solid #ccc;
+  /* Cambia el color del borde derecho */
+  border-bottom: 1px solid #ccc;
+  /* Cambia el color del borde inferior */
+}
+
+.p-datatable-gridlines .p-datatable-thead>tr>th {
+  border-top: 1px solid #ccc;
+  /* Cambia el color del borde superior del encabezado */
+}
+
+.p-datatable-gridlines .p-datatable-tfoot>tr>td {
+  border-bottom: none;
+  /* Mantiene la eliminación del borde inferior en el pie de la tabla */
+}
+
+@media only screen and (max-width: 780px) {
+
+  .p-dialog-top .p-dialog,
+  .p-dialog-bottom .p-dialog,
+  .p-dialog-left .p-dialog,
+  .p-dialog-right .p-dialog,
+  .p-dialog-top-left .p-dialog,
+  .p-dialog-top-right .p-dialog,
+  .p-dialog-bottom-left .p-dialog,
+  .p-dialog-bottom-right .p-dialog {
+    margin: 0 !important;
+  }
+}

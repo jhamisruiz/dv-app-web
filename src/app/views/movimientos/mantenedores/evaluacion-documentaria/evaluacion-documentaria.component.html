@@ -1,0 +1,77 @@
+<app-tools (OnClickNew)="changeMode($event)" [isBtnNew]="false" (OnClickSave)="btnSubmit()" [ViewMode]="modeType"
+  (OnClickBack)="changeMode($event)" [setConfirm]="sms" [Message]="Message">
+</app-tools>
+
+<ng-container *ngIf="isViewMode || isDeleteMode">
+  <app-table [currentPath]="fullPath+'?esDocumentaria=0'" [headers]="headers" (OnBntClick)="getForm($event)" (OnEdit)="getForm($event)"
+    [btnEdit]="true" [refresh]="auto" [acciones]="false">
+  </app-table>
+</ng-container>
+<ng-container *ngIf="isCreateMode || isEditMode">
+  <p-card>
+    <form [formGroup]="form">
+      <h5>EVALUACIÓN - DOCUMENTARIA</h5>
+      <div class="row mt-3" *ngIf="!proveedor">
+        <app-table-grid [dataSource]="form.value.Lista_proveedores" (OnRowSelect)="getById($event)" [caption]="false"
+          [btnDelete]="false" [btnNewRow]="false" [btnEditRow]="false" [paginator]="false"
+          [headers]="headers_evaluacion">
+        </app-table-grid>
+      </div>
+    </form>
+    <div class="row" *ngIf="proveedor">
+      <form [formGroup]="formDocumentaria">
+        <div class="row" *ngIf="proveedor">
+          <div class="col-xxl-2 col-md-3 col-sm-4 pt-3">
+            <p-button label="Select. Otro Proveedor" (onClick)="resetFormulario()" [outlined]="true" severity="warning"
+              styleClass="w-100 mt-1" class="w-100 mt-1" icon="pi pi-reply"></p-button>
+          </div>
+          <!-- <div class="col-xxl-3 col-md-4 col-sm-4">
+            <div>
+              <app-select [currentPath]="'/insumos-buscar'" formControlName="insumo" [showClear]="false"
+                [filter]="false" optionValue="id" optionLabel="nombre" styleClass="p-0 w-100"
+                placeholder="-Seleccionar-" label="Insumo" [isTemplete]="true"
+                [Labels]="['codigo','nombre']" [formValid]="ok"></app-select>
+            </div>
+          </div> -->
+          <div class="col-xxl-3 col-md-4 col-sm-4">
+            <div>
+              <app-select [currentPath]="'/proveedor-buscar'" formControlName="proveedor" [showClear]="false" [filter]="false"
+                optionValue="id" optionLabel="empresa_razon_social" styleClass="p-0 w-100" placeholder="-Seleccionar-"
+                label="Proveedor" [isTemplete]="true" [Labels]="['empresa_ruc','empresa_razon_social']"
+                [formValid]="ok"></app-select>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-8">
+            <div class="card">
+              <app-table [dataSource]="data_documentaria" [LazyLoad]="loading" [selectableRow]="false" [dblclick]="false"
+                [headers]="headers_documentaria" [paginator]="false" [acciones]="false" [refresh]="auto">
+              </app-table>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="col-xxl-12 col-md-12">
+              <div>
+                <app-input inputClass="form-control" formControlName="comentario" label="Comentario" type="textarea"
+                  [formValid]="ok"></app-input>
+              </div>
+            </div>
+            <div class="col-xxl-12 col-md-12">
+              <div>
+                <app-input-file [setDataFile]="formDocumentaria.value?.documento_pdf" [base64]="true" (NgModelResponse)="getFile($event);"
+                  [accept]="'.pdf'" label="Adjuntar evidencia">
+                </app-input-file>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="office-viewer" *ngIf="pdf_view && formDocumentaria.value?.documento_pdf?.url">
+            <iframe title="pdf" class="doc" width="100%" height="100%" [src]="pdfUrl"></iframe>
+          </div>
+        </div>
+      </form>
+    </div>
+  </p-card>
+</ng-container>

@@ -1,0 +1,109 @@
+:host ::ng-deep .checkbox-box {
+  border: 2px solid #d1d5db;
+  background: #ffffff;
+  width: 22px;
+  height: 22px;
+  cursor: pointer;
+  color: #4b5563;
+  border-radius: 6px;
+  transition: background-color 0.2s, color 0.2s, border-color 0.2s, box-shadow 0.2s;
+  outline-color: transparent;
+}
+
+:host ::ng-deep .p-checkbox-box-highlight {
+  border-color: #3B82F6;
+  background: #3B82F6;
+}
+
+/* Estilos para el checkbox cuando está marcado */
+:host ::ng-deep .checkbox-box::before {
+  top: -5px;
+  content: '\2713';
+  font-size: 20px;
+  position: relative;
+  color: #FFFFFF;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+/* Estilos para el checkbox cuando no está marcado */
+:host ::ng-deep .checkbox-box::after {
+  content: '';
+}
+
+:host ::ng-deep .office-viewer {
+  width: 100%;
+  height: calc(180vh - 44px);
+  overflow: hidden;
+
+  iframe {
+    /* height: calc(100% - 4px); */
+    height: calc(100% - -22px);
+  }
+}
+
+:host ::ng-deep .p-button {
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  transition: background-color 0.2s, color 0.2s, border-color 0.2s, box-shadow 0.2s, outline-color 0.2s;
+  border-radius: 6px;
+  outline-color: transparent;
+}
+
+:host ::ng-deep  .p-stepper .p-stepper-panels {
+  background: transparent;
+  padding: 0rem;
+  color: #4b5563;
+}
+
+:host ::ng-deep .p-stepper .p-stepper-header.p-highlight .p-stepper-number {
+  background: #ffffff;
+  color: #3B82F6;
+}
+:host ::ng-deep .p-stepper .p-stepper-header.p-highlight .p-stepper-title {
+  color: #3B82F6;
+}
+:host ::ng-deep.p-stepper .p-stepper-header .p-stepper-action .p-stepper-number {
+  border: 1px solid #3B82F6;
+  background: #ffffff;
+}
+
+// Not Selected
+:host ::ng-deep .p-tabview .p-tabview-nav li .p-tabview-nav-link {
+  border-color: #2563eb;
+  background: white;
+  color: #495057;
+}
+
+// Selected
+:host ::ng-deep .p-tabview .p-tabview-nav li.p-highlight .p-tabview-nav-link {
+  background: #2563eb;
+  border-color: #2563eb;
+  color: white;
+}
+
+.progress-spinner {
+  position: fixed;
+  z-index: 999;
+  height: 2em;
+  width: 2em;
+  overflow: show;
+  margin: auto;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+}
+
+/* Transparent Overlay */
+.progress-spinner:before {
+content: '';
+display: block;
+position: fixed;
+top: 0;
+left: 0;
+width: 100%;
+height: 100%;
+background-color: rgba(0,0,0,0.53);
+}

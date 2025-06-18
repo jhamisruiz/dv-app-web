@@ -1,0 +1,72 @@
+<div class="d-flex flex-column">
+  <div class="d-flex flex-row" *ngFor="let d of data;let di = index">
+    <input type="checkbox" [(ngModel)]="d.selected" [checked]="d.selected" [indeterminate]="d.indeterminate"
+      (change)="onChange($event,d)" />
+    <div style="width: 100%;">
+      <p-chip (click)="d.active=d.active?false:true"
+        styleClass="pl-0 pr-3 pt-1 pb-1 mb-2 rounded rounded-3  text-white col-xxl-3 col-md-4 col-12"
+        [style]="{ 'background': 'linear-gradient(-225deg, #00d9ff 0%, #008cff 48%, #0044ff 100%)','padding-left':'20px'}">
+        <div class="d-flex align-items-center">
+          <span class="mx-2 font-medium">{{d.nombre}}</span>
+          <div class="rounded rounded-4 fs-3" style="max-width: 25px;margin-top: 6px;">
+            <i class="bx bx {{d?.icon}} {{d?.style}}"></i>
+          </div>
+        </div>
+        <div class="w-100">
+          <i class="{{!d.active? 'pi pi-plus' : 'pi pi-minus'}} mx-3 float-end"></i>
+        </div>
+      </p-chip>
+      <div class="row gx-0 collapse px-3 {{d.active?'show':''}}" id="module{{di}}">
+        <div class="d-flex flex-row" *ngFor="let c of d.componentes ?? [];let ci = index">
+          <input type="checkbox" [(ngModel)]="c.selected" [checked]="c.selected" [indeterminate]="c.indeterminate"
+            (change)="onChangeChild($event,c);indeterminate(d)" />
+          <a style="width: 100%;">
+            <p-chip (click)="(c.active =c.active?false:true)"
+              styleClass="pl-0 pr-3 pt-1 pb-1 mb-2 rounded rounded-3  text-white col-xxl-3 col-md-4 col-12"
+              [style]="{ 'background': 'linear-gradient(-225deg, #6aff65 0%, #22C55E 48%, #099885 100%)','padding-left':'20px','min-width':'200px'}">
+              <div class="d-flex align-items-center w-100">
+                <span class="mx-2 font-medium">{{c.nombre}}</span>
+                <div class="rounded rounded-4 fs-3" style="max-width: 25px;">
+                  <i class="bx bx {{c?.icon}} {{c?.style}}"></i>
+                </div>
+              </div>
+              <div class="w-100">
+                <i class="{{!c.active? 'pi pi-plus' : 'pi pi-minus'}} mx-3 float-end"></i>
+              </div>
+            </p-chip>
+            <div class="row gx-0 collapse px-3 {{c.active?'show':''}}">
+              <div class="col-xxl-1 col-lg-3 col-sm-3 col-4">
+                <div class="d-flex flex-column">
+                  <label for="" class="block text-capitalize">{{'CREAR'}}</label>
+                  <p-inputSwitch (onChange)="switchActive($event, c);indeterminate(d)"
+                    [(ngModel)]="c.user_create"></p-inputSwitch>
+                </div>
+              </div>
+              <div class="col-xxl-1 col-lg-3 col-sm-3 col-4">
+                <div class="d-flex flex-column">
+                  <label for="" class="block text-capitalize">{{'LEER'}}</label>
+                  <p-inputSwitch (onChange)="switchActive($event, c);indeterminate(d)"
+                    [(ngModel)]="c.user_read"></p-inputSwitch>
+                </div>
+              </div>
+              <div class="col-xxl-1 col-lg-3 col-sm-3 col-4">
+                <div class="d-flex flex-column">
+                  <label for="" class="block text-capitalize">{{'ACTUALIZAR'}}</label>
+                  <p-inputSwitch (onChange)="switchActive($event, c);indeterminate(d)"
+                    [(ngModel)]="c.user_update"></p-inputSwitch>
+                </div>
+              </div>
+              <div class="col-xxl-1 col-lg-3 col-sm-3 col-4">
+                <div class="d-flex flex-column">
+                  <label for="" class="block text-capitalize">{{'ELIMINAR'}}</label>
+                  <p-inputSwitch (onChange)="switchActive($event, c);indeterminate(d)"
+                    [(ngModel)]="c.user_delete"></p-inputSwitch>
+                </div>
+              </div>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

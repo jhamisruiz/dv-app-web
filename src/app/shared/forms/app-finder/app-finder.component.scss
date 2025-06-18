@@ -1,0 +1,21 @@
+:host ::ng-deep .form-control {
+  background-color: var(--vz-input-bg);
+  color: var(--vz-body-color);
+  border: 1px solid var(--vz-input-border);
+}
+
+// :host ::ng-deep .p-autocomplete-panel {
+
+//   ul {
+//     padding-left: 0;
+//   }
+// }
+
+[data-layout-mode=dark] :host ::ng-deep .p-dropdown-label {
+  color: var(--vz-body-color);
+}
+
+[data-layout-mode=dark] :host ::ng-deep .p-dropdown .p-dropdown-panel {
+  background-color: var(--vz-input-bg);
+  color: var(--vz-body-color);
+}

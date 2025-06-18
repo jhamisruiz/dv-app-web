@@ -1,0 +1,9 @@
+<app-tools (OnClickNew)="changeMode($event)" (OnClickSave)="onSubmit()" [ViewMode]="modeType"
+  (OnClickBack)="changeMode($event)">
+</app-tools>
+
+<ng-container *ngIf="isViewMode || isDeleteMode">
+  <app-table [path]="fullPath" (OnEdit)="getForm($event);" (OnDelete)="delForm($event)" [headers]="headers"
+    [btnDelete]="true" [btnEdit]="true" [refresh]="auto">
+  </app-table>
+</ng-container>

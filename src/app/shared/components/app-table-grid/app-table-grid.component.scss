@@ -1,0 +1,265 @@
+    .isdisabled {
+      border-color: var(--vz-btn-disabled-border-color);
+      opacity: var(--vz-btn-disabled-opacity);
+    }
+
+    :host ::ng-deep .p-calendar {
+      width: 100%;
+
+      .p-button.p-button-icon-only {
+        margin-left: -2.5rem;
+      }
+    }
+
+    [data-layout-mode=dark] :host ::ng-deep .th-dark {
+      background-color: var(--vz-header-bg-dark);
+      color: var(--vz-body-color);
+    }
+
+    :host ::ng-deep .p-datatable .p-datatable-thead>tr>th {
+      padding: 0.6rem 0.2rem;
+    }
+
+    :host ::ng-deep .p-datatable .p-datatable-header {
+      border: 0 solid #dee2e6;
+      border-bottom: 0px solid #dee2e6;
+      background-color: transparent;
+    }
+
+    [data-layout-mode=dark] :host ::ng-deep .p-datatable-header {
+      background-color: transparent;
+      color: var(--vz-body-color);
+    }
+
+    ::ng-deep .p-datatable>.p-datatable-wrapper {
+      border: var(--vz-border-width) var(--vz-border-style) var(--vz-border-color) !important;
+      box-shadow: 0 0 7px rgb(127, 148, 243);
+    }
+
+    [data-layout-mode=dark] :host ::ng-deep .p-datatable .p-datatable-tbody>tr {
+      background-color: var(--vz-input-bg);
+      color: var(--vz-body-color);
+    }
+
+    :host ::ng-deep .p-datatable .p-datatable-tbody>tr:hover {
+      background: rgb(185, 212, 247);
+      color: #000;
+    }
+
+    :host ::ng-deep.p-datatable .p-datatable-tbody>tr.p-highlight {
+      background-color: hwb(216 4% 16%);
+      color: #dad9d9;
+    }
+
+    [data-layout-mode=dark] :host ::ng-deep .p-paginator {
+      background-color: var(--vz-input-bg);
+      color: var(--vz-body-color);
+    }
+
+    [data-layout-mode=light] :host ::ng-deep .th-dark {
+      background-color: var(--gray-300);
+    }
+
+    :host ::ng-deep .p-badge {
+      line-height: 1.4rem !important;
+    }
+
+    :host ::ng-deep .p-button-success {
+      background-color: #22C55E;
+      color: #ffffff;
+    }
+
+    :host ::ng-deep.p-inputnumber-buttons-stacked .p-button.p-inputnumber-button-down {
+      height: 10px;
+    }
+
+    :host ::ng-deep .p-inputnumber-buttons-stacked .p-button.p-inputnumber-button-up {
+      height: 10px;
+    }
+
+    :host ::ng-deep .p-inputnumber-buttons-stacked .p-inputnumber-button-group {
+      margin-left: -18px !important;
+    }
+
+    :host ::ng-deep .p-button.p-button-icon-only {
+      width: auto;
+      padding: 0.2rem 0.8rem;
+      margin-right: 1px;
+    }
+
+    :host ::ng-deep .p-button-danger {
+      background-color: #EF4444;
+      color: #ffffff;
+    }
+
+    :host ::ng-deep .p-button-primary {
+      background-color: #3B82F6;
+      color: #ffffff;
+    }
+
+    :host ::ng-deep .p-button-secondary {
+      color: #ffffff;
+      background: #64748B;
+      border: 1px solid #64748B;
+    }
+
+    :host ::ng-deep .p-button-help {
+      color: #ffffff;
+      background: #A855F7;
+      border: 1px solid #A855F7;
+    }
+
+    :host ::ng-deep .p-button-warning {
+      color: #ffffff;
+      background: #F59E0B;
+      border: 1px solid #F59E0B;
+    }
+
+    :host ::ng-deep .p-datatable {
+      .p-datatable-header {
+        padding-top: 2px;
+        padding-bottom: 2px;
+        margin-bottom: 2px;
+      }
+    }
+
+    :host ::ng-deep .p-dropdown {
+
+      .p-dropdown-label {
+        padding: 3px 9px 3px;
+        min-height: 31px;
+      }
+
+      .p-dropdown-clear-icon {
+        right: 1.7rem;
+      }
+
+      .p-dropdown-trigger {
+        width: 30px;
+        max-height: 32px;
+      }
+    }
+
+    :host ::ng-deep .form-control {
+      padding-top: 0;
+      padding-bottom: 0;
+      background-color: var(--vz-topbar-user-bg);
+      color: var(--vz-body-color);
+      border: 1px solid var(--vz-input-border);
+    }
+
+    [data-layout-mode=dark] :host ::ng-deep .p-dropdown-label {
+      color: var(--vz-body-color);
+    }
+
+    [data-layout-mode=dark] :host ::ng-deep .p-dropdown .p-dropdown-panel {
+      background-color: var(--vz-topbar-user-bg);
+      color: var(--vz-body-color);
+    }
+
+    .tds {
+      border-left: 1px solid rgb(131, 127, 127);
+      border-right: 1px solid rgb(131, 127, 127);
+    }
+
+    //:host ::ng-deep .p-autocomplete {
+    :host ::ng-deep .p-inputtext {
+      width: 100%;
+      padding: 3px 9px 3px;
+      padding-left: 0.7rem !important;
+    }
+
+    :host ::ng-deep .p-inputnumber {
+      width: 100%;
+    }
+
+    :host ::ng-deep .p-badge {
+
+      .darck {
+        background-color: #282e38 !important;
+        color: #ffffff !important;
+      }
+    }
+
+    :host ::ng-deep .p-datatable .p-datatable-tbody>tr:focus {
+      outline: none;
+      outline-offset: 0.15rem;
+    }
+
+    .table .thead-light th {
+      font-size: 11px;
+      text-transform: uppercase;
+      padding-top: 5px;
+      padding-bottom: 5px;
+    }
+
+    .table tr,
+    .table th,
+    .table td {
+      padding-top: 5px;
+      padding-bottom: 5px;
+    }
+
+    :host ::ng-deep .badge-info {
+      border-radius: 10px;
+      background-color: #3B82F6;
+      color: #ffffff;
+    }
+
+    .text-right {
+      text-align: right !important;
+    }
+
+    .total {
+      border-radius: 8px;
+      height: 40px !important;
+      font-size: 18px;
+      font-weight: 500;
+      margin-left: 3px;
+      margin-right: 3px;
+    }
+
+    tr:nth-child(even) {
+      background: rgb(239, 242, 247);
+    }
+
+    :host ::ng-deep th span input {
+      padding: 0.2rem !important;
+      padding-right: 15px !important;
+      text-align: right !important;
+
+    }
+
+    .sizeGlobal {
+      padding-top: 5.8px;
+      padding-bottom: 5.8px;
+    }
+
+    .bodys {
+      //background-color: #3B82F6;
+      border: 1px solid rgb(233, 233, 233);
+      padding-left: 10px;
+      padding-right: 10px;
+      padding-top: 5px;
+      border-radius: 10px;
+      padding-bottom: 15px;
+    }
+
+    .title-tt {
+      border-left: 5px solid var(--btn-main) !important;
+      margin: 5px;
+      margin-top: 8px;
+      padding-left: 8px;
+      font-size: 13px;
+      font-weight: 600;
+      text-transform: uppercase;
+      color: var(--btn-main) !important;
+
+    }
+
+    .title-tt p {
+      font-size: 13px;
+      font-weight: 400;
+      color: #afafaf;
+      text-transform: none !important;
+    }

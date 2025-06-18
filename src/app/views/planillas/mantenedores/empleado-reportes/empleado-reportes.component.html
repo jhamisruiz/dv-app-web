@@ -1,0 +1,101 @@
+<div class="row d-flex justify-content-center mb-2 t-header">
+
+  <div class="col-xxl-4 col-md-6">
+    <div class="card mb-1">
+      <a class="card-body pb-0 bg-soft-success collapsed" data-bs-toggle="collapse" href="#contactInitiated"
+        role="button" aria-expanded="false" aria-controls="contactInitiated">
+        <h3 class="card-title text-uppercase fw-semibold mb-1 fs-20 text-center">{{dateString}}</h3>
+
+        <p class="text-center">
+          {{currentDayName}} {{currentDayNumber <= 9 ? 0 : '' }}{{currentDayNumber}}, {{currentYearNumber}} </p>
+
+      </a>
+    </div>
+    <!--end card-->
+    <div class="collapse " id="contactInitiated" style="width: 100%;" [attr.appDelclas]="true">
+      <div class="w-100 d-flex justify-content-center" appClickOutside (appClickOutside)="handleClickOutside()">
+        <div class="card w-100" noDirective>
+          <p-calendar class="max-w-full w-100" (onYearChange)="onYearChange()" (onMonthChange)="onMonthChange($event)"
+            (onTodayClick)="onShow($event)" (onSelect)="onSelect($event)" [style]="{'width': '100%'}" [(ngModel)]="date"
+            [inline]="true" [showWeek]="true"></p-calendar>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--end col-->
+
+</div>
+<ng-container>
+  <div class="table-h bg-success">
+    <!-- [daysMont]="daysInEachMonth" -->
+    <app-table [currentPath]="newPhat" [tableName]="'Personal'" [headers]="headers" (OnEdit)="OnRowSelect($event);"
+      [refresh]="auto" [btnEdit]="true" (OnRowSelect)="OnRowSelect($event)">
+    </app-table>
+  </div>
+</ng-container>
+
+<p-dialog #pdBack appendTo="body" header="ASISTENCIA" [modal]="true" [(visible)]="displayModal"
+  [style]="{width: '400px'}" [baseZIndex]="0" (click)="pdBack.moveOnTop()" [draggable]="false" [resizable]="true"
+  [closeOnEscape]="false" [showHeader]="false" [autoZIndex]="true">
+
+  <div class=" mt-4 ml-3">
+    <h4 class="font-weight-bold text-dark text-center">ASISTENCIA</h4>
+    <p class="text-center text-dark m-0 text-center">
+      {{currentDayName}} {{currentDayNumber <= 9 ? 0 : '' }}{{currentDayNumber}} de {{dateString}},
+        {{currentYearNumber}} </p>
+        <p class="block text-capitalize text-dark text-center">{{names}}</p>
+  </div>
+  <form [formGroup]="form">
+    <div class="row gy-4">
+      <div class="col-xxl-6">
+        <div class="d-flex flex-column">
+          <span for="switch2" class="pl-3 block text-capitalize text-dark">HORA INICIO</span>
+          <span class="text-dark border rounded p-2 pl-3">-- : --</span>
+        </div>
+      </div>
+      <div class="col-xxl-6">
+        <div class="d-flex flex-column">
+          <span for="switch2" class="pl-3 block text-capitalize text-dark">HORA FIN</span>
+          <span class="text-dark border rounded p-2 pl-3">-- : --</span>
+        </div>
+      </div>
+      <div class="col-xxl-6">
+        <div class="d-flex">
+
+          <p-inputSwitch formControlName="valor" inputId="switch1" (onChange)="onChangeSW($event, 1)"></p-inputSwitch>
+          <div class="p-1"></div>
+          <span for="switch1" class="pl-3 block text-capitalize text-success">AISTENCIA</span>
+
+        </div>
+      </div>
+      <div class="col-xxl-6">
+        <div class="d-flex">
+          <p-inputSwitch formControlName="valor2" (onChange)="onChangeSW($event, 2)" class="mr-3"
+            inputId="switch2"></p-inputSwitch>
+          <div class="p-1"></div>
+          <span for="switch2" class="pl-3 block text-capitalize text-danger">FALTA</span>
+        </div>
+      </div>
+    </div>
+  </form>
+  <hr>
+  <div class="mt5">
+    <div class="row custom-padding d-flex justify-content-center flex-wrap-reverse">
+      <div class="col-md-4 mb-1">
+        <button class="btn btn1 btn-danger w-100" type="button" (click)="displayModal=false"> CANCELAR </button>
+      </div>
+      <div class="col-md-4 mb-1">
+        <button class="btn btn3 btn-warning w-100" type="button" *ngIf="form.value.id"
+          (click)="changeMode('DELETE');onSubmit();displayModal=false">
+          ELIMINAR </button>
+      </div>
+      <div class="col-md-4 mb-1">
+        <button class="btn btn3 btn-success w-100" type="button" (click)="onSubmit()">
+          GUARDAR </button>
+      </div>
+
+    </div>
+  </div>
+
+
+</p-dialog>

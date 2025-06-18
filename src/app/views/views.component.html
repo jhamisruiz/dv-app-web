@@ -1,0 +1,40 @@
+<!-- Vertical Overlay-->
+<app-header></app-header>
+<app-sidebar></app-sidebar>
+<div class="vertical-overlay"></div>
+
+<!-- container -->
+<div class="main-content">
+  <div class="page-content">
+
+    <div class="container-fluid">
+      <div class="row" *ngIf="url[2]">
+        <div class="col-12">
+          <div class="page-title-box d-sm-flex align-items-center justify-content-between pt-1 pb-0">
+            <div class="mb-sm-0"></div>
+            <div class="page-title-right">
+              <ol class="breadcrumb m-0">
+                <li class="breadcrumb-item"><a [routerLink]="'/'" class="">Home</a></li>
+                <li class="breadcrumb-item active" *ngIf="modulo">
+                  <a href="javascript: void(0);" *ngIf="url.length===3"
+                    class="text-capitalize {{url.length>3?'':'text-primary'}}">{{modulo.name}}</a>
+                  <a [routerLink]="modulo.url" *ngIf="url.length>3"
+                    class="text-capitalize {{url.length>3?'':'text-primary'}}">{{modulo.name}}</a>
+                </li>
+                <li class="breadcrumb-item active" *ngIf="componente">
+                  <a href="javascript: void(0);" *ngIf="url.length===4"
+                    class="text-capitalize text-primary">{{componente.name}}</a>
+                  <a [routerLink]="componente.url" *ngIf="url.length>4"
+                    class="text-capitalize text-primary">{{componente.name}}</a>
+                </li>
+              </ol>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="" *ngIf="updateComponent">
+        <router-outlet></router-outlet>
+      </div>
+    </div>
+  </div>
+</div>

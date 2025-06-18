@@ -1,0 +1,60 @@
+<app-tools (OnClickNew)="changeMode($event)" (OnClickSave)="onSubmit()" [ViewMode]="modeType"
+  (OnClickBack)="changeMode($event)">
+</app-tools>
+
+<ng-container *ngIf="isViewMode || isDeleteMode">
+  <app-table [path]="fullPath" (OnEdit)="getForm($event);" (OnDelete)="delForm($event)" [headers]="headers"
+    [btnDelete]="true" [btnEdit]="true" [refresh]="auto">
+  </app-table>
+</ng-container>
+
+<ng-container *ngIf="isCreateMode || isEditMode">
+  <div class="card-body">
+    <form [formGroup]="form">
+      <div class="row gy-4">
+        <div class="col-xxl-2 col-md-6">
+          <div>
+            <app-input inputClass="form-control" formControlName="codigo" label="CÓDIGO" type="text"
+              [formValid]="ok"></app-input>
+          </div>
+        </div>
+        <!--<div class="col-xxl-4 col-md-6">
+          <div>
+             <app-input inputClass="form-control" formControlName="numero_expediente" label="NUMERO EXPEDIENTE" type="number"
+              [formValid]="ok"></app-input>
+          </div>
+        </div>//FIXME: SE OCULTO PARA MM-->
+        <div class="col-xxl-4 col-md-6">
+          <div>
+            <app-input inputClass="form-control" formControlName="nombre_expediente" label="NOMBRE EXPEDIENTE" type="text"
+              [formValid]="ok"></app-input>
+          </div>
+        </div>
+        <div class="col-xxl-4 col-md-6">
+          <div>
+            <app-input inputClass="form-control" formControlName="entidad_demandante" label="ENTIDAD DEMANDANTE" type="text"
+              [formValid]="ok"></app-input>
+          </div>
+        </div>
+        <div class="col-xxl-3 col-md-6">
+          <div>
+            <app-input inputClass="form-control" formControlName="fecha_convenio"
+              label="FECHA VENCIMIENTO" [dateNow]="true" type="calendar" [formValid]="ok"></app-input>
+          </div>
+        </div>
+        <div class="col-xxl-4 col-md-6">
+          <div>
+            <app-input inputClass="form-control" formControlName="numero_resolucion" label="N° DE RESOLUCIÓN" type="text"
+              [formValid]="ok"></app-input>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="row">
+    <app-table-grid [dataSource]="form.value.detalle" [paginator]="false" [headers]="headers_detalle"
+      (dataResponse)="updateDataResponse($event)" [btnNewRow]="false" [btnEditRow]="false">
+    </app-table-grid>
+  </div>
+
+</ng-container>

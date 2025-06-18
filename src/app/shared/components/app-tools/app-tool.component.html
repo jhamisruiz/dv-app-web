@@ -1,0 +1,67 @@
+<p-toolbar>
+  <div class="p-toolbar-group-start w-25  d-flex justify-content-start">
+    <div class="m-1" *ngIf="this.ViewMode?.isCreateMode || this.ViewMode?.isEditMode">
+      <p-button [disabled]="(loading$ | async)" *ngIf="isBtnBack" (click)="onClickBack()" icon="pi pi-arrow-left"
+        severity="danger" pTooltip="Regresar" />
+    </div>
+    <div class="m-1"
+      *ngIf="(this.ViewMode?.isViewMode ? true : (this.ViewMode?.formValid ? true : false))|| this.ViewMode?.isEditMode">
+      <p-button [disabled]="(loading$ | async)" *ngIf="isBtnNew" (click)="onClickNew()" icon="pi pi-plus" class="mx-2"
+        pTooltip="Nuevo" />
+    </div>
+    <div class="m-1" *ngIf="isBtnSave">
+      <div *ngIf="!(ViewMode?.isViewMode)">
+        <p-button [disabled]="saveDisabled || (loading$ | async)" *ngIf="btnSave" (click)="onClickSave()"
+          icon="pi pi-save" severity="success" pTooltip="Guardar" />
+      </div>
+    </div>
+  </div>
+</p-toolbar>
+<!-- <div class="row mb-1 d-flex justify-content-between">
+  <div class="col-xxl-2 col-md-4 m-1" *ngIf="this.ViewMode?.isCreateMode || this.ViewMode?.isEditMode">
+    <div>
+      <button *ngIf="isBtnBack" type="button" class="w-100 btn btn-danger p-0" (click)="onClickBack()">
+        <i class="mdi mdi-keyboard-return m-0" style="font-size: 24px"></i>
+      </button>
+    </div>
+  </div>
+  <div class="col-xxl-2 col-md-4 m-1"
+    *ngIf="(this.ViewMode?.isViewMode ? true : (this.ViewMode?.formValid ? true : false))|| this.ViewMode?.isEditMode">
+    <div>
+      <button *ngIf="isBtnNew" type="button" class="w-100 btn btn-primary" (click)="onClickNew()">Agregar
+        Nuevo</button>
+    </div>
+  </div>
+
+  <div class="col-xxl-2 col-md-4 m-1" *ngIf="isBtnSave">
+    <div *ngIf="!(ViewMode?.isViewMode)">
+      <button *ngIf="btnSave" type="button" class="w-100 btn btn-success" [disabled]="saveDisabled"
+        (click)="onClickSave()">GUARDAR</button>
+    </div>
+  </div>
+</div>
+ -->
+<p-toast [position]="'top-right'" [baseZIndex]="500000">
+</p-toast>
+<p-messages [(value)]="messages" [enableService]="false">
+</p-messages>
+<div class="card flex justify-content-center">
+  <p-confirmDialog breakpoints="{'640px': '100vw'}" [style]="{width: '550px'}">
+    <ng-template pTemplate="message" let-message>
+      <div class="w-100">
+        <i class="pi {{confSms?.icon?confSms?.icon:'pi-exclamation-circle  text-warning'}}"
+          style="font-size: 2.5rem;"></i>
+        <div class="row">
+          <p class="w-100">{{ message.message }}.</p>
+        </div>
+        <div class="w-100 d-flex justify-content-center" *ngIf=" confSms?.validators">
+          <ol>
+            <li *ngFor="let item of confSms?.validators; let i=index">
+              {{item}}
+            </li>
+          </ol>
+        </div>
+      </div>
+    </ng-template>
+  </p-confirmDialog>
+</div>

@@ -1,0 +1,52 @@
+._events {
+  pointer-events: none !important;
+  user-select: none;
+  z-index: 100 !important;
+}
+
+.dh-100 {
+  width: 100%;
+  height: 100%;
+}
+
+.dh-on-top {
+  position: absolute;
+  top: -2.2rem;
+  left: -1.7rem;
+  font-size: 30px;
+  z-index: 1;
+}
+
+.rs-form {
+  position: relative;
+  width: 451px;
+  height: 300px;
+  cursor: move;
+  border: dotted #ccc 4px;
+}
+
+.rs-div {
+  width: auto;
+  height: auto;
+  cursor: move;
+  align-items: center;
+  resize: both;
+}
+
+.rs-btn {
+  width: 160px;
+  align-items: center;
+  cursor: move;
+  resize: both;
+  overflow: auto;
+  border: dotted #ccc 4px;
+}
+
+.rs-input {
+  width: 160px;
+  //height: 29px;
+  cursor: move;
+  align-items: center;
+  resize: both;
+  overflow: auto;
+}

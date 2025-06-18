@@ -1,0 +1,71 @@
+<app-tools (OnClickNew)="changeMode($event)" (OnClickSave)="onSubmit()" [ViewMode]="modeType"
+  (OnClickBack)="changeMode($event)">
+</app-tools>
+
+<ng-container *ngIf="isViewMode || isDeleteMode">
+  <app-table [path]="fullPath" (OnEdit)="getForm($event);" (OnDelete)="delForm($event)" [headers]="headers"
+    [btnDelete]="true" [btnEdit]="true" [refresh]="auto">
+  </app-table>
+</ng-container>
+
+<ng-container *ngIf="isCreateMode || isEditMode">
+  <div class="card-body">
+    <form [formGroup]="form">
+      <div class="row gy-4">
+        <div class="col-xxl-2 col-md-6">
+          <div>
+            <app-input inputClass="form-control" formControlName="codigo" label="CODIGO" type="text"
+              [formValid]="ok"></app-input>
+          </div>
+        </div>
+        <div class="col-xxl-4 col-md-6">
+          <div>
+            <app-input inputClass="form-control" formControlName="nombre" label="NOMBRE" type="text"
+              [formValid]="ok"></app-input>
+          </div>
+        </div>
+        <div class="col-xxl-6 col-md-6">
+          <div>
+            <app-input inputClass="form-control" formControlName="descripcion" label="DESCRIPCION" type="text"
+              [formValid]="ok"></app-input>
+          </div>
+        </div>
+      </div>
+      <div class="row mt-3">
+        <div class="col-xxl-3 col-md-6">
+          <div>
+            <app-select [currentPath]="'/unidad-medida-buscar'" formControlName="id_unidadmedida" [showClear]="false"
+              [filter]="true" optionValue="id" optionLabel="descripcion" styleClass="p-0 w-100" placeholder="-Seleccionar-"
+              label="U. MEDIDA" [isTemplete]="true" filterBy="codigo,descripcion"[Labels]="['codigo','descripcion']" [formValid]="ok"></app-select>
+          </div>
+        </div>
+        <div class="col-xxl-3 col-md-6">
+          <div>
+            <app-input inputClass="form-control" formControlName="cantidad_total" label="CANTIDAD TOTAL" type="text"
+              [formValid]="ok"></app-input>
+          </div>
+        </div>
+        <div class="col-xxl-3 col-md-6">
+          <div>
+            <app-select [currentPath]="'/expediente-buscar'" formControlName="id_expediente" [filter]="true" [showClear]="true"
+              optionValue="id" filterBy="codigo,nombre_expediente,entidad_demandante" optionLabel="codigo" styleClass="p-0 w-100"
+              placeholder="-Seleccionar-" label="EXPEDIENTE" [isTemplete]="true"
+              [Labels]="['codigo','nombre_expediente','entidad_demandante']"></app-select>
+          </div>
+        </div>
+        <div class="col-xxl-3 col-md-6">
+          <div class="d-flex flex-column">
+            <label for="" class="block text-capitalize">HABILITAR</label>
+            <p-inputSwitch formControlName="habilitado"></p-inputSwitch>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <app-table-grid [dataSource]="form.value.detalle" [paginator]="false" [headers]="headers_detalle"
+          (dataResponse)="updateDataResponse($event)" [btnNewRow]="false" [btnEditRow]="false">
+        </app-table-grid>
+      </div>
+    </form>
+  </div>
+
+</ng-container>

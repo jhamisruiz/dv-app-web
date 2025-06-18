@@ -1,0 +1,78 @@
+<app-tools (OnClickNew)="changeMode($event)" (OnClickSave)="onSubmit()" [ViewMode]="modeType"
+  (OnClickBack)="changeMode($event)">
+</app-tools>
+
+<ng-container *ngIf="isViewMode || isDeleteMode">
+  <app-table [path]="fullPath" (OnEdit)="getForm($event);" (OnDelete)="delForm($event)" [headers]="headers"
+    [btnDelete]="true" [btnEdit]="true" [refresh]="auto">
+  </app-table>
+</ng-container>
+
+<ng-container *ngIf="isCreateMode || isEditMode">
+  <div class="card-body">
+    <form [formGroup]="form">
+      <div class="row gy-4">
+        <!--end col-->
+        <div class="col-xxl-3 col-md-6">
+          <div>
+            <app-input inputClass="form-control" (OnInput)="onInput($event)" formControlName="numero_documento"
+              label="RUC" type="text" [formValid]="ok"></app-input>
+          </div>
+        </div>
+        <!--end col-->
+        <div class="col-xxl-3 col-md-6">
+          <div>
+            <app-input inputClass="form-control" formControlName="razon_social" label="RAZON SOCIAL" type="text"
+              [formValid]="ok"></app-input>
+          </div>
+        </div>
+        <!--end col-->
+        <div class="col-xxl-3 col-md-6">
+          <div>
+            <app-input inputClass="form-control" formControlName="nombre_comercial" label="NOMBRE COMERCIAL" type="text"
+              [formValid]="ok"></app-input>
+          </div>
+        </div>
+      </div>
+      <app-ubigeo [setUbigeo]="form.value?.ubigeo" (NgModelResponse)="getUbigeo($event)"></app-ubigeo>
+
+      <div class="row mt-3">
+        <div class="col-xxl-6 col-md-6">
+          <div>
+            <app-input inputClass="form-control" formControlName="direccion" label="DIRECCION" type="text"
+              [formValid]="ok"></app-input>
+          </div>
+        </div><!--end col-->
+        <div class="col-xxl-3 col-md-6">
+          <div>
+            <app-input inputClass="form-control" formControlName="dominio" label="ADMIN DOMINIO" type="text"
+              [formValid]="ok" placeholder="nec-example"></app-input>
+          </div>
+        </div>
+      </div>
+
+      <div class="row mt-3">
+        <div class="col-xxl-3 col-md-6">
+          <div>
+            <app-input-file [setDataFile]="form.get('logo')?.value" [base64]="true" (NgModelResponse)="getFile($event);"
+              [accept]="'.jpg,.png'" label="LOGO EMPRESA" [fileLabel]="'Select. Imagen'" [imageHeight]="70"
+              [infoFile]="'La imagen no debe exceder 70 píxeles de altura'">
+            </app-input-file>
+          </div>
+        </div>
+        <div class="col-xxl-3 col-md-6">
+          <div class="d-flex flex-column">
+            <label for="" class="block text-capitalize">HABILITAR</label>
+            <p-inputSwitch formControlName="habilitado"></p-inputSwitch>
+          </div>
+        </div>
+      </div>
+      <div class="row" [hidden]="!(form.value.logo?.data)">
+        <div class="col-lg-6">
+          <img id="idimagenlogoempresa" [src]="image" alt="">
+        </div>
+      </div>
+    </form>
+  </div>
+
+</ng-container>

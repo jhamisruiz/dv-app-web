@@ -1,0 +1,91 @@
+<div class="field d-flex flex-column" *ngIf="simple && !multiselect">
+  <label for="" class="mb-0 block text-capitalize {{labelClass}}">
+    {{label??'label text'}}
+    <i *ngIf="(initRequired || required)" class="text-danger">*</i>
+  </label>
+  <p-dropdown appendTo="body" [options]="data" (onChange)="onChange($event)" (onFilter)="filterData($event)"
+    [(ngModel)]="descriptionValue" [filter]="filter" filterBy="{{filterBy}}" class="custom-dropdown"
+    styleClass="{{styleClass ?? class}} {{layoutMode==='dark'?'form-control':''}} {{(hasError && (currentControl?.touched || currentControl?.dirty)) || borderRequired2?'border-danger':''}}"
+    placeholder="{{placeholder}}" optionLabel="{{optionLabel}}" [disabled]="locked ? locked: disabled"
+    [required]="required" optionValue="{{optionValue}}" [showClear]="(!!descriptionValue) && showClear"
+    (onClear)="onClear($event)" (onHide)="onHide($event)" panelStyleClass="custom-dd"
+    (keydown.arrowdown)="keyArrowDown.emit()" (keydown.arrowup)="keyArrowUp.emit()" (keydown.tab)="keyTab.emit()"
+    (keydown.enter)="keyEnter.emit()">
+    <ng-template let-select pTemplate="selectedItem" *ngIf="isTemplete">
+      <div class="select-item select-item-value" *ngIf="descriptionValue">
+        <div class="d-flex">
+          <p-badge *ngIf="Labels.length > 1 && select && select[Labels[0]]" [value]="select[Labels[0]]" severity="info"
+            styleClass="m-0"></p-badge>
+          <div *ngFor="let lbl of Labels; let i = index" class="mx-1 {{i===0? 'd-none':''}}">
+            {{i>0? select[lbl]:''}}
+          </div>
+        </div>
+      </div>
+    </ng-template>
+    <ng-template let-select pTemplate="item" *ngIf="isTemplete">
+      <div class="select-item">
+        <div class="d-flex">
+          <p-badge *ngIf="Labels.length > 1 && select && select[Labels[0]]" [value]="select[Labels[0]]" severity="info"
+            styleClass="m-0 mr-1"></p-badge>
+          <div *ngFor="let lbl of Labels; let i = index" class="mx-1 {{i===0? 'd-none':''}}">
+            {{i>0? select[lbl]:''}}
+          </div>
+        </div>
+      </div>
+    </ng-template>
+  </p-dropdown>
+  <div class="w-100" style="height: 15px;">
+    <small class="text-danger fw-bold"
+      *ngIf="(hasError && (currentControl?.touched || currentControl?.dirty) ||required2)">
+      {{messageError}}
+    </small>
+  </div>
+</div>
+<div class="field d-flex flex-column" *ngIf="multiselect">
+  <label for="" class="block text-capitalize {{labelClass}}">
+    {{label??'label text'}}
+    <i *ngIf="(initRequired || required)" class="text-danger">*</i>
+  </label>
+  <p-multiSelect appendTo="body" [options]="data" (onChange)="onChange($event)" [(ngModel)]="descriptionValue"
+    [filter]="filter" filterBy="{{optionLabel}}"
+    styleClass="{{styleClass ?? class}} {{(hasError && (currentControl?.touched || currentControl?.dirty)) || borderRequired2?'border-danger':''}}"
+    placeholder="{{placeholder}}" optionLabel="{{optionLabel}}" [disabled]="disabled" [required]="required"
+    optionValue="{{optionValue}}" [showClear]="showClear" (onClear)="onClear($event)" (onHide)="onHide($event)"
+    panelStyleClass="custom-dd" (keydown.arrowdown)="keyArrowDown.emit()" (keydown.arrowup)="keyArrowUp.emit()"
+    (keydown.tab)="keyTab.emit()" (keydown.enter)="keyEnter.emit()" (onPanelHide)="onPanelHide(descriptionValue)"
+    defaultLabel="Select." display="chip">
+
+  </p-multiSelect>
+
+  <!-- <p-dropdown appendTo="body" [options]="data" (onChange)="onChange($event)" [(ngModel)]="descriptionValue"
+    [filter]="filter" filterBy="{{optionLabel}}"
+    styleClass="{{styleClass ?? class}} {{(hasError && (currentControl?.touched || currentControl?.dirty)) || borderRequired2?'border-danger':''}}"
+    placeholder="{{placeholder}}" optionLabel="{{optionLabel}}" [disabled]="disabled" [required]="required"
+    optionValue="{{optionValue}}" [showClear]="showClear" (onClear)="onClear($event)" (onHide)="onHide($event)"
+    panelStyleClass="custom-dd" (keydown.arrowdown)="keyArrowDown.emit()" (keydown.arrowup)="keyArrowUp.emit()"
+    (keydown.tab)="keyTab.emit()" (keydown.enter)="keyEnter.emit()">
+    <ng-template let-select pTemplate="selectedItem" *ngIf="isTemplete">
+      <div class="select-item select-item-value" *ngIf="descriptionValue">
+        <div>
+          {{select[optionValue ?? '']}}
+          {{select[optionValue1??''] ? ' - '+ select[optionValue1??'']: ''}}
+          {{select[optionValue2??''] ? ' - '+ select[optionValue2??'']: ''}}
+          {{select[optionValue3??''] ? ' - '+ select[optionValue3??'']: ''}}
+        </div>
+      </div>
+    </ng-template>
+    <ng-template let-select pTemplate="item" *ngIf="isTemplete">
+      <div class="select-item">
+        <div>
+          {{select[optionValue ?? '']}}
+          {{select[optionValue1??''] ? ' - '+ select[optionValue1??'']: ''}}
+          {{select[optionValue2??''] ? ' - '+ select[optionValue2??'']: ''}}
+          {{select[optionValue3??''] ? ' - '+ select[optionValue3??'']: ''}}
+        </div>
+      </div>
+    </ng-template>
+  </p-dropdown> -->
+  <div class="w-100" *ngIf="(hasError && (currentControl?.touched || currentControl?.dirty) ||required2)">
+    <small class="text-danger fw-bold">{{messageError}}</small>
+  </div>
+</div>

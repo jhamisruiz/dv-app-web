@@ -1,0 +1,106 @@
+<ng-container>
+  <p-card header="Resultado de Evaluaciones">
+    <app-table [currentPath]="fullPath+'?esDocumentaria=1'" [headers]="headers" [exports]="true" [refresh]="auto" [acciones]="false"
+      (OnEdit)="onViewResults($event)"(OnBntExel)="openExcelInNewTab($event)" (OnBntClick)="onViewResults($event)"
+      [customDownloadTemplate]="customDownload">
+    </app-table>
+  </p-card>
+</ng-container>
+
+<p-dialog [header]="dialogTitle" [resizable]="false" [modal]="true" [maximizable]="true" appendTo="body"
+  [(visible)]="dialogVisible" [style]="{width: '100vw'}" (onHide)="hideDialog()" [contentStyle]="{height: '70vh'}">
+  <p-table
+        [value]="results"
+        [scrollable]="true"
+        dataKey="id"
+        [expandedRowKeys]="expandedRows"
+        scrollHeight="flex"
+        styleClass="{{'p-datatable-gridlines'}}"
+        [tableStyle]="{'min-width': '50rem'}">
+            <ng-template pTemplate="header">
+                <tr>
+                    <th style="width: 5rem"></th>
+                    <th pResizableColumn [pSortableColumn]="col.label" *ngFor="let col of headers_evaluacion">
+                        {{col.label}} <p-sortIcon [field]="col.label" />
+                    </th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-results let-expanded="expanded">
+                <tr>
+                  <td>
+                    <p-button type="button" pRipple [pRowToggler]="results" [text]="true" [rounded]="true" [plain]="true" [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'" />
+                  </td>
+                  <td *ngFor="let h of headers_evaluacion">
+                    <div *ngIf="h.isTag; then tag else emptyContent"></div>
+                    <ng-template #tag>
+                      <!--{{results[h.field]}}
+                       <p-tag [hidden]="!results[h.field]" [value]="getTagValue(results[h.field], h.qualifiedLabel, h.unqualifiedLabel)" [severity]="getSeverity(results[h.field], h.qualifiedLabel, h.unqualifiedLabel)" /> -->
+                    <p-badge *ngIf="results[h.field]===true" [value]="('Descalificado')" [severity]="('danger')" />
+                    <p-badge *ngIf="results[h.field]!==true" [value]="('Calificado')"
+                      [severity]="(h?.severity?h?.severity:'info')" />
+                    </ng-template>
+                    <ng-template #emptyContent>
+                      {{results[h.field]}}
+                    </ng-template>
+                  </td>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="rowexpansion" let-results>
+              <tr class="p-3">
+                  <td [attr.colspan]="headers_evaluacion.length + 1">
+                    <p-card header="Observaciones">
+                      <ng-template pTemplate="content" class="p-0">
+                        <div class="row d-inline d-flex justify-content-center">
+                          <ng-container *ngFor="let o of headers_obs">
+                            <div class="col-md-3">
+                              <p-panel [header]="o.label">
+                                <p>
+                                    {{results[o.field] || '' }}
+                                </p>
+                              </p-panel>
+                            </div>
+                          </ng-container>
+                        </div>
+                      </ng-template>
+                    </p-card>
+                  </td>
+              </tr>
+          </ng-template>
+    </p-table>
+  <!-- <app-table-grid [dataSource]="results" [headers]="headers_evaluacion" [caption]="false" [btnDelete]="false"
+    [btnNewRow]="false" [btnEditRow]="false" [paginator]="false" [gridlines]="true">
+  </app-table-grid> -->
+  <ng-template pTemplate="footer">
+    <button type="button" pButton pRipple icon="pi pi-times" (click)="dialogVisible = false" label="Cerrar"
+      class="p-button-text">
+    </button>
+  </ng-template>
+</p-dialog>
+
+<ng-template #customDownload>
+  <form class="flex flex-column gap-3 w-25rem" [formGroup]="form">
+    <h3 class="font-medium text-900 block mb-2">Descargar</h3>
+    <div class="form-group p-1">
+      <p-selectButton
+        [options]="downloadOptions"
+        formControlName="downloadOption"
+        optionLabel="label"
+        optionValue="value" />
+    </div>
+    <div class="form-group p-1">
+      <app-select [currentPath]="'/convocatoria-buscar'" formControlName="idConvocatoria"
+              [showClear]="true" [filter]="false" optionValue="id" optionLabel="nombre_convocatoria" styleClass="p-0 w-100"
+              placeholder="-Seleccionar convocatoria" label="convocatoria" [isTemplete]="true" [Labels]="['codigo','nombre']">
+      </app-select>
+    </div>
+    <div class="form-group p-1">
+      <app-select [currentPath]="'/expediente-buscar'" formControlName="idExpediente"
+              [showClear]="true" [filter]="false" optionValue="id" optionLabel="nombre_expediente" styleClass="p-0 w-100"
+              placeholder="-Seleccionar expediente" label="expediente" [isTemplete]="true" [Labels]="['codigo','nombre_expediente']">
+      </app-select>
+    </div>
+    <button type="button" severity="success" class="btn p-button-success btn-success pl-3 pr-3 mr-1" (click)="onExportData()">
+      <i class="pi pi-file-excel"></i>
+    </button>
+  </form>
+</ng-template>
