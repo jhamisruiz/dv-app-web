@@ -78,5 +78,5 @@ jobs:
           docker run -d \
             --name  app-web-container \
             -p 8000:8080 \
-            ghcr.io/nectextil/nec-app-web:latest
+            ghcr.io/jhamisruiz/dev-app-web:latest
         EOF
