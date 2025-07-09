@@ -403,7 +403,7 @@ export abstract class AbstractForm extends AbstractComponent implements AfterVie
     if (this.paramasCodeValidator) {
       params = { ...params, ...this.paramasCodeValidator };
     }
-    return this.httpClient.get(`/${this.fullPath}/codigo`, {
+    return this.httpClient.get(`/${this.fullPath}-codigo`, {
       params: params,
     });
   }

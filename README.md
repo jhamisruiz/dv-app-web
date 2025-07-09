@@ -29,6 +29,8 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 
 ### 1. Ageragr un mensaje donde si modifica un campo en el form o tabla del form que indique de dicho cambio y sugerir guardar
 
+## ng generate
+ -  ng generate component views/caja/mantenedores/egresos --skip-tests
 
 ## GIT ACTIONS
 

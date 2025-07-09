@@ -7,7 +7,7 @@ export const UniqueCode = (fn: (value: string) => Observable<any>): AsyncValidat
     .pipe(
       map(res => {
         // if code is already taken
-        if (res) {
+        if (res?.code && res.code === true) {
           // return error
           return { codeExist: true };
         }

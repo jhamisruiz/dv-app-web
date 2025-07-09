@@ -23,9 +23,9 @@ export class AuthInterceptor implements HttpInterceptor {
       if (event instanceof HttpResponse) {
         //FIXME:
         //(event && includes(event.url, LOGOUT_API_PATH) && event.body && !event.body.error)
-        if (event && includes(event.url, LOGIN_API_PATH) && event.body && event.body?.id) {
+        if (event && includes(event.url, LOGIN_API_PATH) && event.body && event.body?.success && event.body?.data) {
           //NOTE: datos del usuario para crear session
-          const data = event.body;
+          const data = event.body.data;
 
           //FIXME: fixear TOKEN, FECHA DE EXPIRACION y mas datos
           //8888

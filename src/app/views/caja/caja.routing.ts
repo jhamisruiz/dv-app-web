@@ -6,6 +6,9 @@ import { HomeCajaComponent } from './home-caja/home-caja.component';
 import { PlanCuentasComponent } from './mantenedores/plan-cuentas/plan-cuentas.component';
 import { RegistrosComponent } from './mantenedores/registros/registros.component';
 import { UserGuard } from '@app/shared/guards/guards/user.guard';
+import { GestionCuentasComponent } from './mantenedores/gestion-cuentas/gestion-cuentas.component';
+import { IngresosComponent } from './mantenedores/ingresos/ingresos.component';
+import { EgresosComponent } from './mantenedores/egresos/egresos.component';
 
 const routes: Routes = [
   {
@@ -26,6 +29,21 @@ const routes: Routes = [
         component: RegistrosComponent,
         canActivate: [UserGuard],
       },
+      {
+        path: 'gestion-de-cuentas',
+        component: GestionCuentasComponent,
+        canActivate: [UserGuard],
+      },
+      {
+        path: 'ingresos',
+        component: IngresosComponent,
+        canActivate: [UserGuard],
+      },
+      {
+        path: 'egresos',
+        component: EgresosComponent,
+        canActivate: [UserGuard],
+      }
     ],
   },
 ];
