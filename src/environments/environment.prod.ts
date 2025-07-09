@@ -2,7 +2,8 @@ export const environment = {
   production: true,
   host: 'localhost:8080', //'gateway.adminedic.com',
   wsHost: 'prueba/ws',
-  wsSSL: true,
+  //wsSSL: true,
+  wsSSL: false,
 
   userName: '',//'admin' \ 'kalva,
   userPass: '',//'admin123' \ '123,
