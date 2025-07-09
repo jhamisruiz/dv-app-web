@@ -36,6 +36,7 @@ export class HttpConfig implements HttpInterceptor {
       const version = environment.apiVersion;
 
       url = `${protocol}://${[remoteUrl, version, ...endpoint].join('/')}`;
+      // url = `${protocol}://${[remoteUrl +version, ...endpoint].join('/')}`;
     }
 
     // Obtener el token de usuario.

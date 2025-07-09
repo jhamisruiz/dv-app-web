@@ -24,7 +24,7 @@ export const LOCAL_CORPORATION = 'c';
 // NOTE: API PATH
 
 export const UBIGEO_PATH = '/ubigeo';
-export const LOGIN_API_PATH = '/auth';
+export const LOGIN_API_PATH = '/login';//'/auth';
 export const LOGOUT_API_PATH = '/logout';//FIXME: implementar
 export const DATAHANDLER_API_PATH = '/data-handler';
 
