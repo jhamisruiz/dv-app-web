@@ -8,8 +8,8 @@ export const environment = {
   userPass: '',//'admin123' \ '123,
   apiHost: 'localhost:8080', //'gateway.adminedic.com',
   apiVersion: 'v1',
-  apiSSL: true,
-  //apiSSL: false,
+  //apiSSL: true,
+  apiSSL: false,
 
   dataLayoutMode: 'light',
   dataLayout: 'horizontal',// horizontal | vertical | semibox
