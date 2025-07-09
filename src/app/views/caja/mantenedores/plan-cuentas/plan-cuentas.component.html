@@ -1,5 +1,39 @@
-<ul>
-  <li>
-    plan cuentas works!
-  </li>
-</ul>
+<div class="contable-peruana">
+  <h2>Contable Peruana</h2>
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div>
+      <label for="pcgeAccount">Cuenta PCGE</label>
+      <select id="pcgeAccount" formControlName="pcgeAccount">
+        <option value="" disabled>Seleccione una cuenta</option>
+        <option *ngFor="let account of pcgeAccounts" [value]="account.code">
+          {{account.code}} - {{account.name}}
+        </option>
+      </select>
+    </div>
+    <div>
+      <label for="category">Categoría</label>
+      <input id="category" type="text" formControlName="category" placeholder="Descripción de la categoría" />
+    </div>
+    <button type="submit" [disabled]="form.invalid">Agregar</button>
+  </form>
+
+  <table *ngIf="mappings.length > 0">
+    <thead>
+      <tr>
+        <th>PCGE</th>
+        <th>Categoría</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let m of mappings">
+        <td>{{m.pcgeAccount}}</td>
+        <td>{{m.category}}</td>
+        <td>
+          <button type="button">Editar</button>
+          <button type="button">Eliminar</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

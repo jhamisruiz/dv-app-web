@@ -91,7 +91,6 @@ export class AppLoginComponent implements OnInit, OnDestroy {
       )
       .subscribe({
         error: (err) => {
-          console.log('login: err', err);
           this.submit = false;
           this.err = err;
           const message = String(err?.message ?? '').replace(/\(#([0-9]+)\)/, err?.help ? `<a href="${err.help}">(#$1)</a>` : '(#$1)');
