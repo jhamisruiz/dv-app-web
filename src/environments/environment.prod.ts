@@ -1,13 +1,13 @@
 export const environment = {
   production: true,
-  host: 'localhost:8080', //'gateway.adminedic.com',
+  host: '146.190.166.20:8080', //'gateway.adminedic.com',
   wsHost: 'prueba/ws',
   //wsSSL: true,
   wsSSL: false,
 
-  userName: '',//'admin' \ 'kalva,
-  userPass: '',//'admin123' \ '123,
-  apiHost: 'localhost:8080', //'gateway.adminedic.com',
+  userName: 'admin',//'admin' \ 'kalva,
+  userPass: '123',//'admin123' \ '123,
+  apiHost: '146.190.166.20:8080', //'gateway.adminedic.com',
   apiVersion: 'v1',
   //apiSSL: true,
   apiSSL: false,
@@ -16,5 +16,5 @@ export const environment = {
   dataLayout: 'horizontal',// horizontal | vertical | semibox
 
   //backend public
-  hostPublic: 'localhost:8080', //'https://gateway.adminedic.com',
+  hostPublic: '146.190.166.20:8080', //'https://gateway.adminedic.com',
 };
