@@ -25,7 +25,7 @@ export class AppSidebarComponent implements OnInit, AfterViewInit {
   menuUrl = '';
   newURL = '';
   preloader = false;
-  logo = 'assets/images/LOGO-NEC.png';
+  logo = 'assets/images/logo-dev.png';
   constructor(
     private sv: AppConfigService,
     private router: Router,

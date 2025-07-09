@@ -23,20 +23,23 @@ export interface Modulo {
   indeterminate?: boolean;
 }
 
+export interface RolPermisos {
+  id?: number | null;
+  id_rol?: number | null;
+  user_create?: boolean;
+  user_read?: boolean;
+  user_update?: boolean;
+  user_delete?: boolean;
+}
 export interface Componente {
   id?: number;
   nombre?: string;
   url?: string;
   icon?: string;
-  id_menu?: number;
+  id_modulo?: number;
   orden?: number;
   style?: string;
-  id_rol?: number;
-  idrol_permiso?: number;
-  user_create?: boolean;
-  user_read?: boolean;
-  user_update?: boolean;
-  user_delete?: boolean;
+  rol_permiso: RolPermisos;
   active?: boolean;
   selected?: boolean;
   indeterminate?: boolean;
@@ -105,7 +108,7 @@ export class AppSelectRolesComponent implements OnInit {
 
   getData(path: string, id: number): void {
     const dataObservable: Observable<Modulo[]> = id === 0 ?
-      this.sv.getdataSource(`menu?userid=${this.usuario_id}`) :
+      this.sv.getdataSource(`modulo?userid=${this.usuario_id}`) :
       this.sv.get(`${path}/${id}`);
 
     dataObservable.subscribe((r: Modulo[]) => {
@@ -153,10 +156,11 @@ export class AppSelectRolesComponent implements OnInit {
           componentes[i].active = val;
           componentes[i].selected = val;
           componentes[i].indeterminate = false;
-          componentes[i].user_create = val;
-          componentes[i].user_update = val;
-          componentes[i].user_read = val;
-          componentes[i].user_delete = val;
+          componentes[i].rol_permiso.id_rol = val ? this.id : (componentes[i].rol_permiso.id === null ? null : this.id);
+          componentes[i].rol_permiso.user_create = val;
+          componentes[i].rol_permiso.user_update = val;
+          componentes[i].rol_permiso.user_read = val;
+          componentes[i].rol_permiso.user_delete = val;
         });
       }
       this.dataResponse.emit(this.data ?? []);
@@ -177,17 +181,18 @@ export class AppSelectRolesComponent implements OnInit {
       d.active = val;
       d.selected = val;
       d.indeterminate = false;
-      d.user_create = val;
-      d.user_read = val;
-      d.user_update = val;
-      d.user_delete = val;
+      d.rol_permiso.id_rol = val ? this.id : (d.rol_permiso.id === null ? null : this.id);
+      d.rol_permiso.user_create = val;
+      d.rol_permiso.user_read = val;
+      d.rol_permiso.user_update = val;
+      d.rol_permiso.user_delete = val;
       this.dataResponse.emit(this.data ?? []);
     }
   }
   switchActive(e: any, c: Componente): void {
-    if (c.user_create === true && c.user_read === true && c.user_update === true && c.user_delete === true) {
+    if (c.rol_permiso && c.rol_permiso.user_create === true && c.rol_permiso.user_read === true && c.rol_permiso.user_update === true && c.rol_permiso.user_delete === true) {
       c.active = true; c.selected = true; c.indeterminate = false;
-    } else if (c.user_create === false && c.user_read === false && c.user_update === false && c.user_delete === false) {
+    } else if (c.rol_permiso && c.rol_permiso.user_create === false && c.rol_permiso.user_read === false && c.rol_permiso.user_update === false && c.rol_permiso.user_delete === false) {
       c.active = false; c.selected = false; c.indeterminate = false;
     } else {
       c.active = true; c.selected = false; c.indeterminate = true;
@@ -199,7 +204,7 @@ export class AppSelectRolesComponent implements OnInit {
     let countTrue = 0;
     let countFalse = 0;
     let countIndeterminate = 0;
-    componente.forEach((v) => {
+    componente.forEach((v: Componente) => {
       if (v.selected === true) {
         countTrue = countTrue + 1;
       } if (v.selected === false) {
@@ -207,6 +212,7 @@ export class AppSelectRolesComponent implements OnInit {
       } if (v.indeterminate === true) {
         countIndeterminate = countIndeterminate + 1;
       }
+      v.rol_permiso.id_rol = v.indeterminate ? this.id : (v.rol_permiso.id === null ? null : this.id);
     });
 
     if (countTrue > 0 && countFalse === 0) {

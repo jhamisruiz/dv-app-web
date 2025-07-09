@@ -1,0 +1,63 @@
+<p>ingresos works!</p>
+<!-- ingresos.component.html -->
+<div class="ingresos-container">
+    <h2>Registro de Ingresos</h2>
+
+    <form class="ingreso-form">
+        <div class="form-group">
+            <label for="fecha">Fecha</label>
+            <input id="fecha" type="date" class="input" />
+        </div>
+
+        <div class="form-group">
+            <label for="monto">Monto</label>
+            <input id="monto" type="number" class="input" />
+        </div>
+
+        <div class="form-group">
+            <label for="categoria">Categoría</label>
+            <select id="categoria" class="input">
+                <option value="" disabled selected>Seleccione</option>
+                <option value="venta">Venta</option>
+                <option value="alquiler">Alquiler</option>
+                <option value="otros">Otros</option>
+            </select>
+        </div>
+
+        <div class="form-group full-width">
+            <label for="descripcion">Descripción</label>
+            <textarea id="descripcion" rows="3" class="input"></textarea>
+        </div>
+
+        <button type="submit" class="btn">Guardar</button>
+    </form>
+
+    <div class="ingresos-list">
+        <h3>Listado de Ingresos</h3>
+        <table class="ingresos-table">
+            <thead>
+                <tr>
+                    <th>Fecha</th>
+                    <th>Descripción</th>
+                    <th>Categoría</th>
+                    <th>Monto</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Aquí se repetirán las filas de ingresos dinámicamente -->
+                <tr>
+                    <td>01/07/2025</td>
+                    <td>Venta de propiedad</td>
+                    <td>Venta</td>
+                    <td>S/ 150,000.00</td>
+                    <td>
+                        <button class="action-btn">Editar</button>
+                        <button class="action-btn">Eliminar</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+  

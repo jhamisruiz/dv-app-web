@@ -22,10 +22,11 @@ export class RolesComponent extends AbstractDocument implements OnInit {
 
   form: UntypedFormGroup = this.fb.group(
     {
-      id: [0],
+      id: [null],
       codigo: [{ value: null, disabled: this.isEditMode }, [Validators.required, Validators.minLength(4)],
       Validators.composeAsync([UniqueCode(this.codeValidator.bind(this))])],
       nombre: ['', [Validators.required]],
+      id_empresa: [1],
       habilitado: [true],
       detalle: [[], [Validators.required]],
     },

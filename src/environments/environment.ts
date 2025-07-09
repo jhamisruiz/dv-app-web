@@ -4,22 +4,22 @@
 
 export const environment = {
   production: false,
-  host: 'localhost:8002',
+  host: 'localhost:8080',
   wsHost: 'prueba/ws',
   wsSSL: true,
 
-  apiHost: 'localhost:8002',
+  apiHost: 'localhost:8080',
   apiVersion: 'v1',
   apiSSL: false,
   //develop mode
-  userName: 'pp',
+  userName: 'admin',
   userPass: '123',
 
   dataLayoutMode: 'dark',//dark | light
   dataLayout: 'horizontal',//horizontal | vertical | semibox
 
   //backend public
-  hostPublic: 'http://localhost:8002',
+  hostPublic: 'http://localhost:8080',
 };
 
 /*

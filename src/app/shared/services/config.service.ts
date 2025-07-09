@@ -23,7 +23,7 @@ export class AppConfigService {
 
   getMenu(): Observable<any> {
     const user_id = this.persistence.get(STOREKEY.USER_ID);
-    return this.http.get(`menu/sub-menu?userid=${user_id}&start=1&length=10&search=&order=asc`);
+    return this.http.get(`modulo-componente?userid=${user_id}&start=1&length=10&search=&order=asc`);
   }
 
   getUpdate(): Observable<boolean> {

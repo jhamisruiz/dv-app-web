@@ -16,7 +16,7 @@ export class AppHeaderComponent implements OnInit {
   userData: any;
   layoutMode: string | null = 'dark';
 
-  logo = 'assets/images/LOGO-NEC.png';
+  logo = 'assets/images/logo-dev.png';
 
   constructor(
     private user: UserService,

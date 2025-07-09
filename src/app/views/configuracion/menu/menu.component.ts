@@ -11,7 +11,7 @@ import { AppTable } from '@app/shared/components/app-table/app-table.interface';
 })
 
 export class MenuComponent extends AbstractDocument implements OnInit {
-  fullPath = '/menu';
+  fullPath = '/modulo';
   headers: AppTable[] = [
     { field: 'id', label: 'id', visible: false },
     { field: 'nombre', label: 'nombre', filter: true },
@@ -26,7 +26,7 @@ export class MenuComponent extends AbstractDocument implements OnInit {
       nombre: [, [Validators.required]],
       url: [, [Validators.required]],
       icon: [, [Validators.required]],
-      class: [, [Validators.required]],
+      class_name: [, [Validators.required]],
       style: [, [Validators.required]],
       orden: [, [Validators.required]],
       habilitado: [true],
