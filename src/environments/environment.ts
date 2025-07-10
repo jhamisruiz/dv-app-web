@@ -4,11 +4,11 @@
 
 export const environment = {
   production: false,
-  host: '147.182.207.226:8002', // 'localhost:8080',
+  host: 'localhost:8080',
   wsHost: 'prueba/ws',
   wsSSL: true,
 
-  apiHost: '147.182.207.226:8002', // 'localhost:8080',
+  apiHost:  'localhost:8080',
   apiVersion: 'v1',
   apiSSL: false,
   //develop mode
@@ -19,7 +19,7 @@ export const environment = {
   dataLayout: 'horizontal',//horizontal | vertical | semibox
 
   //backend public
-  hostPublic: '147.182.207.226:8002', // 'http://localhost:8080',
+  hostPublic:  'localhost:8080',
 };
 
 /*
