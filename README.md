@@ -35,3 +35,24 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 ## GIT ACTIONS
 
 1.- Configurar git
+
+```````````````````
+Estructura del sistema 
+Arquitectura del sistema 
+Administradores de plataforma 
+Niveles de acceso 
+Áreas de negocio 
+Documentos formatos (imprimibles) tramite documentario
+Alimentar Base datos 
+Almacenar, descargar..
+Facturación electrónica
+Proceso documentario 
+Progreso de trámite 
+Flujo de documentos 
+Flujo ingresos 
+Productos, servicios 
+Precios de productos 
+Planos actualización 
+Registros diversos..
+reportes imprimibles..
+Ingresos, Balances, record de Ventas, deudas, cobranz

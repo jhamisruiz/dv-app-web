@@ -145,7 +145,7 @@
 
               <div class="{{h.center ? 'text-center': ''}}" *ngIf="h.type==='habilitado'">
                 <div class="w-100 d-flex">
-                  <p-tag [value]="getValSeverity(d[h.field])" [severity]="getSeverity(d[h.field])"></p-tag>
+                  <p-tag [value]="getValSeverity(d[h.field], h?.data)" [severity]="getSeverity(d[h.field], h?.data)"></p-tag>
                 </div>
               </div>
             </ng-template>

@@ -410,7 +410,6 @@ export abstract class AbstractForm extends AbstractComponent implements AfterVie
 
   getIncompleteRequiredControls(formGroup: UntypedFormGroup | any, parentKey: string = ''): string[] {
     const incompleteControls: string[] = [];
-
     if (formGroup instanceof UntypedFormGroup) {
       Object.keys(formGroup.controls).forEach(controlName => {
         const control = formGroup.get(controlName);

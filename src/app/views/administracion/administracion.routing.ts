@@ -7,7 +7,7 @@ import { HomeAdministracionComponent } from './home-administracion/home-administ
 import { EmpresaComponent } from './mantenedores/empresa/empresa.component';
 import { UserGuard } from '@app/shared/guards/guards/user.guard';
 import { ProveedorComponent } from './mantenedores/proveedor/proveedor.component';
-import { ProveedorNucleoComponent } from './mantenedores/proveedor-nucleo/proveedor-nucleo.component';
+import { InmueblesComponent } from './mantenedores/inmuebles/inmuebles.component';
 
 const routes: Routes = [
   {
@@ -34,8 +34,8 @@ const routes: Routes = [
         canActivate: [UserGuard],
       },
       {
-        path: 'registro-de-proveedor-nucleo',
-        component: ProveedorNucleoComponent,
+        path: 'registro-de-lotes',
+        component: InmueblesComponent,
         canActivate: [UserGuard],
       },
     ],

@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AppLoginComponent } from './views/inicio/app-login/app-login.component';
 import { AuthGuard } from './shared/guards/guards/auth.guard';
+import { DOMAIN_COMPANY } from '@common/constants';
 
 const routes: Routes = [
   // {
@@ -16,13 +17,13 @@ const routes: Routes = [
     component: AppLoginComponent,
   },
   {
-    path: 'dominio_empresa',
+    path: DOMAIN_COMPANY,
     loadChildren: (): any => import('./views/views.routing')
       .then(m => m.ViewsRoutingModule),
   },
   {
     path: '**',
-    redirectTo: 'dominio_empresa',
+    redirectTo: DOMAIN_COMPANY,
     pathMatch: 'full',
   },
 ];

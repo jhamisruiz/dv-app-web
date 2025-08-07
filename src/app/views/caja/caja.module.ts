@@ -7,7 +7,6 @@ import { RouterModule } from '@angular/router';
 import { SharedModule } from '@app/shared/shared.module';
 import { HttpClientModule } from '@angular/common/http';
 import { PlanCuentasComponent } from './mantenedores/plan-cuentas/plan-cuentas.component';
-import { RegistrosComponent } from './mantenedores/registros/registros.component';
 import { cajaRoutingModule } from './caja.routing';
 import { GestionCuentasComponent } from './mantenedores/gestion-cuentas/gestion-cuentas.component';
 import { IngresosComponent } from './mantenedores/ingresos/ingresos.component';
@@ -21,7 +20,6 @@ import { EgresosComponent } from './mantenedores/egresos/egresos.component';
     GestionCuentasComponent,
     IngresosComponent,
     EgresosComponent,
-    RegistrosComponent,
   ],
   imports: [
     CommonModule,
@@ -39,7 +37,6 @@ import { EgresosComponent } from './mantenedores/egresos/egresos.component';
     GestionCuentasComponent,
     IngresosComponent,
     EgresosComponent,
-    RegistrosComponent,
   ],
 })
 export class CajaModule { }

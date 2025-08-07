@@ -26,7 +26,7 @@
     {{label??'label text'}}
     <i *ngIf="(initRequired || required)" class="text-danger">*</i>
   </label>
-  <p-calendar [(ngModel)]="defaultDate" [showIcon]="true" [dateFormat]="dateFormat" [minDate]="mindate"
+  <p-calendar [(ngModel)]="defaultDate" [showIcon]="true" [showTime]="showTime" [showSeconds]="showTime" [dateFormat]="getDateValue(dateFormat)" [minDate]="mindate"
     [maxDate]="maxdate" (onSelect)="onCalendarSelect($event)" [disabled]="locked ? locked: disabled"
     [inputStyle]="{'width':'100%','min-width':'100%'}" class="w-100"
     inputStyleClass="{{inputClass}} {{((hasError && (currentControl?.touched || currentControl?.dirty)) || borderRequired)||(borderRequired2)?'border-danger':''}}"

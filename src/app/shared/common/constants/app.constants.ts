@@ -1,5 +1,6 @@
 export const APP_URL = 'https://devnec.nectextil.pe/'; // enviroment.apiBaseAddr
 
+export const DOMAIN_COMPANY = 'dominio-empresa';
 // NOTE: HEADERS
 export const TRANSACTION_HEADER = 'app-transaction-id';
 export const MODULE_ID_HEADER = 'app-module-id';

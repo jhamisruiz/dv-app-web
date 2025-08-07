@@ -50,7 +50,7 @@
         </div>
         <div class="col-xxl-3 col-md-12">
           <div>
-            <app-input inputClass="form-control" formControlName="rep_password" label="REPITE CONTRASEÑA" type="text"
+            <app-input inputClass="form-control" formControlName="password_repeat" label="REPITE CONTRASEÑA" type="text"
               [formValid]="ok"></app-input>
           </div>
         </div>
@@ -72,17 +72,17 @@
               [showClear]="true" [filter]="false" optionValue="id" optionLabel="nombre" styleClass="p-0 w-100"
               placeholder="-Seleccionar-" label="ROL" [isTemplete]="true" [Labels]="['codigo','nombre']"
               [formValid]="ok"></app-select>
-            <a href="/{{ dominioEmpresa }}/configuracion/registro-de-rol" class="text-info" rel="noopener noreferrer">
+            <a [routerLink]="['/'+dominioEmpresa+'/configuracion/registro-de-rol']" class="text-info" rel="noopener noreferrer">
               {{'Agregar Rol'}}
             </a>
           </div>
         </div>
         <div class="col-xxl-3 col-md-6" [hidden]="idusuario>2">
           <div>
-            <!-- <app-select [currentPath]="'/empresa-buscar'" (OnChange)="selectChangempresa($event)" formControlName="id_empresa"
+            <app-select [currentPath]="'/empresa-buscar'" (OnChange)="selectChangempresa($event)" formControlName="id_empresa"
               [showClear]="true" [filter]="false" optionValue="id" optionLabel="razon_social" styleClass="p-0 w-100"
               placeholder="-Seleccionar-" label="EMPRESA" [isTemplete]="true" [Labels]="['numero_documento','razon_social']"
-              [formValid]="ok"></app-select> -->
+              [formValid]="ok"></app-select>
           </div>
         </div>
         <div class="col-xxl-3 col-md-6">

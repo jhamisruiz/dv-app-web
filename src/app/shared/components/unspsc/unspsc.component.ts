@@ -482,12 +482,14 @@ export class UnspscComponent implements NsCustomFormControl, ControlValueAccesso
       this.value = null;
       this.limpiar();
     }
-    this.sv.Segmentos().subscribe((r: UNSPSC[] | null) => {
-      if (r) {
-        this.segmentos = r;
-        if (this.value) {
-          this.getSuggstToProducto({ codigo: this.value });
-        }
+    if (this.value) {
+      this.getSuggstToProducto({ codigo: this.value });
+      return
+    }
+
+    this.sv.Segmentos().subscribe((res: UNSPSC[] | null) => {
+      if (res) {
+        this.segmentos = res;
       }
     });
   }
@@ -551,11 +553,12 @@ export class UnspscComponent implements NsCustomFormControl, ControlValueAccesso
       this.value = e?.codigo;
       const c = { codigo: e?.codigo };
       if (c?.codigo) {
-        this.sv.getProductos(c?.codigo, null).subscribe((r: any) => {
-          if (r?.productos) {
-            this.familias = r?.familias;
-            this.clases = r?.clases;
-            this.productos = r?.productos;
+        this.sv.getProductos(c?.codigo, null).subscribe((res: any) => {
+          if (res?.productos) {
+            this.segmentos = res?.segmentos;
+            this.familias = res?.familias;
+            this.clases = res?.clases;
+            this.productos = res?.productos;
             this.segmentoCodigo();
             this.familiaCodigo();
             this.claseCodigo();

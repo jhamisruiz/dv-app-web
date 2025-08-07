@@ -16,8 +16,8 @@ export class UsuarioComponent extends AbstractDocument implements OnInit {
     { field: 'id', label: 'id', visible: false },
     { field: 'nombres', label: 'Nombres', filter: true },
     { field: 'apellidos', label: 'Apellidos', filter: true },
-    { field: 'email', label: 'Correo', filter: true },
     { field: 'username', label: 'usuario', filter: true },
+    { field: 'email', label: 'Correo', filter: true },
     { field: 'telefono', label: 'telefono', filter: true },
     { field: 'razon_social', label: 'Empresa', filter: true },
     { field: 'numero_documento', label: 'ruc empresa', filter: true },
@@ -28,16 +28,18 @@ export class UsuarioComponent extends AbstractDocument implements OnInit {
     id: [],
     nombres: ['', [Validators.required]],
     apellidos: ['', [Validators.required]],
-    email: ['', [Validators.required]],
+    email: ['', [Validators.required, Validators.email,
+    Validators.pattern(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/)]],
     username: ['', [Validators.required]],
-    password: ['', [Validators.required]],
-    rep_password: ['', [Validators.required]],
+    password: ['', this.isEditMode ? [] : [Validators.required]],
+    password_repeat: ['', this.isEditMode ? [] : [Validators.required]],
     fecha_creacion: [new Date().toISOString().slice(0, 10)],
     habilitado: [true],
     telefono: [],
     photo: [],
     id_rol: ['', [Validators.required]],
     id_empresa: [this.idempresa, [Validators.required]],
+    id_sucursal: [1],
   });
   constructor(
     injector: Injector,
@@ -48,7 +50,7 @@ export class UsuarioComponent extends AbstractDocument implements OnInit {
 
   ngOnInit(): void {
     super.ngOnInit();
-    this.hashValues = ['password', 'rep_password'];
+    //this.hashValues = ['password', 'password_repeat'];
     if (this.idusuario === 1 || this.idusuario === 2) {
       this.form.patchValue({
         id_empresa: '',

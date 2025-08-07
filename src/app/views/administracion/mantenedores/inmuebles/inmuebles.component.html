@@ -1,0 +1,122 @@
+<app-tools (OnClickNew)="changeMode($event)" (OnClickSave)="onSubmit()" [ViewMode]="modeType"
+    (OnClickBack)="changeMode($event)">
+</app-tools>
+<ng-container *ngIf="isViewMode || isDeleteMode">
+    <app-table [path]="fullPath" (OnEdit)="getForm($event);" (OnDelete)="delForm($event)" [headers]="headers"
+        [btnDelete]="true" [btnEdit]="true" [refresh]="auto">
+    </app-table>
+</ng-container>
+
+<ng-container *ngIf="isCreateMode || isEditMode">
+    <div class="card-body">
+        <form [formGroup]="form">
+            <div class="row gy-4">
+                <div class="col-xxl-3 col-md-6">
+                    <div>
+                        <app-input inputClass="form-control" formControlName="direccion" label="DIRECCIÓN" type="text"
+                            [formValid]="ok">
+                        </app-input>
+                    </div>
+                </div>
+                <div class="col-xxl-3 col-md-6">
+                    <div>
+                        <app-input inputClass="form-control" formControlName="referencia" label="REFERENCIA" type="text"
+                            [formValid]="ok">
+                        </app-input>
+                    </div>
+                </div>
+                <div class="col-xxl-3 col-md-6">
+                    <div>
+                        <app-input inputClass="form-control" formControlName="ubigeo" label="ubigeo" type="text"
+                            [formValid]="ok">
+                        </app-input>
+                    </div>
+                </div>
+                <div class="col-xxl-3 col-md-6">
+                    <div>
+                        <app-input inputClass="form-control" formControlName="medidas" label="MEDIDAS" type="text"
+                            [formValid]="ok">
+                        </app-input>
+                    </div>
+                </div>
+                <div class="col-xxl-3 col-md-6">
+                    <div>
+                        <app-input inputClass="form-control" formControlName="orientacion" label="ORIENTACIÓN"
+                            type="text" [formValid]="ok">
+                        </app-input>
+                    </div>
+                </div>
+                <div class="col-xxl-3 col-md-6">
+                    <div>
+                        <app-input inputClass="form-control" formControlName="precio" label="PRECIO" [min]="0"
+                            [minFractionDigits]="2" type="number" [formValid]="ok">
+                        </app-input>
+                    </div>
+                </div>
+                <div class="col-xxl-3 col-md-6">
+                    <div>
+                        <app-select [dataSource]="moneda" formControlName="moneda" [showClear]="true" [filter]="false"
+                            optionValue="codigo" optionLabel="nombre" styleClass="p-0 w-100" placeholder="-Seleccionar-"
+                            label="MONEDA" [formValid]="ok"></app-select>
+                    </div>
+                </div>
+                <div class="col-xxl-3 col-md-6">
+                    <div>
+                        <app-input inputClass="form-control" formControlName="servicios" label="SERVICIOS" type="text"
+                            [formValid]="ok">
+                        </app-input>
+                    </div>
+                </div>
+                <div class="col-xxl-3 col-md-6">
+                    <div>
+                        <app-select [dataSource]="estados" formControlName="estado" [showClear]="true" [filter]="false"
+                            optionValue="codigo" optionLabel="nombre" styleClass="p-0 w-100" placeholder="-Seleccionar-"
+                            label="ESTADO" [formValid]="ok"></app-select>
+                        <p-dialog [(visible)]="isCreateMode?false:visible" [position]="'top'" >
+                            <ng-template pTemplate="headless">
+                                <div class="p-4 {{form.value.estado==='Disponible'?'bg-success':(form.value.estado==='Reservado'?'bg-warning':'bg-primary')}}"
+                                    style="border-radius: 12px;">
+
+                                    <div class="w-100 text-center">
+                                        <h2>Disponibilidad de Producto</h2>
+                                        <h4 class="text-white">{{form.value.estado}}</h4>
+                                    </div>
+                                    <div class="flex align-items-end gap-2">
+                                        <p-button label="Cancel"  severity="secondary" (onClick)="closeDialog()"/>
+                                    </div>
+                                </div>
+                            </ng-template>
+                        </p-dialog>
+                    </div>
+                </div>
+                <div class="col-xxl-6 col-md-6">
+                    <div>
+                        <app-input inputClass="form-control" formControlName="descripcion" label="DESCRIPCIÓN"
+                            type="text" [formValid]="ok"></app-input>
+                    </div>
+                </div>
+                <div class="col-xxl-3 col-md-6">
+                    <div>
+                        <app-input inputClass="form-control" formControlName="fecha_reserva" [dateNow]="true"
+                            label="Fecha Reserva" type="calendar" [format]="'yy-mm-dd'" [formValid]="ok"></app-input>
+                    </div>
+                </div>
+                <div class="col-xxl-3 col-md-6">
+                    <div>
+                        <app-input inputClass="form-control" formControlName="fecha_venta" [dateNow]="true"
+                            label="Fecha Venta" type="calendar" [format]="'yy-mm-dd'" [formValid]="ok"></app-input>
+                    </div>
+                </div>
+                <div class="col-xxl-3 col-md-6">
+                    <div>
+                        <app-select [currentPath]="'/usuario-buscar'" formControlName="id_usuario" [showClear]="true"
+                            [filter]="false" optionValue="id" optionLabel="nombres" styleClass="p-0 w-100"
+                            placeholder="-Seleccionar-" label="USUARIO ENCARGADO" [isTemplete]="true"
+                            [Labels]="['nombres','apellidos']" [formValid]="ok"></app-select>
+                    </div>
+                </div>
+            </div>
+        </form>
+
+    </div>
+</ng-container>

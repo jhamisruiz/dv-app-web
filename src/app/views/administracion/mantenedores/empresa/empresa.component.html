@@ -44,22 +44,50 @@
           </div>
         </div><!--end col-->
         <div class="col-xxl-3 col-md-6">
-          <div>
+          <!-- <div>
             <app-input inputClass="form-control" formControlName="dominio" label="ADMIN DOMINIO" type="text"
-              [formValid]="ok" placeholder="nec-example"></app-input>
+              [formValid]="ok" placeholder="example-domain"></app-input>
+          </div> -->
+        </div>
+      </div>
+
+      <div class="row gy-4">
+        <div class="col-xxl-3 col-md-12">
+          <div>
+            <app-input inputClass="form-control" formControlName="clave_certificado" label="CLAVE CERTIFICADO" type="text"
+              [formValid]="ok"></app-input>
+          </div>
+        </div>
+        <div class="col-xxl-3 col-md-12">
+          <div>
+            <app-input inputClass="form-control" formControlName="usuario_emisor" label="USUARIO EMISOR" type="text"
+              [formValid]="ok"></app-input>
+          </div>
+        </div>
+        <div class="col-xxl-3 col-md-12">
+          <div>
+            <app-input inputClass="form-control" formControlName="clave_emisor" label="CLAVE EMISOR" type="text"
+              [formValid]="ok"></app-input>
           </div>
         </div>
       </div>
 
       <div class="row mt-3">
-        <div class="col-xxl-3 col-md-6">
+        <div class="col-xxl-3 col-md-12">
+          <div>
+            <app-input-file [setDataFile]="form.value?.certificado" [base64]="true" (NgModelResponse)="getFile($event);"
+              [accept]="'.pfx,.txt'" label="CERTIFICADO DIGITAL">
+            </app-input-file>
+          </div>
+        </div>
+        <!-- <div class="col-xxl-3 col-md-6">
           <div>
             <app-input-file [setDataFile]="form.get('logo')?.value" [base64]="true" (NgModelResponse)="getFile($event);"
               [accept]="'.jpg,.png'" label="LOGO EMPRESA" [fileLabel]="'Select. Imagen'" [imageHeight]="70"
               [infoFile]="'La imagen no debe exceder 70 píxeles de altura'">
             </app-input-file>
           </div>
-        </div>
+        </div> -->
         <div class="col-xxl-3 col-md-6">
           <div class="d-flex flex-column">
             <label for="" class="block text-capitalize">HABILITAR</label>

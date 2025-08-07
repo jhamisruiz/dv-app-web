@@ -55,7 +55,13 @@ const routes: Routes = [
             .then(m => m.MovimientosModule),
         canActivate: [ModuleGuard],
       },
-
+      {
+        path: 'facturacion',
+        loadChildren: (): Promise<any> =>
+          import('./facturacion/facturacion.module')
+            .then(m => m.FacturacionModule),
+        canActivate: [ModuleGuard],
+      },
     ],
   },
 

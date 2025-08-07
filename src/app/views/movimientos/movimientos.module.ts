@@ -8,30 +8,18 @@ import { RouterModule } from '@angular/router';
 import { SharedModule } from '@app/shared/shared.module';
 import { HttpClientModule } from '@angular/common/http';
 import { BienComponent } from './mantenedores/bien/bien.component';
-import { InsumoComponent } from './mantenedores/insumo/insumo.component';
 import { ServicioComponent } from './mantenedores/servicio/servicio.component';
-import { EvaluacionesComponent } from './mantenedores/evaluaciones/evaluaciones.component';
-import { ExpedientesComponent } from './mantenedores/expedientes/expedientes.component';
-import { EvaluacionTecnicaComponent } from './mantenedores/evaluacion-tecnica/evaluacion-tecnica.component';
-import { EvaluacionDocumentariaComponent } from './mantenedores/evaluacion-documentaria/evaluacion-documentaria.component';
-import { ResultadoEvaluacionComponent } from './mantenedores/resultado-evaluacion/resultado-evaluacion.component';
-import { ConvocatoriasComponent } from './mantenedores/convocatorias/convocatorias.component';
-import { EvaluacionCumpliminetoComponent } from './mantenedores/evaluacion-cumplimineto/evaluacion-cumplimineto.component';
+import { CategoriaComponent } from './mantenedores/categoria/categoria.component';
+import { ProductoComponent } from './mantenedores/producto/producto.component';
 
 @NgModule({
   declarations: [
     MovimientosComponent,
     HomeMovimientosComponent,
     BienComponent,
-    InsumoComponent,
     ServicioComponent,
-    EvaluacionesComponent,
-    ExpedientesComponent,
-    EvaluacionTecnicaComponent,
-    EvaluacionDocumentariaComponent,
-    ResultadoEvaluacionComponent,
-    ConvocatoriasComponent,
-    EvaluacionCumpliminetoComponent,
+    CategoriaComponent,
+    ProductoComponent,
   ],
   imports: [
     CommonModule,
@@ -45,15 +33,9 @@ import { EvaluacionCumpliminetoComponent } from './mantenedores/evaluacion-cumpl
   exports: [
     HomeMovimientosComponent,
     BienComponent,
-    InsumoComponent,
     ServicioComponent,
-    EvaluacionesComponent,
-    ExpedientesComponent,
-    EvaluacionTecnicaComponent,
-    EvaluacionDocumentariaComponent,
-    ResultadoEvaluacionComponent,
-    ConvocatoriasComponent,
-    EvaluacionCumpliminetoComponent,
+    CategoriaComponent,
+    ProductoComponent,
   ],
 })
 export class MovimientosModule { }

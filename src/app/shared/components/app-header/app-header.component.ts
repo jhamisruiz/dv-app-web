@@ -4,6 +4,8 @@ import { LocalStoreService } from '../../services/local-store.service';
 import { STOREKEY } from '@app/config/keys.config';
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { environment } from 'src/environments/environment';
+import { HttpClient } from '@angular/common/http';
+import { LOGOUT_API_PATH } from '@common/constants';
 
 @Component({
   selector: 'app-header',
@@ -23,6 +25,7 @@ export class AppHeaderComponent implements OnInit {
     private persistence: LocalStoreService,
     private renderer: Renderer2,
     private el: ElementRef,
+    private http: HttpClient,
   ) { }
 
   ngOnInit(): void {
@@ -60,7 +63,9 @@ export class AppHeaderComponent implements OnInit {
   }
 
   logout(): void {
-    this.user.clearUserSession();
+    this.http.post(LOGOUT_API_PATH, {}).subscribe(() => {
+      this.user.clearUserSession();
+    });
   }
 
 
