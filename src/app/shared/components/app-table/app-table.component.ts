@@ -493,7 +493,12 @@ export class AppTableComponent implements OnInit {
     return numeroConDecimales;
   }
 
-  getValSeverity(status: boolean): any {
+  getValSeverity(status: boolean | string, data: any): any {
+    if (typeof status === 'string' && Array.isArray(data)) {
+      const value = data.find(i => i.dataKey === status);
+      return value.dataKey;
+    }
+
     switch (status) {
       case true:
         return 'Habilitado';
@@ -502,13 +507,19 @@ export class AppTableComponent implements OnInit {
     }
   }
 
-  getSeverity(status: boolean): any {
+  getSeverity(status: boolean | string, data: any): any {
+    if (typeof status === 'string' && Array.isArray(data)) {
+      const color = data.find(i => i.dataKey === status);
+      return color.color;
+    }
+
     switch (status) {
       case true:
         return 'success';
       case false:
         return 'danger';
     }
+    return 'warning';
   }
 
   getdataoverlayPanel(d: any): void {
@@ -529,7 +540,7 @@ export class AppTableComponent implements OnInit {
     const textoCorto = primerasCincoPalabras.join(' ');
 
     // Retornar las primeras cinco palabras
-    return textoCorto + (primerasCincoPalabras?.length > (number-1) ? '...' : '');
+    return textoCorto + (primerasCincoPalabras?.length > (number - 1) ? '...' : '');
   }
 
 }

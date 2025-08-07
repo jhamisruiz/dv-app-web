@@ -39,10 +39,14 @@ export class EmpresaComponent extends AbstractDocument implements OnInit {
       distrito: ['', [Validators.required]],
       direccion: ['', [Validators.required]],
       ubigeo: ['', [Validators.required]],
-      dominio: ['', [Validators.required, Validators.pattern(/^[a-zA-Z0-9-]+$/)]],
+      //dominio: ['', [Validators.required, Validators.pattern(/^[a-zA-Z0-9-]+$/)]],
+      usuario_emisor: ['', [Validators.required]],
+      clave_emisor: ['', [Validators.required]],
+      certificado: [],
+      clave_certificado: [],
       fecha_creacion: [new Date().toISOString().slice(0, 10)],
       habilitado: [true],
-      logo: [, [Validators.required]],
+      //logo: [],
     },
   );
 
@@ -80,7 +84,7 @@ export class EmpresaComponent extends AbstractDocument implements OnInit {
 
   onInput(e: any): void {
     if (e?.length === 11) {
-      this.sv.getDniRuc({ 'dni_ruc': e }).subscribe((r: any) => {
+      this.sv.getDniRuc({ 'numero_documento': e }).subscribe((r: any) => {
         if (r) {
           this.form.patchValue({
             razon_social: r?.nombre,

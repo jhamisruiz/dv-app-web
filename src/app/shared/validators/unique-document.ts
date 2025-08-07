@@ -7,9 +7,9 @@ export const UniqueDoc = (fn: (value: string) => Observable<any>): AsyncValidato
     .pipe(
       map(res => {
         // if code is already taken
-        if (res) {
+        if (res?.code && res.code === true) {
           // return error
-          return { docExist: true };
+          return { codeExist: true };
         }
         return null;
       }),

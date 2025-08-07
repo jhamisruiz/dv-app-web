@@ -10,6 +10,10 @@ import { loadMenu } from '@store/app-menu/actions/app-menu.actions';
 import { environment } from 'src/environments/environment';
 import { STOREKEY } from '@app/config/keys.config';
 import { LocalStoreService } from '@services/local-store.service';
+import { DomainService } from '@services/app-services/app.domain.service';
+
+const domainService = new DomainService(new LocalStoreService());
+const domainPath = domainService.getDomain();
 
 @Component({
   selector: 'app-sidebar',
@@ -40,9 +44,9 @@ export class AppSidebarComponent implements OnInit, AfterViewInit {
       this.logo = '../assets/images/logo-sm.png';// environment.hostPublic + (logo).toString();
     }
     const url = this.router.url;
-    const arr = url.split('/');
-    this.menuUrl = arr[1];
-    this.routerLink(arr[1]);
+    const listUrl = url.split('/');
+    this.menuUrl = listUrl[2];
+    this.routerLink(listUrl[2]);
     this.preloader = true;
     this.store.select(selectMenuLoading).subscribe((r) => {
       this.preloader = r;
@@ -69,7 +73,7 @@ export class AppSidebarComponent implements OnInit, AfterViewInit {
   }
 
   onDoubleClick(e: Event, r: string): void {
-    this.router.navigate([r]);
+    this.router.navigate([domainPath ?? STOREKEY.DOMINIO_EMPRESA,r]);
     this.routerLink(r);
     const dl = document.documentElement.getAttribute('data-layout');
     if (dl !== 'horizontal') {
@@ -120,9 +124,9 @@ export class AppSidebarComponent implements OnInit, AfterViewInit {
     this.router.events
       .pipe(filter((e) => e instanceof NavigationEnd))
       .subscribe((e: any) => {
-        const arr = e.url.split('/');
+        const listUrl = e.url.split('/');
         this.store.dispatch(loadCompAction({ formMode: 'VIEW', id: null }));
-        if (arr[1] === murl) {
+        if (listUrl[2] === murl) {
           this.menuUrl = murl;
         }
       });

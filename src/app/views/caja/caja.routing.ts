@@ -4,7 +4,6 @@ import { Routes, RouterModule } from '@angular/router';
 import { CajaComponent } from './caja.component';
 import { HomeCajaComponent } from './home-caja/home-caja.component';
 import { PlanCuentasComponent } from './mantenedores/plan-cuentas/plan-cuentas.component';
-import { RegistrosComponent } from './mantenedores/registros/registros.component';
 import { UserGuard } from '@app/shared/guards/guards/user.guard';
 import { GestionCuentasComponent } from './mantenedores/gestion-cuentas/gestion-cuentas.component';
 import { IngresosComponent } from './mantenedores/ingresos/ingresos.component';
@@ -25,22 +24,17 @@ const routes: Routes = [
         canActivate: [UserGuard],
       },
       {
-        path: 'registros',
-        component: RegistrosComponent,
-        canActivate: [UserGuard],
-      },
-      {
         path: 'gestion-de-cuentas',
         component: GestionCuentasComponent,
         canActivate: [UserGuard],
       },
       {
-        path: 'ingresos',
+        path: 'gestion-de-ingresos',
         component: IngresosComponent,
         canActivate: [UserGuard],
       },
       {
-        path: 'egresos',
+        path: 'gestion-de-egresos',
         component: EgresosComponent,
         canActivate: [UserGuard],
       }

@@ -4,6 +4,8 @@ import { BehaviorSubject, interval, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { STOREKEY } from 'src/app/config/keys.config';
 import { Router } from '@angular/router';
+import { Location } from '@angular/common';
+import { DOMAIN_COMPANY } from '../common/constants';
 
 export enum USER_STATUS {
   VALID,
@@ -39,6 +41,7 @@ export class UserService implements OnDestroy {
     private persistence: LocalStoreService,
     private router: Router,
     private zone: NgZone,
+    private location: Location,
   ) {
     // Get stored expiration time
     this.userLoginExpireAt = this.persistence.get(STOREKEY.USER_LOGIN_EXPIRE);
@@ -152,25 +155,26 @@ export class UserService implements OnDestroy {
 
     this.status$.next(USER_STATUS.LOGOUT);
 
-    this.router.navigate(['/', 'login']);
+    this.router.navigate(['/']);
     this.ngOnDestroy();
 
   }
 
   resetRouterConfig(dominio_empresa: string): void {
     const routerConfig = this.router.config;
+    const rutaCompleta = this.location.path(true);
     const newRoutes = routerConfig.map(el => {
-      if (el.path == 'dominio_empresa') {
+      if (el.path == DOMAIN_COMPANY) {
         el.path = dominio_empresa;
       }
-      if (el.redirectTo == 'dominio_empresa') {
+      if (el.redirectTo == DOMAIN_COMPANY) {
         el.redirectTo = dominio_empresa;
       }
       return el;
     });
-
-    this.router.resetConfig([...newRoutes]);
-    this.router.navigate(['/', dominio_empresa]);
+    this.router.resetConfig(newRoutes);
+    //this.router.navigate(['/', this.router.url]);
+    this.router.navigateByUrl(`${rutaCompleta}`);
   }
 
   ngOnDestroy(): void {

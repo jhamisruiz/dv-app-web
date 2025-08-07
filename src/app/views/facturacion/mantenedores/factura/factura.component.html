@@ -1,0 +1,214 @@
+<app-tools [setMessage]="mensaje" (OnClickNew)="changeMode($event)" (OnClickSave)="onSubmit()" [ViewMode]="modeType"
+  (OnClickBack)="changeMode($event)" [Message]="setMessageSunat"><!-- [saveDisabled]="isEditMode" -->
+</app-tools>
+<ng-container *ngIf="isViewMode || isDeleteMode">
+  <app-table (OnEdit)="getForm($event);" (OnDelete)="delForm($event)"
+    [path]="fullPath+'?start=0&length=10&search=&order=asc'" [tableName]="'Factura'" [headers]="headers"
+    [btnEdit]="true" [btnDelete]="true" [refresh]="auto">
+  </app-table>
+</ng-container>
+<ng-container *ngIf="isCreateMode || isEditMode">
+  this.form.value?.mensaje_sunat:{{this.form.value?.mensaje_sunat}}
+  <div class="card-body">
+    <form [formGroup]="form" class="row gy-2 pb-2 border border-primary rounded">
+      <div class="row  pt-2">
+        <div class="col-xxl-3 col-md-6 m-0">
+          <div>
+            <h4>FACTURA ELECTR&Oacute;NICA:</h4>
+          </div>
+        </div>
+        <div class="col-xxl-2 col-lg-3 m-0">
+          <div>
+            <h4 class="text-start w-100">SERIE:
+              <span class="w-50 border p-1 px-3 border-success rounded">{{form.value?.serie ?? '0000'}}</span>
+            </h4>
+          </div>
+        </div>
+        <div class="col-xxl-2 col-lg-3 m-0">
+          <div>
+            <h4 class="text-start w-100">
+              CORRELATIVO:
+              <span class="w-50 border p-1 px-4 border-success rounded">{{form.value?.correlativo ?? '0'}}
+              </span>
+            </h4>
+          </div>
+        </div>
+      </div>
+      <p-divider align="left">
+        <a href="#collapsEemisor" data-bs-toggle="collapse" aria-expanded="false" aria-controls="collapsEemisor"
+          (click)="(activeEmpresa =activeEmpresa?false:true)">
+          <h4 class="p-tag mb-0 text-white">
+            <i class="{{activeEmpresa? 'pi pi-plus' : 'pi pi-minus'}} mr-2"></i>
+            Datos de Empresa
+          </h4>
+        </a>
+      </p-divider>
+      <div class="row collapse show" id="collapsEemisor" formGroupName="emisor">
+        <div class="col-xxl-3 col-md-6 m-0">
+          <div>
+            <app-select [currentPath]="'/empresa-buscar'" (OnSuggest)="OnSuggestEmpresa($event)"
+              formControlName="id_empresa" [showClear]="true" [filter]="false" optionValue="id"
+              optionLabel="razon_social" styleClass="p-0 w-100" placeholder="-Seleccionar-" label="EMPRESA"
+              [isTemplete]="true" [Labels]="['razon_social','nombre_comercial']" [formValid]="ok"
+              [locked]="isEditMode"></app-select>
+          </div>
+        </div>
+        <div class="col-xxl-3 col-md-6 m-0">
+          <div>
+            <app-select [currentPath]="pathSucursal" (OnSuggest)="OnSuggest($event)" formControlName="id_sucursal"
+              [showClear]="true" [filter]="false" optionValue="id" optionLabel="codigo" styleClass="p-0 w-100"
+              placeholder="-Seleccionar-" label="SUCURSAL" [isTemplete]="true" [Labels]="['codigo','nombre']"
+              [formValid]="ok" [locked]="isEditMode"></app-select>
+          </div>
+        </div>
+        <div class="col-xxl-2 col-md-6 m-0">
+          <div>
+            <app-input inputClass="form-control" formControlName="numero_documento" label="RUC" type="text"
+              [formValid]="ok">
+            </app-input>
+          </div>
+        </div>
+        <div class="col-xxl-3 col-md-6 m-0">
+          <div>
+            <app-input inputClass="form-control" formControlName="razon_social" label="RAZON SOCIAL" type="text"
+              [formValid]="ok">
+            </app-input>
+          </div>
+        </div>
+        <div class="col-xxl-6 col-md-6 m-0">
+          <div>
+            <app-input inputClass="form-control" formControlName="direccion" label="DIRECCION" type="text"
+              [formValid]="ok" [locked]="isEditMode">
+            </app-input>
+          </div>
+        </div>
+      </div>
+      <p-divider align="left">
+        <a href="#collapsCliente" data-bs-toggle="collapse" aria-expanded="false" aria-controls="collapsCliente"
+          (click)="(activeCliente =activeCliente?false:true)">
+          <h4 class="p-tag mb-0 text-white">
+            <i class="{{activeCliente? 'pi pi-plus' : 'pi pi-minus'}} mr-2"></i>
+            Datos de Cliente
+          </h4>
+        </a>
+      </p-divider>
+      <div class="row gx-0 collapse show" id="collapsCliente">
+        <div class="row" formGroupName="cliente">
+          <div class="col-xxl-3 col-md-6">
+            <div>
+              <app-input inputClass="form-control" (OnInput)="onInput($event)" formControlName="numero_documento"
+                label="RUC CLIENTE" type="text" [formValid]="ok" [locked]="isEditMode"></app-input>
+            </div>
+          </div>
+          <div class="col-xxl-3 col-md-6">
+            <div>
+              <app-input inputClass="form-control" formControlName="razon_social" label="RAZON SOCIAL CLIENTE"
+                type="text" [formValid]="ok" [locked]="isEditMode"></app-input>
+            </div>
+          </div>
+          <div class="col-xxl-3 col-md-6">
+            <div>
+              <app-input inputClass="form-control" formControlName="email" label="CORREO ELECTRONICO" type="text"
+                [formValid]="ok" [locked]="isEditMode"></app-input>
+            </div>
+          </div>
+          <div class="col-xxl-3 col-md-6 m-0">
+            <div>
+              <app-input inputClass="form-control" formControlName="direccion" label="DIRECCION CLIENTE" type="textarea"
+                [rows]="1" [formValid]="ok" [locked]="isEditMode"></app-input>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xxl-3 col-md-6">
+            <div>
+              <app-input inputClass="form-control" formControlName="fecha_emision" [dateNow]="true" [MinDate]="3"
+                [MaxDate]="0" label="F. DE EMISION" type="calendar" [formValid]="ok" [locked]="isEditMode"></app-input>
+            </div>
+          </div>
+          <div class="col-xxl-3 col-md-6">
+            <div>
+              <app-input inputClass="form-control" formControlName="fecha_vencimiento" dateFormat="yy-mm-dd"
+                [MinDate]="0" label="F. DE VENCIMIENTO" type="calendar" [formValid]="ok"
+                [locked]="isEditMode"></app-input>
+            </div>
+          </div>
+          <div class="col-xxl-3 col-md-6 m-0">
+            <div>
+              <app-select [dataSourse]="moneda" formControlName="codigo_moneda" [showClear]="true" [filter]="false"
+                optionValue="codigo" optionLabel="nombre" styleClass="p-0 w-100" placeholder="-Seleccionar-"
+                label="MONEDA" [formValid]="ok" [locked]="isEditMode"></app-select>
+            </div>
+          </div>
+          <div class="col-xxl-3 col-md-6 m-0">
+            <div>
+              <app-select [dataSourse]="[{cod:'Contado',nam:'Contado'},{cod:'Credito',nam:'Credito'}]"
+                formControlName="forma_pago" (selectChange)="selectFormaPago($event)" [showClear]="true"
+                [filter]="false" optionValue="cod" optionLabel="nam" styleClass="p-0 w-100" placeholder="-Seleccionar-"
+                label="Forma Pago" [formValid]="ok" [locked]="isEditMode"></app-select>
+            </div>
+          </div>
+        </div>
+        <div class="row form-pago" *ngIf="form.value.forma_pago==='Credito'">
+          <div class="col-xxl-2 col-md-3">
+            <div>
+              <app-input inputClass="form-control" formControlName="numero_cuotas" label="NRO DE CUOTAS" type="number"
+                [formValid]="ok" [min]="1" [showButtons]="true" [locked]="isEditMode"></app-input>
+            </div>
+          </div>
+          <div class="col-xxl-2 col-md-3">
+            <div>
+              <app-input inputClass="form-control" formControlName="dias_cuotas" label="DIAS ENTRE CUOTAS" type="number"
+                [formValid]="ok" [min]="1" [showButtons]="true" [locked]="isEditMode"></app-input>
+            </div>
+          </div>
+          <div class="col-xxl-6 col-md-6">
+            <app-table-grid [dataSourse]="form.value.cuotas" (dataResponse)="updateCuotasResponse($event)"
+              [totalRows]="this.form.value.numero_cuotas" [paginator]="false" modalFormName="Cuotas"
+              [headers]="headers_credito" [addDias]="form.value.dias_cuotas" [isDelete]="false" [isAdd]="false"
+              [caption]="false" [locked]="isEditMode">
+            </app-table-grid>
+          </div>
+        </div>
+      </div>
+      <p-divider align="left">
+        <a href="#collapsProductos" data-bs-toggle="collapse" aria-expanded="false" aria-controls="collapsProductos"
+          (click)="(activeDetalle =activeDetalle?false:true)">
+          <h4 class="p-tag mb-0 text-white">
+            <i class="{{activeDetalle? 'pi pi-plus' : 'pi pi-minus'}} mr-2"></i>
+            Lista de Productos
+          </h4>
+        </a>
+      </p-divider>
+      <div class="row collapse show" id="collapsProductos">
+        <app-table-grid [dataSourse]="form.value.detalle" [paginator]="false" modalFormName="Factura"
+          [isFacturacion]="true" [headers]="headers_detalle" [modalForm]="true"
+          (dataResponse)="updateDataResponse($event)" [locked]="isEditMode">
+        </app-table-grid>
+      </div>
+      <div class="row">
+        <app-total [dataSourse]="form.value" (OnCalc)="onCalc($event)" [currency]="form.value.codigo_moneda"
+          [locked]="isEditMode"></app-total>
+      </div>
+      <div class="row mt-1">
+        <div class="d-flex flex-wrap gap-3">
+          <div class="d-flex align-items-center">
+            <p-inputSwitch formControlName="enviar_email" (onChange)="configRadio($event,'enviar_email')"
+              inputId="enviar_email" [readonly]="isEditMode"></p-inputSwitch>
+            <label for="enviar_email" class="mx-1 mb-0">Enviar Doc. por Email</label>
+          </div>
+          <div class="d-flex align-items-center">
+            <p-inputSwitch formControlName="enviar_sunat" name="config" (onChange)="configRadio($event,'enviar_sunat')"
+              inputId="enviar_sunat" [readonly]="isEditMode"></p-inputSwitch>
+            <label for="enviar_sunat" class="mx-1 mb-0">Enviar Sunat</label>
+          </div>
+          <div class="d-flex align-items-center">
+            <p-inputSwitch formControlName="solo_guardar" name="config" (onChange)="configRadio($event,'solo_guardar')"
+              inputId="solo_guardar" [readonly]="isEditMode"></p-inputSwitch>
+            <label for="solo_guardar" class="mx-1 mb-0">Solo Guardar Venta</label>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</ng-container>

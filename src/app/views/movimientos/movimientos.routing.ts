@@ -4,16 +4,10 @@ import { Routes, RouterModule } from '@angular/router';
 import { UserGuard } from '@app/shared/guards/guards/user.guard';
 import { MovimientosComponent } from './movimientos.component';
 import { BienComponent } from './mantenedores/bien/bien.component';
-import { InsumoComponent } from './mantenedores/insumo/insumo.component';
 import { ServicioComponent } from './mantenedores/servicio/servicio.component';
-import { EvaluacionesComponent } from './mantenedores/evaluaciones/evaluaciones.component';
-import { ExpedientesComponent } from './mantenedores/expedientes/expedientes.component';
-import { EvaluacionTecnicaComponent } from './mantenedores/evaluacion-tecnica/evaluacion-tecnica.component';
 import { HomeMovimientosComponent } from './home-movimientos/home-movimientos.component';
-import { EvaluacionDocumentariaComponent } from './mantenedores/evaluacion-documentaria/evaluacion-documentaria.component';
-import { ResultadoEvaluacionComponent } from './mantenedores/resultado-evaluacion/resultado-evaluacion.component';
-import { ConvocatoriasComponent } from './mantenedores/convocatorias/convocatorias.component';
-import { EvaluacionCumpliminetoComponent } from './mantenedores/evaluacion-cumplimineto/evaluacion-cumplimineto.component';
+import { CategoriaComponent } from './mantenedores/categoria/categoria.component';
+import { ProductoComponent } from './mantenedores/producto/producto.component';
 
 const routes: Routes = [
   {
@@ -30,48 +24,18 @@ const routes: Routes = [
          canActivate: [UserGuard],
       },
       {
-        path: 'registro-de-insumos',
-        component: InsumoComponent,
-         canActivate: [UserGuard],
-      },
-      {
         path: 'registro-de-servicios',
         component: ServicioComponent,
          canActivate: [UserGuard],
       },
       {
-        path: 'registro-de-evaluaciones',
-        component: EvaluacionesComponent,
+        path: 'registro-de-categorias',
+        component: CategoriaComponent,
         canActivate: [UserGuard],
       },
       {
-        path: 'registro-de-expedientes',
-        component: ExpedientesComponent,
-        canActivate: [UserGuard],
-      },
-      {
-        path: 'evaluacion-documentaria',
-        component: EvaluacionDocumentariaComponent,
-        canActivate: [UserGuard],
-      },
-      {
-        path: 'evaluacion-tecnica',
-        component: EvaluacionTecnicaComponent,
-        canActivate: [UserGuard],
-      },
-      {
-        path: 'resultado-de-evaluacion',
-        component: ResultadoEvaluacionComponent,
-        canActivate: [UserGuard],
-      },
-      {
-        path: 'registro-de-convocatorias',
-        component: ConvocatoriasComponent,
-        canActivate: [UserGuard],
-      },
-      {
-        path: 'criterios-de-evaluacion',
-        component: EvaluacionCumpliminetoComponent,
+        path: 'registro-de-productos',
+        component: ProductoComponent,
         canActivate: [UserGuard],
       },
     ],

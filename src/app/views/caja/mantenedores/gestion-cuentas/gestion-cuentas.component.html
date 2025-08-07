@@ -1,56 +1,26 @@
-<p>gestion-cuentas works!</p>
-<!-- gestión-cuentas.component.html -->
-<div class="gestion-cuentas">
-    <header class="gestion-cuentas__header">
-        <h2>Gestión de Cuentas</h2>
-    </header>
+<div class="row">
+    <div class="col-xl-6">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title mb-0">Line Chart</h4>
+            </div>
+            <div class="card-body">
+                <canvas #myChart class="chartjs-chart"
+                    data-colors='["--vz-primary-rgb, 0.2", "--vz-primary", "--vz-success-rgb, 0.2", "--vz-success"]'></canvas>
+            </div>
+        </div>
+    </div> <!-- end col -->
 
-    <section class="gestion-cuentas__lista">
-        <table class="cuentas-tabla">
-            <thead>
-                <tr>
-                    <th>Nombre de cuenta</th>
-                    <th>Tipo</th>
-                    <th>Saldo</th>
-                    <th>Acciones</th>
-                </tr>
-            </thead>
-            <tbody>
-                <!-- Ejemplo de fila estática; reemplaza con *ngFor luego -->
-                <tr>
-                    <td>Cuenta Principal</td>
-                    <td>Banco</td>
-                    <td>S/ 0.00</td>
-                    <td class="acciones">
-                        <button class="btn btn--editar">Editar</button>
-                        <button class="btn btn--eliminar">Eliminar</button>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </section>
+    <div class="col-xl-6">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title mb-0">Bar Chart</h4>
+            </div>
+            <div class="card-body">
+                <canvas id="bar" class="chartjs-chart"
+                    data-colors='["--vz-primary-rgb, 0.8", "--vz-primary-rgb, 0.9"]'></canvas>
 
-    <section class="gestion-cuentas__formulario">
-        <h3>Crear nueva cuenta</h3>
-        <form novalidate>
-            <div class="form-group">
-                <label for="nombre">Nombre de cuenta</label>
-                <input id="nombre" type="text" placeholder="Ej. Caja Oficina">
             </div>
-            <div class="form-group">
-                <label for="tipo">Tipo</label>
-                <select id="tipo">
-                    <option value="">Seleccione tipo</option>
-                    <option value="caja">Caja</option>
-                    <option value="banco">Banco</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="saldo">Saldo inicial</label>
-                <input id="saldo" type="number" placeholder="0.00">
-            </div>
-            <button type="submit" class="btn btn--guardar">Guardar</button>
-        </form>
-    </section>
-</div>
-  
+        </div>
+    </div> <!-- end col -->
+</div> <!-- end row -->

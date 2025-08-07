@@ -81,6 +81,7 @@ export class AppInputComponent implements NsCustomFormControl, ControlValueAcces
 
   @Input() errorMessage?: string;
 
+  @Input() email = false;
   @Input() filter = true;
   @Input() required = false;
   borderRequired = false;
@@ -135,6 +136,8 @@ export class AppInputComponent implements NsCustomFormControl, ControlValueAcces
   @Input() set format(f: string) {
     this.dateFormat = f;
   }
+  @Input() showTime = false;
+
   dateFormat = 'yy-mm-dd';
 
   @Input() dateNow = false;
@@ -236,12 +239,18 @@ export class AppInputComponent implements NsCustomFormControl, ControlValueAcces
     const year = fechaOriginal.getFullYear().toString(); // Obtén los últimos dos dígitos del año
     const month = ('0' + (fechaOriginal.getMonth() + 1)).slice(-2); // Añade cero al mes si es necesario
     const day = ('0' + fechaOriginal.getDate()).slice(-2); // Añade cero al día si es necesario
+    const hour = ('0' + fechaOriginal.getHours()).slice(-2);
+    const minute = ('0' + fechaOriginal.getMinutes()).slice(-2);
+    const second = ('0' + fechaOriginal.getSeconds()).slice(-2);
     // Construye la cadena de fecha en el formato deseado
 
     const fechaFormateada = format
       .replace('yy', year)
       .replace('mm', month)
-      .replace('dd', day);
+      .replace('dd', day)
+      .replace('hh', hour)
+      .replace('mm', minute)
+      .replace('ss', second);
     return of(fechaFormateada).pipe(delay(1));
   }
 
@@ -328,6 +337,10 @@ export class AppInputComponent implements NsCustomFormControl, ControlValueAcces
     return this.dateFormat.length;
   }
 
+  getDateValue(format: string): string {
+    return (format.length > 8) ? format.slice(0, 8) : format;
+  }
+
   onCalendarSelect(e: any): void {
     this.selectDate(e).subscribe((r) => {
       this.value = r;
@@ -408,6 +421,7 @@ export class AppInputComponent implements NsCustomFormControl, ControlValueAcces
 
     if (this.isDateType && moment(value, ['MM-DD-YYYY', 'YYYY-MM-DD']).isValid()) {
       this.value = moment(value, ['MM-DD-YYYY', 'YYYY-MM-DD']).format(this.dateFormat);
+
       this.valueAsDate = moment(value, ['MM-DD-YYYY', 'YYYY-MM-DD']).toDate();
       this.valueAsNumber = this.valueAsDate.getTime();
     } else {

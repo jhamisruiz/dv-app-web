@@ -140,7 +140,6 @@ export class AppFinderComponent implements NsCustomFormControl, OnInit, ControlV
         if (r) {
           const d: any[] = r ?? [];
           this.data = d;
-
           if (this.inputValue && this.optionValue) {//fixme:
             const id = this.optionValue;
             const sel = d.find((v) => v?.[id] === Number(this.inputValue));
