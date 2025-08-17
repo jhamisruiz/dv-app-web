@@ -80,12 +80,18 @@ export interface AppTableGrid {
   inputMax?: number;
   step?: number;
   prefix?: 'S/' | '$' | string;
+  multiplication?: Multiplica;
   toModalVisible?: boolean;
   showButtons?: boolean;
   //form
   colClass?: string;
 }
 
+interface Multiplica {
+  fieldA: string;
+  fieldB: string;
+  result: string;
+}
 export interface ParentVal {
   field: string;
   parentField: string;

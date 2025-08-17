@@ -8,6 +8,7 @@ import { EmpresaComponent } from './mantenedores/empresa/empresa.component';
 import { UserGuard } from '@app/shared/guards/guards/user.guard';
 import { ProveedorComponent } from './mantenedores/proveedor/proveedor.component';
 import { InmueblesComponent } from './mantenedores/inmuebles/inmuebles.component';
+import { SucursalComponent } from './mantenedores/sucursal/sucursal.component';
 
 const routes: Routes = [
   {
@@ -26,6 +27,11 @@ const routes: Routes = [
       {
         path: 'registro-de-empresas',
         component: EmpresaComponent,
+        canActivate: [UserGuard],
+      },
+      {
+        path: 'registro-de-sucursales',
+        component: SucursalComponent,
         canActivate: [UserGuard],
       },
       {

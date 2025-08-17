@@ -36,6 +36,8 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 
 1.- Configurar git
 
+inmuebles agregar promociones descuentos,..., sectores,  proyectos, mz, numero lote
+
 ```````````````````
 Estructura del sistema 
 Arquitectura del sistema 

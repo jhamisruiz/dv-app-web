@@ -1,0 +1,67 @@
+<app-tools (OnClickNew)="changeMode($event)" (OnClickSave)="onSubmit()" [ViewMode]="modeType"
+  (OnClickBack)="changeMode($event)">
+</app-tools>
+
+<ng-container *ngIf="isViewMode || isDeleteMode">
+  <app-table [path]="fullPath" (OnEdit)="getForm($event);" (OnDelete)="delForm($event)" [headers]="headers"
+    [btnDelete]="true" [btnEdit]="true" [refresh]="auto">
+  </app-table>
+</ng-container>
+
+<ng-container *ngIf="isCreateMode || isEditMode">
+  <div class="card-body">
+    <form [formGroup]="form">
+      <div class="row gy-4">
+        <div class="col-xxl-4 col-md-4">
+          <div class="row">
+            <div class="col-lg-6 col-sm-6">
+              <div>
+                <app-input inputClass="form-control" formControlName="codigo" label="CÓDIGO" type="text"
+                  [formValid]="ok">
+                </app-input>
+              </div>
+            </div>
+            <div class="col-lg-6 col-sm-6">
+              <div>
+                <app-input inputClass="form-control" (OnInput)="onInput($event)" formControlName="numero_documento"
+                  label="DNI" type="text" [formValid]="ok"></app-input>
+              </div>
+            </div>
+            <div class="col-lg-6 col-sm-6">
+              <div>
+                <app-input inputClass="form-control" formControlName="nombres" label="NOMBRES" type="text" [formValid]="ok">
+                </app-input>
+              </div>
+            </div>
+            <div class="col-lg-6 col-sm-6">
+              <div>
+                <app-input inputClass="form-control" formControlName="apellidos" label="APELLIDOS" type="text" [formValid]="ok">
+                </app-input>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-xxl-8 col-md-8">
+            <div class="row">
+              <app-table-grid [dataSource]="form.value.detalle" [paginator]="false" [headers]="headers_comp"
+                (dataResponse)="updateDataResponse($event)">
+              </app-table-grid>
+            </div>
+        </div>
+        <app-ubigeo [setUbigeo]="form.value?.ubigeo" (NgModelResponse)="getUbigeo($event)"></app-ubigeo>
+        <div class="col-xxl-6 col-md-6">
+          <div>
+            <app-input inputClass="form-control" formControlName="direccion" label="DIRECCION" type="text"
+              [formValid]="ok"></app-input>
+          </div>
+        </div>
+        <div class="col-xxl-3 col-md-6">
+          <div class="d-flex flex-column">
+            <label for="" class="block text-capitalize">HABILITAR</label>
+            <p-inputSwitch formControlName="habilitado"></p-inputSwitch>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</ng-container>

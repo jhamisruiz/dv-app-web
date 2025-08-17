@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FacturacionComponent } from './facturacion.component';
 import { HomeFacturacionComponent } from './home-facturacion/home-facturacion.component';
 import { BoletaComponent } from './mantenedores/boleta/boleta.component';
-//import { FacturaComponent } from './mantenedores/factura/factura.component';
+import { FacturaComponent } from './mantenedores/factura/factura.component';
 import { NotaCreditoComponent } from './mantenedores/nota-credito/nota-credito.component';
 import { NotaDebitoComponent } from './mantenedores/nota-debito/nota-debito.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -17,7 +17,7 @@ import { FacturacionRoutingModule } from './facturacion.routing';
     FacturacionComponent,
     HomeFacturacionComponent,
     BoletaComponent,
-    //FacturaComponent,
+    FacturaComponent,
     NotaCreditoComponent,
     NotaDebitoComponent,
   ],
@@ -33,7 +33,7 @@ import { FacturacionRoutingModule } from './facturacion.routing';
   exports: [
     HomeFacturacionComponent,
     BoletaComponent,
-    //FacturaComponent,
+    FacturaComponent,
     NotaCreditoComponent,
     NotaDebitoComponent,
   ],

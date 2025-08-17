@@ -304,7 +304,7 @@ export class AppTableGridComponent implements OnInit, OnDestroy {
           });
         });
       }
-      if (d?.length && h?.type === 'suggest' || d?.length &&h?.type === 'select') {
+      if (d?.length && h?.type === 'suggest' || d?.length && h?.type === 'select') {
         //AGREGA UN PBJETO DEL FINDER AL FILDNAME DE LA ROW
         d.forEach((v, i) => {
           if (h?.data?.length) {
@@ -351,8 +351,23 @@ export class AppTableGridComponent implements OnInit, OnDestroy {
     this.OnChangeData.emit(this.data);
   }
 
+  onChangeNumber(d: any, h: AppTableGrid, val: any): void {
+    if (h?.multiplication && h?.multiplication?.fieldA && h?.multiplication?.fieldB && h?.multiplication?.result) {
+      const fieldA = h.multiplication.fieldA;
+      const fieldB = h.multiplication.fieldB;
+      const result = h.multiplication.result;
 
-  selected(e: any, d: any, f: any, p: Array<ParentVal>, h: any): void {
+      if (d[fieldA] && d[fieldB]) {
+        const resultado = Number(d[fieldA] ?? 0) * Number(d[fieldB] ?? 0);
+        d[result] = (resultado).toFixed(2);
+        this.errorStyle(d, h, d[result], h?.required ?? false, h?.parentsVals ?? []);
+      } else {
+        d[result] = null;
+      }
+    }
+  }
+
+  selected(e: any, d: any, f: any, parent: Array<ParentVal>, h: any): void {
     //select
     const id = e?.value > 0 ? e?.value : 0;
     const data: any[] = h?.data ?? [];
@@ -363,11 +378,12 @@ export class AppTableGridComponent implements OnInit, OnDestroy {
           //AGREGA UN PBJETO DEL FINDER AL FILDNAME DE LA ROW
           d[h?.fieldname] = doc;
         }
-        if (p?.length) {
-          p.forEach((v, i) => {
+        if (parent?.length) {
+          parent.forEach((v, i) => {
             d[v.parentField] = doc[v.field];
             const obj = this.headersTable.find((vh: any) => vh?.field === v.parentField);
             if (obj) {
+              if (obj?.multiplication) this.onChangeNumber(d, obj, d[obj?.field]);
               this.errorStyle(d, obj, d[obj?.field], obj?.required ?? false, obj?.parentsVals ?? []);
             }
           });
