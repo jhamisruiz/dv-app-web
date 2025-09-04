@@ -8,6 +8,7 @@ import { BoletaComponent } from './mantenedores/boleta/boleta.component';
 import { NotaCreditoComponent } from './mantenedores/nota-credito/nota-credito.component';
 import { NotaDebitoComponent } from './mantenedores/nota-debito/nota-debito.component';
 import { UserGuard } from '@app/shared/guards/guards/user.guard';
+import { FacturaComponent } from './mantenedores/factura/factura.component';
 
 const routes: Routes = [
   {
@@ -22,8 +23,7 @@ const routes: Routes = [
       },
       {
         path: 'registro-de-facturas',
-        //component: FacturaComponent,
-        component: BoletaComponent,
+        component: FacturaComponent,
         canActivate: [UserGuard],
       },
       {

@@ -102,6 +102,12 @@ export class EmpresaComponent extends AbstractDocument implements OnInit {
 
   getFile(e: any): void {
     this.form.patchValue({
+      certificado: e,
+    });
+  }
+
+  getLogo(e: any): void {
+    this.form.patchValue({
       logo: e?.delete ? null : e,
     });
 

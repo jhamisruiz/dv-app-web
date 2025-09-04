@@ -12,6 +12,7 @@ import { ProveedorComponent } from './mantenedores/proveedor/proveedor.component
 import { AdministracionRoutingModule } from './administracion.routing';
 import { ProveedorNucleoComponent } from './mantenedores/proveedor-nucleo/proveedor-nucleo.component';
 import { InmueblesComponent } from './mantenedores/inmuebles/inmuebles.component';
+import { SucursalComponent } from './mantenedores/sucursal/sucursal.component';
 
 @NgModule({
   declarations: [AdministracionComponent,
@@ -21,6 +22,7 @@ import { InmueblesComponent } from './mantenedores/inmuebles/inmuebles.component
     ProveedorComponent,
     ProveedorNucleoComponent,
     InmueblesComponent,
+    SucursalComponent
   ],
   imports: [
     CommonModule,
@@ -37,6 +39,7 @@ import { InmueblesComponent } from './mantenedores/inmuebles/inmuebles.component
     EmpresaComponent,
     ProveedorComponent,
     InmueblesComponent,
+    SucursalComponent,
   ],
   providers: [{ provide: LOCALE_ID, useValue: 'es' }],
 })

@@ -1,0 +1,76 @@
+<app-tools (OnClickNew)="changeMode($event)" (OnClickSave)="onSubmit()" [ViewMode]="modeType"
+  (OnClickBack)="changeMode($event)">
+</app-tools>
+
+<ng-container *ngIf="isViewMode || isDeleteMode">
+  <app-table [path]="fullPath" (OnEdit)="getForm($event);" (OnDelete)="delForm($event)" [headers]="headers"
+    [btnDelete]="true" [btnEdit]="true" [refresh]="auto">
+  </app-table>
+</ng-container>
+<ng-container *ngIf="isCreateMode || isEditMode">
+  <div class="card-body">
+    <form [formGroup]="form">
+      <div class="row gy-4">
+        <!--end col-->
+        <div class="col-xxl-3 col-md-6">
+          <div>
+            <app-select [currentPath]="'/empresa-buscar'" (OnChange)="selectChange($event)" formControlName="id_empresa"
+              [showClear]="true" [filter]="false" optionValue="id" optionLabel="razon_social" styleClass="p-0 w-100"
+              placeholder="-Seleccionar-" label="EMPRESA" [isTemplete]="true"
+              [Labels]="['razon_social','nombre_comercial']" [formValid]="ok"></app-select>
+          </div>
+        </div>
+        <div class="col-xxl-3 col-md-6">
+          <div>
+            <app-input inputClass="form-control" formControlName="codigo" label="CODIGO" type="text"
+              [locked]="!this.form.value?.id_empresa" [formValid]="ok">
+            </app-input>
+          </div>
+        </div>
+        <!--end col-->
+        <div class="col-xxl-3 col-md-6">
+          <div>
+            <app-input inputClass="form-control" formControlName="nombre" label="NOMBRE" type="text" [formValid]="ok">
+            </app-input>
+          </div>
+        </div>
+        <!--end col-->
+        <div class="col-xxl-3 col-md-6">
+          <div>
+            <app-input inputClass="form-control" formControlName="telefono" label="telefono" type="text"
+              [formValid]="ok"></app-input>
+          </div>
+        </div>
+      </div>
+
+      <app-ubigeo [setUbigeo]="form.value?.ubigeo" (NgModelResponse)="getUbigeo($event)"></app-ubigeo>
+
+      <div class="row mt-3">
+        <div class="col-xxl-3 col-md-6">
+          <div>
+            <app-input inputClass="form-control" formControlName="email" label="CORREO" type="text" [formValid]="ok">
+            </app-input>
+          </div>
+        </div>
+        <div class="col-xxl-6 col-md-6">
+          <div>
+            <app-input inputClass="form-control" formControlName="direccion" label="DIRECCION" type="text"
+              [formValid]="ok"></app-input>
+          </div>
+        </div>
+        <div class="col-xxl-3 col-md-6">
+          <div class="d-flex flex-column">
+            <label for="" class="block text-capitalize">HABILITAR</label>
+            <p-inputSwitch formControlName="habilitado"></p-inputSwitch>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <app-table-grid [dataSource]="form.value.detalle" [paginator]="false" [headers]="headers_sucursal_doc"
+          (dataResponse)="updateDataResponse($event)"></app-table-grid>
+      </div>
+    </form>
+  </div>
+
+</ng-container>

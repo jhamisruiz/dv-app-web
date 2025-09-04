@@ -97,14 +97,14 @@
                 </div>
                 <div class="col-xxl-3 col-md-6">
                     <div>
-                        <app-input inputClass="form-control" formControlName="fecha_reserva" [dateNow]="true"
+                        <app-input inputClass="form-control" formControlName="fecha_reserva" [dateNow]="false"
                             label="Fecha Reserva" type="calendar" [format]="'yy-mm-dd'" [formValid]="ok"></app-input>
                     </div>
                 </div>
                 <div class="col-xxl-3 col-md-6">
                     <div>
-                        <app-input inputClass="form-control" formControlName="fecha_venta" [dateNow]="true"
-                            label="Fecha Venta" type="calendar" [format]="'yy-mm-dd'" [formValid]="ok"></app-input>
+                        <app-input inputClass="form-control" formControlName="fecha_venta" [dateNow]="false"
+                            label="Fecha Venta" type="calendar" [format]="'yy-mm-dd hh:mm:ss'" [formValid]="ok"></app-input>
                     </div>
                 </div>
                 <div class="col-xxl-3 col-md-6">

@@ -135,14 +135,14 @@
           </div>
           <div class="col-xxl-3 col-md-6 m-0">
             <div>
-              <app-select [dataSourse]="moneda" formControlName="codigo_moneda" [showClear]="true" [filter]="false"
+              <app-select [dataSource]="moneda" formControlName="codigo_moneda" [showClear]="true" [filter]="false"
                 optionValue="codigo" optionLabel="nombre" styleClass="p-0 w-100" placeholder="-Seleccionar-"
                 label="MONEDA" [formValid]="ok" [locked]="isEditMode"></app-select>
             </div>
           </div>
           <div class="col-xxl-3 col-md-6 m-0">
             <div>
-              <app-select [dataSourse]="[{cod:'Contado',nam:'Contado'},{cod:'Credito',nam:'Credito'}]"
+              <app-select [dataSource]="[{cod:'Contado',nam:'Contado'},{cod:'Credito',nam:'Credito'}]"
                 formControlName="forma_pago" (selectChange)="selectFormaPago($event)" [showClear]="true"
                 [filter]="false" optionValue="cod" optionLabel="nam" styleClass="p-0 w-100" placeholder="-Seleccionar-"
                 label="Forma Pago" [formValid]="ok" [locked]="isEditMode"></app-select>
@@ -163,7 +163,7 @@
             </div>
           </div>
           <div class="col-xxl-6 col-md-6">
-            <app-table-grid [dataSourse]="form.value.cuotas" (dataResponse)="updateCuotasResponse($event)"
+            <app-table-grid [dataSource]="form.value.cuotas" (dataResponse)="updateCuotasResponse($event)"
               [totalRows]="this.form.value.numero_cuotas" [paginator]="false" modalFormName="Cuotas"
               [headers]="headers_credito" [addDias]="form.value.dias_cuotas" [isDelete]="false" [isAdd]="false"
               [caption]="false" [locked]="isEditMode">
@@ -180,14 +180,14 @@
           </h4>
         </a>
       </p-divider>
+      <!--[isFacturacion]="true"  [modalForm]="true" -->
       <div class="row collapse show" id="collapsProductos">
-        <app-table-grid [dataSourse]="form.value.detalle" [paginator]="false" modalFormName="Factura"
-          [isFacturacion]="true" [headers]="headers_detalle" [modalForm]="true"
-          (dataResponse)="updateDataResponse($event)" [locked]="isEditMode">
+        <app-table-grid [dataSource]="form.value.detalle" [paginator]="false" modalFormName="Factura"
+          [headers]="headers_detalle" (dataResponse)="updateDataResponse($event)" [locked]="isEditMode">
         </app-table-grid>
       </div>
       <div class="row">
-        <app-total [dataSourse]="form.value" (OnCalc)="onCalc($event)" [currency]="form.value.codigo_moneda"
+        <app-total [dataSource]="form.value" (OnCalc)="onCalc($event)" [currency]="form.value.codigo_moneda"
           [locked]="isEditMode"></app-total>
       </div>
       <div class="row mt-1">

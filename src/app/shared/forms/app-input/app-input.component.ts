@@ -132,7 +132,10 @@ export class AppInputComponent implements NsCustomFormControl, ControlValueAcces
   @Input() rows?: number;
   @Input() cols?: number;
 
-  /** Formato por defecto de la fecha para el input control */
+  /**
+   * @param  {string}  f formato de fecha
+   * @description Establece el formato yy-mm-dd | yy-mm-dd hh:mm:ss
+   */
   @Input() set format(f: string) {
     this.dateFormat = f;
   }
@@ -140,6 +143,9 @@ export class AppInputComponent implements NsCustomFormControl, ControlValueAcces
 
   dateFormat = 'yy-mm-dd';
 
+  /**
+   * @param  {boolean}  dateNow inicia con fecha por defecto o null
+   */
   @Input() dateNow = false;
   defaultDate?: Date;
 

@@ -313,7 +313,7 @@ export class FacturaComponent extends AbstractDocument implements OnInit {
       required: true,
     },
   ];
-  pathSucursal = '/sucursal-empresa?start=0&length=10&search=&order=asc&cod=0&cod=0';
+  pathSucursal = '/sucursal-documento?code=0&doc=1';
 
   mensaje: any;
   setMessageSunat!: any[];
@@ -404,7 +404,7 @@ export class FacturaComponent extends AbstractDocument implements OnInit {
 
   selectChange(e: any): void {
     const code = e > 0 ? e : 0;
-    this.pathSucursal = `/sucursal-empresa?start=0&length=10&search=&order=asc&cod=${code}&doc=1`;
+    this.pathSucursal = `/sucursal-documento?code=${code}&doc=1`;
     //cod=es el idempresa|doc=1= es el id documento electronico que referencia a 01 factura
   }
 
